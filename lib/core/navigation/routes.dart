@@ -1,0 +1,39 @@
+import 'package:get/get.dart';
+import 'package:maindmate/features/Consultations/book_a_consultation/controller/book_a_consultation_binding.dart';
+import 'package:maindmate/features/Consultations/book_a_consultation/view/book_a_consultation_screen.dart';
+import 'package:maindmate/features/auth/sign_in/controller/sign_in_binding.dart';
+import 'package:maindmate/features/auth/sign_in/view/sign_in_screen.dart';
+import 'package:maindmate/features/auth/sign_up/controller/sing_up_binding.dart';
+import 'package:maindmate/features/auth/sign_up/view/sign_up_screen.dart';
+import 'package:maindmate/features/auth/welcome_screen/view/welcome_screen.dart';
+import 'package:maindmate/features/experience/experience_detailes/controller/experience_detailes_binding.dart';
+import 'package:maindmate/features/experience/experience_detailes/view/experience_detailes_screen.dart';
+import 'package:maindmate/features/experience/experience_of_others/controller/experience_of_others_binding.dart';
+import 'package:maindmate/features/experience/experience_of_others/view/experience_of_others_screen.dart';
+
+appRoutes() => [
+      GetPage(
+          name: '/WelcomeScreen',
+          page: () => WelcomeScreen(),
+),
+      GetPage(
+          name: '/SignUpScreen',
+          page: () => SignUpScreen(),
+          binding: SignUpBinding()),
+      GetPage(
+          name: '/SignInScreen',
+          page: () => SignInScreen(),
+          binding: SignInBinding()),
+      GetPage(
+          name: '/ExperienceOfOthersScreen',
+          page: () => ExperienceOfOthersScreen(),
+          binding: ExperienceOfOThersBinding()),
+      GetPage(
+          name: '/BookAConsultationScreen',
+          page: () => BookAConsultationScreen(),
+          binding: BookAConsultationBinding()),
+      GetPage(
+          name: '/ExperienceDetailesScreen',
+          page: () => ExperienceDetailesScreen(),
+          binding: ExperienceDetailesBinding())
+    ];

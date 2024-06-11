@@ -1,0 +1,95 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:maindmate/core/shared/buttons/general_button.dart';
+import 'package:maindmate/core/theme/app_theme.dart';
+// import 'package:maindmate/features/auth/welcome_screen/view/widgets/build_page_indecator.dart';
+import 'package:maindmate/features/auth/welcome_screen/view/widgets/build_page_view.dart';
+import 'package:maindmate/main.dart';
+
+class WelcomeScreen extends StatelessWidget {
+  WelcomeScreen({super.key});
+  final PageController controller =
+      PageController(viewportFraction: 1, keepPage: true);
+
+  @override
+  Widget build(BuildContext context) {
+    appTheme=AppTheme.of(context);
+    return Scaffold(
+      backgroundColor: appTheme.primaryBackground,
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 50),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          SizedBox(
+            height: 70,
+          ),
+          Switch(
+              value: AppTheme.themeMode == ThemeMode.dark,
+              onChanged: (val) {
+                AppTheme.toggleThemeMode();
+
+                MyApp.of(context)
+                    .updateThemeMode(); // Make sure to expose updateThemeMode method in MyApp
+                print(AppTheme.themeMode);
+              }),
+          Image.asset('assets/images/logo.png'),
+          SizedBox(
+            height: 30,
+          ),
+          const Text('مايندمت هو تطبيق رعاية وعلاج الصحة العقلية والنفسية'),
+          BuildPageView(
+            controller: controller,
+          ),
+          // BuildPageIndecator(pageController: controller,),
+          SizedBox(
+            height: 100,
+          ),
+          ButtonWidget(
+            showLoadingIndicator: false,
+            onPressed: ()  {
+              Get.toNamed('/SignInScreen');
+            },
+            text: ("الدخول كمستخدم"),
+            options: ButtonOptions(
+              width: MediaQuery.sizeOf(context).width * 0.6,
+              height: 50,
+              padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+              iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+              color: appTheme.primary,
+              textStyle: appTheme.text18,
+              elevation: 3,
+              borderSide: const BorderSide(
+                color: Colors.transparent,
+                width: 1,
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          ButtonWidget(
+            showLoadingIndicator: false,
+            onPressed: () async {},
+            text: ("الدخول كزائر"),
+            options: ButtonOptions(
+              width: MediaQuery.sizeOf(context).width * 0.6,
+              height: 50,
+              padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+              iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+              color: appTheme.secondary,
+              textStyle: appTheme
+                  .text18
+                  .copyWith(color: appTheme.primaryBtnText),
+              elevation: 3,
+              borderSide: const BorderSide(
+                color: Colors.transparent,
+                width: 1,
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ]),
+      ),
+    );
+  }
+}
