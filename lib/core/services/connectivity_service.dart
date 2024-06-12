@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ConnectivityService extends GetxService {
@@ -9,16 +9,16 @@ class ConnectivityService extends GetxService {
   bool _firstCheck = true; // Flag to track the first connectivity check
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    initConnectivity();
+    await initConnectivity();
   }
 
   /// Initializes connectivity monitoring
-  Future<ConnectivityService> initConnectivity() async {
+  initConnectivity() async {
     var initialStatus = await Connectivity().checkConnectivity();
+    print(initialStatus);
     isConnected.value = initialStatus != ConnectivityResult.none;
-
     if (isConnected.value == false) {
       // If not connected at initialization, show a snackbar
       log('offline');
@@ -32,33 +32,26 @@ class ConnectivityService extends GetxService {
     }
 
     // Listening for connectivity changes
-    Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> result) {
+    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+      print("Current connectivity status: $result");
       bool previousState = isConnected.value;
       isConnected.value = result != ConnectivityResult.none;
 
+      print("Is connected: ${isConnected.value}");
       if (!_firstCheck && previousState != isConnected.value) {
         if (isConnected.value) {
           // When connectivity returns
-      log('online');
-          // SnackbarManager.showSnackbar(
-          //   "Online",
-          //   "You are back online.",
-          //   icon: Icon(Icons.wifi_outlined, color: customColors.primaryText),
-          //   backgroundColor: customColors.primaryBackground,
-          // );
+          print("We are back online");
+          log('online');
+          // Optional: Uncomment and adjust SnackbarManager to show a snackbar here
         } else {
           // When connectivity is lost
+          print("We are offline");
           log('offline');
-          // SnackbarManager.showSnackbar(
-          //   "Offline",
-          //   "No internet connection.",
-          //   icon: Icon(Icons.wifi_off_outlined, color: customColors.primaryText),
-          //   backgroundColor: customColors.primaryBackground,
-          // );
+          // Optional: Uncomment and adjust SnackbarManager to show a snackbar here
         }
       }
-      _firstCheck = false; // Update the first check flag after first run
+      _firstCheck = false; // Update the first check flag after the first run
     });
-    return this;
   }
 }

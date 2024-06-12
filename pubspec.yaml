@@ -41,7 +41,8 @@ dependencies:
   shared_preferences: ^2.2.3
   easy_localization: ^3.0.7
   flutter_screenutil: ^5.0.0
-  connectivity_plus: ^6.0.3
+  connectivity_plus: ^5.0.2
+  intl_phone_number_input: ^0.7.4
 
 dev_dependencies:
   flutter_test:
@@ -84,7 +85,7 @@ flutter:
   fonts:
     - family: NeoSans
       fonts:
-        - asset: assets/fonts/Neo Sans Std Light.otf
+        - asset: assets/fonts/alfont_com_NeoSansW23-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

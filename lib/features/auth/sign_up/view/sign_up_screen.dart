@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:maindmate/core/services/divide_widgets.dart';
 import 'package:maindmate/core/shared/buttons/general_button.dart';
@@ -7,110 +8,93 @@ import 'package:maindmate/core/shared/functions/validation/name_validation.dart'
 import 'package:maindmate/core/shared/functions/validation/password_validation.dart';
 import 'package:maindmate/core/shared/functions/validation/phone_validation.dart';
 import 'package:maindmate/core/shared/text_fileds/custom_text_filed.dart';
+import 'package:maindmate/core/shared/text_fileds/international_field.dart';
 import 'package:maindmate/features/auth/sign_up/controller/sign_up_controller.dart';
 import 'package:maindmate/features/auth/sign_up/view/widgets/select_gender.dart';
 import 'package:maindmate/main.dart';
+
 class SignUpScreen extends StatelessWidget {
-   SignUpScreen({super.key});
-  final SignUpController signUpController=Get.find();
+  SignUpScreen({super.key});
+  final SignUpController signUpController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Form(
-          key:signUpController.formstate,
+          key: signUpController.formstate,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                height: 70,
+              SizedBox(height: 50.h),
+              Center(
+                  child: Image.asset('assets/images/logo.png',
+                      width: 200.w, height: 100.h)),
+              Center(
+                child: Text(
+                  'create_account',
+                  style: appTheme.text18.copyWith(
+                      fontWeight: FontWeight.normal,
+                      fontSize: 30.sp,
+                      color: appTheme.primary),
+                ).tr(),
               ),
-              Center(child: Image.asset('assets/images/logo.png')),
               Text(
-                'create_account',
-                style: appTheme.text18.copyWith(fontWeight: FontWeight.normal,fontSize: 32,color:appTheme.primary),
-              ).tr(),
-              
-              Text(
-                tr('first_name'),
-                style: appTheme.text18.copyWith(fontWeight: FontWeight.normal),
+                tr('user_name'),
+                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
               ),
-              
               customTextField(
-                  label: tr('first_name'),
-                  controller: signUpController.firstNameController,
+                  label: tr('enter_user_name'),
+                  controller: signUpController.nameController,
                   validator: (val) {
                     return nameValidation(val);
                   }),
-              Text(tr('last_name'),
-                  style: appTheme.text18.copyWith(fontWeight: FontWeight.normal)),
-              
-              
-              customTextField(
-                label: tr('last_name'),
-                controller: signUpController.secondNameController,
-                validator: (val) {
-                  
-                    return nameValidation(val);
-                },
-              ),
-              Text(tr('gender'),
-                  style: appTheme.text18.copyWith(fontWeight: FontWeight.normal)),
-              SelectGender(),
-              
               Text(
-                'enter_email_or_phone',
-                style: appTheme.text18.copyWith(fontWeight: FontWeight.normal),
+                'enter_email',
+                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
               ).tr(),
-              
-              
               customTextField(
-                  label: tr('email_or_phone'),
-                  controller: signUpController.emailOrPhoneController,
+                  label: tr('email'),
+                  controller: signUpController.emailController,
                   validator: (val) {
-                    
-                    return phoneValidation(val);
+                    // return phoneValidation(val);
                   }),
-              
-              
+              Text(
+                'enter_phone',
+                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
+              ).tr(),
+              internationalField(signUpController.phoneController),
               Text(
                 'enter_password',
-                style: appTheme.text18.copyWith(fontWeight: FontWeight.normal),
+                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
               ).tr(),
-              
-              
               customTextField(
                   label: tr('password'),
                   controller: signUpController.passwordController,
                   validator: (val) {
-                    
-                   return passwordValidation(val);
+                    return passwordValidation(val);
                   }),
-              
-              
               Text(
-                'اعد ادخل كلمة المرور',
-                style: appTheme.text18.copyWith(fontWeight: FontWeight.normal),
+                'اعد ادخال كلمة المرور',
+                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
               ),
-              
-             
               customTextField(
                   label: tr('re_enter_password'),
                   controller: signUpController.confirmPasswordController,
-                  validator: (val) {        return signUpController.confirmPasswordController.text ==
-                              signUpController.passwordController.text
-                          ? null
-                          : tr(
-                              "The confirm password doesn't mathcing the new password");
-              
+                  validator: (val) {
+                    return signUpController.confirmPasswordController.text ==
+                            signUpController.passwordController.text
+                        ? null
+                        : tr(
+                            "The confirm password doesn't mathcing the new password");
                   }),
+              ContinueAsDoctor(),
               RemmeberMe(),
               TermOfUs(),
-               SignUpButton(),
+              SignUpButton(),
               const SignUpUsingFacebookGoogle(),
               Row(
-                mainAxisAlignment:MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     'i_have_an_account',
@@ -119,18 +103,17 @@ class SignUpScreen extends StatelessWidget {
                   ).tr(),
                   GestureDetector(
                     onTap: () {
-                      Get.toNamed('/SignInScreen');
+                      Get.offAndToNamed('/SignInScreen');
                     },
                     child: Text(
                       'login',
                       style: appTheme.text18.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: appTheme.primary),
+                          fontWeight: FontWeight.w500, color: appTheme.primary),
                     ).tr(),
                   )
                 ],
               ),
-            ].divide(const SizedBox(height:5)),
+            ].divide(const SizedBox(height: 5)),
           ),
         ),
       ),
@@ -148,7 +131,31 @@ class RemmeberMe extends StatelessWidget {
       children: [
         Text(
           'remember_me',
-          style: appTheme.text18.copyWith(fontWeight: FontWeight.normal),
+          style: appTheme.text14.copyWith(fontWeight: FontWeight.normal),
+        ).tr(),
+        Obx(
+          () => Switch(
+              value: signUpController.isRemmberMeActive.value,
+              onChanged: (value) {
+                signUpController.isRemmberMeActive.value = value;
+              }),
+        )
+      ],
+    );
+  }
+}
+
+class ContinueAsDoctor extends StatelessWidget {
+  ContinueAsDoctor({super.key});
+  final SignUpController signUpController = Get.find();
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          'continue_as_doctor',
+          style: appTheme.text14.copyWith(fontWeight: FontWeight.normal),
         ).tr(),
         Obx(
           () => Switch(
@@ -193,8 +200,8 @@ class TermOfUs extends StatelessWidget {
 }
 
 class SignUpButton extends StatelessWidget {
-   SignUpButton({super.key});
-final SignUpController signUpController=Get.find();
+  SignUpButton({super.key});
+  final SignUpController signUpController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -235,13 +242,17 @@ class SignUpUsingFacebookGoogle extends StatelessWidget {
           'or_register_with',
           style: appTheme.text14.copyWith(fontWeight: FontWeight.normal),
         ).tr(),
-const SizedBox(height: 10,),
+        const SizedBox(
+          height: 10,
+        ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('assets/images/facebook.png'),
-           const SizedBox(width: 15,),
+            const SizedBox(
+              width: 15,
+            ),
             Image.asset('assets/images/google.png'),
           ],
         )

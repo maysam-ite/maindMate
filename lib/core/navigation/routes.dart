@@ -10,12 +10,18 @@ import 'package:maindmate/features/experience/experience_detailes/controller/exp
 import 'package:maindmate/features/experience/experience_detailes/view/experience_detailes_screen.dart';
 import 'package:maindmate/features/experience/experience_of_others/controller/experience_of_others_binding.dart';
 import 'package:maindmate/features/experience/experience_of_others/view/experience_of_others_screen.dart';
+import 'package:maindmate/features/main_bottom_navigation_bar/controller/main_bottom_navigation_binding.dart';
+import 'package:maindmate/features/main_bottom_navigation_bar/view/main_bottom_navigation_widget.dart';
 
 appRoutes() => [
       GetPage(
-          name: '/WelcomeScreen',
-          page: () => WelcomeScreen(),
-),
+        name: '/WelcomeScreen',
+        page: () => WelcomeScreen(),
+      ),
+      GetPage(
+          name: '/MainBottomNavigationBarWidget',
+          page: () => MainBottomNavigationBarWidget(),
+          binding: MainBottomNavigationBinding()),
       GetPage(
           name: '/SignUpScreen',
           page: () => SignUpScreen(),

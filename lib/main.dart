@@ -6,16 +6,17 @@ import 'package:maindmate/core/navigation/routes.dart';
 import 'package:maindmate/core/services/connectivity_service.dart';
 import 'package:maindmate/core/services/responsive.dart';
 import 'package:maindmate/core/theme/app_theme.dart';
+
 late AppTheme appTheme;
-void main()async {
- WidgetsFlutterBinding.ensureInitialized();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
- 
-   await AppTheme.initialize();
-      Get.put(() => ConnectivityService());
+
+  await AppTheme.initialize();
+  Get.put(ConnectivityService());
 
   runApp(EasyLocalization(
-      supportedLocales: const [ Locale('ar')],
+      supportedLocales: const [Locale('ar')],
       path:
           'assets/localization', // <-- change the path of the translation files
       fallbackLocale: const Locale('ar'),
@@ -27,20 +28,20 @@ class MyApp extends StatefulWidget {
 
   @override
   State<MyApp> createState() => _MyAppState();
-  
+
   static _MyAppState of(BuildContext context) =>
       context.findAncestorStateOfType<_MyAppState>()!;
 }
 
 class _MyAppState extends State<MyApp> {
   ThemeMode _themeMode = AppTheme.themeMode;
-   @override
+  @override
   void initState() {
     _themeMode = AppTheme.themeMode;
-    
+
     super.initState();
   }
-  
+
   void updateThemeMode() {
     setState(() {
       _themeMode = AppTheme.themeMode;
@@ -53,19 +54,19 @@ class _MyAppState extends State<MyApp> {
       });
   @override
   Widget build(BuildContext context) {
-    appTheme=AppTheme.of(context);
+    appTheme = AppTheme.of(context);
     initSizes(context);
-    
-    return  ScreenUtilInit(
-      designSize: const Size(375, 812), 
+
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-      builder: (ctx,j) => GetMaterialApp(
-      title: 'Flutter Demo',
-       localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-           theme: ThemeData(
+      builder: (ctx, j) => GetMaterialApp(
+        title: 'Flutter Demo',
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        theme: ThemeData(
           brightness: Brightness.light,
           scrollbarTheme: const ScrollbarThemeData(),
         ),
@@ -73,10 +74,11 @@ class _MyAppState extends State<MyApp> {
           brightness: Brightness.dark,
           scrollbarTheme: const ScrollbarThemeData(),
         ),
-         themeMode: _themeMode,
+        themeMode: _themeMode,
         debugShowCheckedModeBanner: false,
-    getPages: appRoutes(),
-     initialRoute: '/WelcomeScreen',
-    ),);
+        getPages: appRoutes(),
+        initialRoute: '/WelcomeScreen',
+      ),
+    );
   }
 }

@@ -26,10 +26,12 @@ abstract class AppTheme {
             ? ThemeMode.dark
             : ThemeMode.light;
   }
+
   static void toggleThemeMode() {
     final isDarkMode = _prefs?.getBool(kThemeModeKey) ?? false;
     saveThemeMode(isDarkMode ? ThemeMode.light : ThemeMode.dark);
   }
+
   static void saveThemeMode(ThemeMode mode) => mode == ThemeMode.system
       ? _prefs?.remove(kThemeModeKey)
       : _prefs?.setBool(kThemeModeKey, mode == ThemeMode.dark);
@@ -69,15 +71,14 @@ abstract class AppTheme {
   late Color lineColor;
   late Color white70;
 
+  TextStyle get text10 => typography.text10;
+  TextStyle get text12 => typography.text12;
+  TextStyle get text14 => typography.text14;
+  TextStyle get text16 => typography.text16;
+  TextStyle get text18 => typography.text18;
+  TextStyle get text24 => typography.text24;
+  TextStyle get text26 => typography.text26;
 
-   TextStyle get text10 => typography.text10;
-   TextStyle get text12 => typography.text12;
-   TextStyle get text14 => typography.text14;
-   TextStyle get text16 => typography.text16;
-   TextStyle get text18 => typography.text18;
-   TextStyle get text24 => typography.text24;
-   TextStyle get text26 => typography.text26;
- 
   Typography get typography => {
         DeviceSize.mobile: MobileTypography(this),
         DeviceSize.tablet: TabletTypography(this),
@@ -104,15 +105,12 @@ class LightModeTheme extends AppTheme {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color(0xFF615BA4 );
+  late Color primary = const Color(0xFF615BA4);
   late Color secondary = const Color(0xFF36AFC5);
   late Color tertiary = const Color(0xFF003158);
   late Color alternate = const Color(0xFFF19642);
   late Color primaryBackground = const Color(0xFFFFFFFF);
 
-
-
-  
   late Color primaryText = const Color(0xFF0D121D);
   late Color secondaryText = const Color(0xFF57636C);
   late Color secondaryBackground = const Color(0xFFFFFFFF);
@@ -138,7 +136,7 @@ abstract class Typography {
   TextStyle get text18;
   TextStyle get text24;
   TextStyle get text26;
-  }
+}
 
 class MobileTypography extends Typography {
   MobileTypography(this.theme);
@@ -161,33 +159,33 @@ class MobileTypography extends Typography {
         fontFamily: 'NeoSans',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
-        fontSize: 14.0,
+        fontSize: 14.0.sp,
       );
   TextStyle get text16 => TextStyle(
         fontFamily: 'NeoSans',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
-        fontSize: 16.0,
+        fontSize: 16.0.sp,
       );
   TextStyle get text18 => TextStyle(
         fontFamily: 'NeoSans',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
-        fontSize: 18.0,
+        fontSize: 18.0.sp,
       );
   TextStyle get text24 => TextStyle(
         fontFamily: 'NeoSans',
         color: theme.primaryText,
         fontWeight: FontWeight.w600,
-        fontSize: 24.0,
+        fontSize: 24.0.sp,
       );
   TextStyle get text26 => TextStyle(
         fontFamily: 'NeoSans',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
-        fontSize: 26.0,
+        fontSize: 26.0.sp,
       );
-  }
+}
 
 class TabletTypography extends Typography {
   TabletTypography(this.theme);
@@ -236,14 +234,14 @@ class TabletTypography extends Typography {
         fontWeight: FontWeight.w500,
         fontSize: 26.0,
       );
-  }
+}
 
 class DesktopTypography extends Typography {
   DesktopTypography(this.theme);
 
   final AppTheme theme;
 
- TextStyle get text10 => TextStyle(
+  TextStyle get text10 => TextStyle(
         fontFamily: 'NeoSans',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
@@ -285,7 +283,7 @@ class DesktopTypography extends Typography {
         fontWeight: FontWeight.w500,
         fontSize: 26.0,
       );
-  }
+}
 
 class DarkModeTheme extends AppTheme {
   @Deprecated('Use primary instead')
@@ -328,14 +326,14 @@ extension TextStyleHelper on TextStyle {
     TextDecoration? decoration,
     double? lineHeight,
   }) =>
-       copyWith(
-              fontFamily: fontFamily,
-              color: color,
-              fontSize: fontSize,
-              letterSpacing: letterSpacing,
-              fontWeight: fontWeight,
-              fontStyle: fontStyle,
-              decoration: decoration,
-              height: lineHeight,
-            );
+      copyWith(
+        fontFamily: fontFamily,
+        color: color,
+        fontSize: fontSize,
+        letterSpacing: letterSpacing,
+        fontWeight: fontWeight,
+        fontStyle: fontStyle,
+        decoration: decoration,
+        height: lineHeight,
+      );
 }

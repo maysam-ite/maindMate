@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:maindmate/core/services/divide_widgets.dart';
 import 'package:maindmate/core/shared/buttons/general_button.dart';
+import 'package:maindmate/core/shared/functions/validation/email_validation.dart';
 import 'package:maindmate/core/shared/functions/validation/password_validation.dart';
 import 'package:maindmate/core/shared/functions/validation/phone_validation.dart';
 import 'package:maindmate/core/shared/text_fileds/custom_text_filed.dart';
@@ -17,71 +18,115 @@ class SignInScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return constraints.maxWidth < 600 ? _buildMobileLayout() : _buildTabletLayout();
-        },
-      ),
-    );
-  }
-
-  Widget _buildMobileLayout() {
-    return _buildFormLayout(150.w, 32.sp);
-  }
-
-  Widget _buildTabletLayout() {
-    return Center(child: _buildFormLayout(200.w, 40.sp, maxWidth: 600.w));
-  }
-
-  Widget _buildFormLayout(double imageSize, double titleSize, {double? maxWidth}) {
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 50.w),
-      child: Form(
-        key: signInController.formstate,
-        child: Container(
-          width: maxWidth,
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 50.w),
+        child: Form(
+          key: signInController.formstate,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 70.h),
-              Center(child: Image.asset('assets/images/logo.png', width: imageSize, height: imageSize)),
               SizedBox(height: 50.h),
-              Center(child: TitleText(text: 'login', fontSize: titleSize, color: appTheme.primary)),
-              SizedBox(height: 20.h),
-              CustomTextField(
-                label: 'enter_email_or_phone',
-                controller: signInController.emailOrPhoneController,
-                validator: phoneValidation,
+              Center(
+                  child: Image.asset('assets/images/logo.png',
+                      width: 200.w, height: 100.h)),
+              // SizedBox(height: 20.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'login',
+                    style: appTheme.text18.copyWith(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 32.sp,
+                        color: appTheme.primary),
+                  ).tr(),
+                ],
               ),
-              CustomTextField(
-                label: 'enter_password',
+              SizedBox(height: 20.h),
+              Text(
+                'enter_email_or_phone',
+                style: appTheme.text18.copyWith(fontWeight: FontWeight.normal),
+              ).tr(),
+              customTextField(
+                label: tr('email_or_phone'),
+                controller: signInController.emailOrPhoneController,
+                validator: (val) {
+                  return emailValidation(val);
+                },
+              ),
+              Text(
+                'enter_password',
+                style: appTheme.text18.copyWith(fontWeight: FontWeight.normal),
+              ).tr(),
+              customTextField(
+                label: tr('password'),
                 controller: signInController.passwordController,
-                validator: passwordValidation,
+                validator: (val) {
+                  return passwordValidation(val);
+                },
               ),
               RemmeberMe(),
               SizedBox(height: 30.h),
               SignInButton(),
               SizedBox(height: 20.h),
-              SignUpUsingFacebookGoogle(),
+              const SignUpUsingFacebookGoogle(),
               SizedBox(height: 30.h),
-              _buildFooter(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'i_have_an_account',
+                    style:
+                        appTheme.text16.copyWith(fontWeight: FontWeight.normal),
+                  ).tr(),
+                  GestureDetector(
+                    onTap: () {
+                      Get.offAndToNamed('/SignUpScreen');
+                    },
+                    child: Text(
+                      'create_account',
+                      style: appTheme.text18.copyWith(
+                          fontWeight: FontWeight.w500, color: appTheme.primary),
+                    ).tr(),
+                  ),
+                ],
+              ),
             ].divide(SizedBox(height: 5.h)),
           ),
         ),
       ),
     );
   }
+}
 
-  Widget _buildFooter() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        TitleText(text: 'i_have_an_account', fontSize: 16, color: Colors.black),
-        GestureDetector(
-          onTap: () {},
-          child: TitleText(text: 'login', fontSize: 18, color: appTheme.primary),
+class SignInButton extends StatelessWidget {
+  SignInButton({super.key});
+  final SignInController signInController = Get.find();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ButtonWidget(
+        showLoadingIndicator: signInController.isLoading.value,
+        onPressed: () {
+          signInController.onPressContinue();
+        },
+        text: tr('login'),
+        options: ButtonOptions(
+          width: 0.6.sw,
+          height: 50.h,
+          padding: EdgeInsetsDirectional.fromSTEB(24.w, 0, 24.w, 0),
+          iconPadding: EdgeInsetsDirectional.zero,
+          color: appTheme.primary,
+          textStyle: appTheme.text18.copyWith(color: Colors.white),
+          elevation: 3,
+          borderSide: BorderSide(
+            color: Colors.transparent,
+            width: 1.w,
+          ),
+          borderRadius: BorderRadius.circular(40.r),
         ),
-      ],
+      ),
     );
   }
 }
@@ -95,13 +140,18 @@ class RemmeberMe extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        TitleText(text: 'remember_me', fontSize: 18, color: Colors.black),
-        Obx(() => Switch(
-          value: signUpController.isRemmberMeActive.value,
-          onChanged: (value) {
-            signUpController.isRemmberMeActive.value = value;
-          },
-        )),
+        Text(
+          'remember_me',
+          style: appTheme.text18.copyWith(fontWeight: FontWeight.normal),
+        ).tr(),
+        Obx(
+          () => Switch(
+            value: signUpController.isRemmberMeActive.value,
+            onChanged: (value) {
+              signUpController.isRemmberMeActive.value = value;
+            },
+          ),
+        ),
       ],
     );
   }
@@ -115,12 +165,17 @@ class SignUpUsingFacebookGoogle extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        TitleText(text: 'or_register_with', fontSize: 14, color: Colors.black),
+        Text(
+          'or_register_with',
+          style: appTheme.text14.copyWith(fontWeight: FontWeight.normal),
+        ).tr(),
         SizedBox(height: 10.h),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/images/facebook.png', width: 40.w, height: 40.h),
+            Image.asset('assets/images/facebook.png',
+                width: 40.w, height: 40.h),
             SizedBox(width: 15.w),
             Image.asset('assets/images/google.png', width: 40.w, height: 40.h),
           ],
@@ -129,73 +184,3 @@ class SignUpUsingFacebookGoogle extends StatelessWidget {
     );
   }
 }
-class TitleText extends StatelessWidget {
-  final String text;
-  final double fontSize;
-  final Color color;
-
-  const TitleText({required this.text, required this.fontSize, required this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: appTheme.text18.withSize(fontSize).withColor(color).withWeight(FontWeight.normal),
-    ).tr();
-  }
-}
-
-class CustomTextField extends StatelessWidget {
-  final String label;
-  final TextEditingController controller;
-  final FormFieldValidator<String> validator;
-
-  const CustomTextField({required this.label, required this.controller, required this.validator});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TitleText(text: label, fontSize: 18, color: Colors.black),
-        customTextField(
-          label: tr(label),
-          controller: controller,
-          validator: validator,
-        ),
-      ],
-    );
-  }
-}
-
-class SignInButton extends StatelessWidget {
-  final SignInController signInController = Get.find();
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: ButtonWidget(
-        showLoadingIndicator: signInController.isLoading.value,
-        onPressed: signInController.onPressContinue,
-        text: tr('login'),
-        options: ButtonOptions(
-          width: 0.6.sw,
-          height: 50.h,
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
-          color: appTheme.primary,
-          textStyle: appTheme.text18.withColor(Colors.white),
-          elevation: 3,
-          borderSide: BorderSide(color: Colors.transparent, width: 1.w),
-          borderRadius: BorderRadius.circular(40.r),
-        ),
-      ),
-    );
-  }
-}
-
-extension TextStyleExtension on TextStyle {
-  TextStyle withColor(Color color) => copyWith(color: color);
-  TextStyle withWeight(FontWeight weight) => copyWith(fontWeight: weight);
-  TextStyle withSize(double size) => copyWith(fontSize: size.sp);
-}
-

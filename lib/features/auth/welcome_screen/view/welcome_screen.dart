@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:maindmate/core/shared/buttons/general_button.dart';
 import 'package:maindmate/core/theme/app_theme.dart';
@@ -13,39 +14,34 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    appTheme=AppTheme.of(context);
+    appTheme = AppTheme.of(context);
     return Scaffold(
       backgroundColor: appTheme.primaryBackground,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 50),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           SizedBox(
-            height: 70,
+            height: 50.h,
           ),
-          Switch(
-              value: AppTheme.themeMode == ThemeMode.dark,
-              onChanged: (val) {
-                AppTheme.toggleThemeMode();
-
-                MyApp.of(context)
-                    .updateThemeMode(); // Make sure to expose updateThemeMode method in MyApp
-                print(AppTheme.themeMode);
-              }),
           Image.asset('assets/images/logo.png'),
           SizedBox(
-            height: 30,
+            height: 30.h,
           ),
-          const Text('مايندمت هو تطبيق رعاية وعلاج الصحة العقلية والنفسية'),
+          Text(
+            'مايندمت هو تطبيق رعاية وعلاج الصحة العقلية والنفسية',
+            style: appTheme.text16,
+            textAlign: TextAlign.center,
+          ),
           BuildPageView(
             controller: controller,
           ),
           // BuildPageIndecator(pageController: controller,),
           SizedBox(
-            height: 100,
+            height: 90.h,
           ),
           ButtonWidget(
             showLoadingIndicator: false,
-            onPressed: ()  {
+            onPressed: () {
               Get.toNamed('/SignInScreen');
             },
             text: ("الدخول كمستخدم"),
@@ -55,7 +51,7 @@ class WelcomeScreen extends StatelessWidget {
               padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
               iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
               color: appTheme.primary,
-              textStyle: appTheme.text18,
+              textStyle: appTheme.text18.copyWith(color: Colors.white),
               elevation: 3,
               borderSide: const BorderSide(
                 color: Colors.transparent,
@@ -69,7 +65,9 @@ class WelcomeScreen extends StatelessWidget {
           ),
           ButtonWidget(
             showLoadingIndicator: false,
-            onPressed: () async {},
+            onPressed: () {
+              Get.offAllNamed('/ExperienceOfOthersScreen');
+            },
             text: ("الدخول كزائر"),
             options: ButtonOptions(
               width: MediaQuery.sizeOf(context).width * 0.6,
@@ -77,9 +75,7 @@ class WelcomeScreen extends StatelessWidget {
               padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
               iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
               color: appTheme.secondary,
-              textStyle: appTheme
-                  .text18
-                  .copyWith(color: appTheme.primaryBtnText),
+              textStyle: appTheme.text18.copyWith(color: Colors.white),
               elevation: 3,
               borderSide: const BorderSide(
                 color: Colors.transparent,
