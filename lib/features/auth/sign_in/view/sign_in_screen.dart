@@ -43,12 +43,12 @@ class SignInScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 20.h),
-              Text(
-                'enter_email_or_phone',
-                style: appTheme.text18.copyWith(fontWeight: FontWeight.normal),
+             Text(
+                'enter_email',
+                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
               ).tr(),
               customTextField(
-                label: tr('email_or_phone'),
+                label: tr('email'),
                 controller: signInController.emailOrPhoneController,
                 validator: (val) {
                   return emailValidation(val);
@@ -106,25 +106,27 @@ class SignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ButtonWidget(
-        showLoadingIndicator: signInController.isLoading.value,
-        onPressed: () {
-          signInController.onPressContinue();
-        },
-        text: tr('login'),
-        options: ButtonOptions(
-          width: 0.6.sw,
-          height: 50.h,
-          padding: EdgeInsetsDirectional.fromSTEB(24.w, 0, 24.w, 0),
-          iconPadding: EdgeInsetsDirectional.zero,
-          color: appTheme.primary,
-          textStyle: appTheme.text18.copyWith(color: Colors.white),
-          elevation: 3,
-          borderSide: BorderSide(
-            color: Colors.transparent,
-            width: 1.w,
+      child: Obx(
+        ()=> ButtonWidget(
+          showLoadingIndicator: signInController.isLoading.value,
+          onPressed: () {
+            signInController.onPressContinue();
+          },
+          text: tr('login'),
+          options: ButtonOptions(
+            width: 0.6.sw,
+            height: 50.h,
+            padding: EdgeInsetsDirectional.fromSTEB(24.w, 0, 24.w, 0),
+            iconPadding: EdgeInsetsDirectional.zero,
+            color: appTheme.primary,
+            textStyle: appTheme.text18.copyWith(color: Colors.white),
+            elevation: 3,
+            borderSide: BorderSide(
+              color: Colors.transparent,
+              width: 1.w,
+            ),
+            borderRadius: BorderRadius.circular(40.r),
           ),
-          borderRadius: BorderRadius.circular(40.r),
         ),
       ),
     );

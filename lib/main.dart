@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:maindmate/core/navigation/routes.dart';
 import 'package:maindmate/core/services/connectivity_service.dart';
 import 'package:maindmate/core/services/responsive.dart';
+import 'package:maindmate/core/services/store_service.dart';
 import 'package:maindmate/core/theme/app_theme.dart';
+StoreService storeService = StoreService();
 
 late AppTheme appTheme;
 void main() async {

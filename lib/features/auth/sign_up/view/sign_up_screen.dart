@@ -205,25 +205,27 @@ class SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ButtonWidget(
-        showLoadingIndicator: signUpController.isLoading.value,
-        onPressed: () {
-          signUpController.onPressContinue();
-        },
-        text: tr('create_account'),
-        options: ButtonOptions(
-          width: MediaQuery.sizeOf(context).width * 0.6,
-          height: 50,
-          padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
-          iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-          color: appTheme.primary,
-          textStyle: appTheme.text18.copyWith(color: Colors.white),
-          elevation: 3,
-          borderSide: const BorderSide(
-            color: Colors.transparent,
-            width: 1,
+      child: Obx(
+        ()=> ButtonWidget(
+          showLoadingIndicator: signUpController.isLoading.value,
+          onPressed: () {
+            signUpController.onPressContinue();
+          },
+          text: tr('create_account'),
+          options: ButtonOptions(
+            width: MediaQuery.sizeOf(context).width * 0.6,
+            height: 50,
+            padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+            iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+            color: appTheme.primary,
+            textStyle: appTheme.text18.copyWith(color: Colors.white),
+            elevation: 3,
+            borderSide: const BorderSide(
+              color: Colors.transparent,
+              width: 1,
+            ),
+            borderRadius: BorderRadius.circular(12),
           ),
-          borderRadius: BorderRadius.circular(12),
         ),
       ),
     );

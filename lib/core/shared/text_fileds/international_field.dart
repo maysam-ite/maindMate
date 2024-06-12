@@ -5,19 +5,23 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import '../../../../main.dart'; // Make sure this import is correct to access appTheme
 
 Widget internationalField(TextEditingController controller) {
+  bool isInputValid = false;
   return InternationalPhoneNumberInput(
     onInputChanged: (PhoneNumber number) {
-      print(number.phoneNumber); // This is the complete phone number
     },
     textFieldController: controller,
     onInputValidated: (bool value) {
-      print(value ? 'valid' : 'invalid'); // Validation status
+      isInputValid = value;
     },
     selectorConfig: const SelectorConfig(
       trailingSpace: false,
       selectorType: PhoneInputSelectorType.DIALOG,
     ),
+    searchBoxDecoration:InputDecoration(hintText: tr('country_search')) ,
     locale: 'ar',
+    validator: (String? g) {
+      return isInputValid ? null : tr("invalid_phone_number");
+    },
     textAlign:
         Get.locale == const Locale('ar') ? TextAlign.right : TextAlign.left,
     ignoreBlank: false,
@@ -70,8 +74,5 @@ Widget internationalField(TextEditingController controller) {
       fillColor: appTheme.primaryBackground,
       contentPadding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 16),
     ),
-    onSaved: (PhoneNumber number) {
-      print('On Saved: $number');
-    },
   );
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:maindmate/features/experience/experience_of_others/view/experience_of_others_screen.dart';
 
 class MainBottomNavigationController extends GetxController {
   @override
@@ -23,7 +24,7 @@ class MainBottomNavigationController extends GetxController {
       // Initialize the screen if it hasn't been initialized yet
       switch (index) {
         case 0:
-          lazyLoadedScreens[index] = SizedBox();
+          lazyLoadedScreens[index] = const ExperienceOfOthersScreen();
           break;
         case 1:
           lazyLoadedScreens[index] = SizedBox();

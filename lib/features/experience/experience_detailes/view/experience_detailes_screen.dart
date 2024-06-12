@@ -15,13 +15,8 @@ class ExperienceDetailesScreen extends StatelessWidget {
         title: const Center(
           child: Text('Centered Title'),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {},
-          ),
-        ],
-      ),
+        centerTitle:true
+        ),
       body: SingleChildScrollView(
         child: Column(
           children: [

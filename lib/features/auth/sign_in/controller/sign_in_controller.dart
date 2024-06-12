@@ -6,6 +6,7 @@ import 'package:maindmate/core/server/helper_api.dart';
 import 'package:maindmate/core/server/parse_response.dart';
 import 'package:maindmate/core/server/server_config.dart';
 import 'package:maindmate/core/shared/widgets/snackbar_manager.dart';
+import 'package:maindmate/main.dart';
 
 class SignInController extends GetxController {
   RxBool isRemmberMeActive = false.obs;
@@ -32,7 +33,19 @@ class SignInController extends GetxController {
       if (handlingResponse is ErrorResponse) {
         SnackbarManager.showSnackbar(
             getMessageFromStatus(handlingResponse.status!));
-      } else {}
+      } else {
+        whenResponseSuccess(handlingResponse);
+      }
     }
+  }
+
+  whenResponseSuccess(handlingResponse) {
+    if (isRemmberMeActive.value) {
+      
+      String token = handlingResponse['token'];
+      storeService.createString('token', token);
+      print(token);
+    }
+    // Get.offAllNamed('/MainBottomNavigationBarWidget');
   }
 }

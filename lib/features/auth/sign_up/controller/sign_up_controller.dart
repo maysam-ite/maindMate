@@ -46,7 +46,16 @@ class SignUpController extends GetxController {
         // isLoading.value = false;
         SnackbarManager.showSnackbar(
             handlingResponse.validationErrors!.getAllMessages()[0], backgroundColor: appTheme.error);
-      } else {}
+      } else {
+        whenResponseSuccess(handlingResponse);
+      }
     }
   }
+        whenResponseSuccess(handlingResponse){
+               if(isRemmberMeActive.value){
+                String token=handlingResponse['token'];
+                storeService.createString('token',token);
+               }
+               Get.offAllNamed('/MainBottomNavigationBarWidget');
+        }
 }
