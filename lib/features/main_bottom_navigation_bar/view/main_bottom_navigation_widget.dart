@@ -1,9 +1,11 @@
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:maindmate/features/main_bottom_navigation_bar/view/main_bottom_navigation_icon.dart';
 import '../controller/main_bottom_navigation_controller.dart';
 import '../../../main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:easy_localization/easy_localization.dart';
 
 class MainBottomNavigationBarWidget extends StatelessWidget {
   MainBottomNavigationBarWidget({super.key});
@@ -32,82 +34,71 @@ class MainBottomNavigationBarWidget extends StatelessWidget {
           highlightColor: Colors.transparent,
         ),
         child: Obx(() => Scaffold(
-              body: mainBottomNavigationController
-                  .getScreen(mainBottomNavigationController.selectedPage.value),
-              bottomNavigationBar: BottomNavigationBar(
-                currentIndex: mainBottomNavigationController.selectedPage.value,
-                onTap: (i) => mainBottomNavigationController.changePage(i),
-                backgroundColor: appTheme.secondaryBackground,
-                selectedItemColor: appTheme.primary,
-                unselectedItemColor: appTheme.accent1,
-                showSelectedLabels: true,
-                showUnselectedLabels: false,
-                type: BottomNavigationBarType.fixed,
-                items: <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(
-                    icon: const Icon(
-                      Icons.home_outlined,
-                      size: 24.0,
-                    ),
-                    activeIcon: const Icon(
-                      Icons.home,
-                      size: 24.0,
-                    ),
-                    label: tr("Home"),
-                    tooltip: '',
+            extendBody: true,
+            body: mainBottomNavigationController
+                .getScreen(mainBottomNavigationController.selectedPage.value),
+            bottomNavigationBar: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  height: 40.h,
+                  margin: const EdgeInsets.symmetric(horizontal: 5),
+                  decoration: BoxDecoration(
+                      color: appTheme.primaryBackground,
+                      borderRadius: BorderRadius.circular(15)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      iconPagesButton(
+                          context: context,
+                          icon: Icons.person_outline,
+                          activeIcon: Icons.person,
+                          index: 4,
+                          currentPage:
+                              mainBottomNavigationController.selectedPage),
+                      iconPagesButton(
+                          context: context,
+                          icon: Icons.groups_outlined,
+                          activeIcon: Icons.groups,
+                          index: 3,
+                          currentPage:
+                              mainBottomNavigationController.selectedPage),
+                      SizedBox(
+                        width: 50.w,
+                      ),
+                      iconPagesButton(
+                          context: context,
+                          icon: Icons.chat_outlined,
+                          activeIcon: Icons.chat,
+                          index: 1,
+                          currentPage:
+                              mainBottomNavigationController.selectedPage),
+                      iconPagesButton(
+                          context: context,
+                          icon: Icons.home_outlined,
+                          activeIcon: Icons.home,
+                          index: 0,
+                          currentPage:
+                              mainBottomNavigationController.selectedPage)
+                    ],
                   ),
-                  BottomNavigationBarItem(
-                    icon: const Icon(
-                      Icons.search,
-                      size: 20.0,
-                    ),
-                    activeIcon: const Icon(
-                      Icons.search_sharp,
-                      size: 24.0,
-                    ),
-                    label: tr("search"),
-                    tooltip: '',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(
-                      Icons.add_circle_outlined,
-                      size: 40,
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: GestureDetector(
+                    onTap: () {
+                      mainBottomNavigationController.changePage(2);
+                    },
+                    child: const Icon(
+                      Icons.add_circle,
+                      size: 60,
                       color: Colors.blue,
                     ),
-                    activeIcon: const Icon(
-                      Icons.slow_motion_video,
-                      size: 24.0,
-                    ),
-                    label: tr("Reels"),
-                    tooltip: '',
                   ),
-                  BottomNavigationBarItem(
-                    icon: const Icon(
-                      Icons.auto_awesome_outlined,
-                      size: 24.0,
-                    ),
-                    activeIcon: const Icon(
-                      Icons.auto_awesome_sharp,
-                      size: 24.0,
-                    ),
-                    label: tr("Customize"),
-                    tooltip: '',
-                  ),
-                  BottomNavigationBarItem(
-                    icon: const Icon(
-                      Icons.account_circle_outlined,
-                      size: 24.0,
-                    ),
-                    activeIcon: const Icon(
-                      Icons.account_circle,
-                      size: 24.0,
-                    ),
-                    label: tr("Profile"),
-                    tooltip: '',
-                  )
-                ],
-              ),
-            )),
+                )
+              ],
+            ))),
       ),
     );
   }

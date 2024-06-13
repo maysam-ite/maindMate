@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:maindmate/features/Consultations/book_a_consultation/view/book_a_consultation_screen.dart';
 import 'package:maindmate/features/experience/experience_of_others/view/experience_of_others_screen.dart';
 
 class MainBottomNavigationController extends GetxController {
@@ -27,16 +28,16 @@ class MainBottomNavigationController extends GetxController {
           lazyLoadedScreens[index] = const ExperienceOfOthersScreen();
           break;
         case 1:
-          lazyLoadedScreens[index] = SizedBox();
+          lazyLoadedScreens[index] = const BookAConsultationScreen();
           break;
         case 2:
-          lazyLoadedScreens[index] = SizedBox();
+          lazyLoadedScreens[index] = const SizedBox();
           break;
         case 3:
-          lazyLoadedScreens[index] = true ? const SizedBox() : SizedBox();
+          lazyLoadedScreens[index] = true ? const SizedBox() : const SizedBox();
           break;
         case 4:
-          lazyLoadedScreens[index] = true ? const SizedBox() : SizedBox();
+          lazyLoadedScreens[index] = true ? const SizedBox() : const SizedBox();
           break;
       }
     }

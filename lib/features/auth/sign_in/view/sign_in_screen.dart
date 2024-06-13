@@ -6,7 +6,6 @@ import 'package:maindmate/core/services/divide_widgets.dart';
 import 'package:maindmate/core/shared/buttons/general_button.dart';
 import 'package:maindmate/core/shared/functions/validation/email_validation.dart';
 import 'package:maindmate/core/shared/functions/validation/password_validation.dart';
-import 'package:maindmate/core/shared/functions/validation/phone_validation.dart';
 import 'package:maindmate/core/shared/text_fileds/custom_text_filed.dart';
 import 'package:maindmate/features/auth/sign_in/controller/sign_in_controller.dart';
 import 'package:maindmate/main.dart';
@@ -43,7 +42,7 @@ class SignInScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 20.h),
-             Text(
+              Text(
                 'enter_email',
                 style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
               ).tr(),
@@ -107,7 +106,7 @@ class SignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Obx(
-        ()=> ButtonWidget(
+        () => ButtonWidget(
           showLoadingIndicator: signInController.isLoading.value,
           onPressed: () {
             signInController.onPressContinue();

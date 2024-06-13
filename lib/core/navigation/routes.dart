@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:maindmate/features/Consultations/book_a_consultation/controller/book_a_consultation_binding.dart';
 import 'package:maindmate/features/Consultations/book_a_consultation/view/book_a_consultation_screen.dart';
+import 'package:maindmate/features/Consultations/book_now/controller/book_now_binding.dart';
+import 'package:maindmate/features/Consultations/book_now/view/book_now_screen.dart';
 import 'package:maindmate/features/auth/sign_in/controller/sign_in_binding.dart';
 import 'package:maindmate/features/auth/sign_in/view/sign_in_screen.dart';
 import 'package:maindmate/features/auth/sign_up/controller/sing_up_binding.dart';
@@ -32,14 +34,18 @@ appRoutes() => [
           binding: SignInBinding()),
       GetPage(
           name: '/ExperienceOfOthersScreen',
-          page: () => ExperienceOfOthersScreen(),
+          page: () => const ExperienceOfOthersScreen(),
           binding: ExperienceOfOThersBinding()),
       GetPage(
           name: '/BookAConsultationScreen',
-          page: () => BookAConsultationScreen(),
+          page: () => const BookAConsultationScreen(),
           binding: BookAConsultationBinding()),
       GetPage(
+          name: '/BookNowScreen',
+          page: () => const BookNowScreen(),
+          binding: BookNowBinding()),
+      GetPage(
           name: '/ExperienceDetailesScreen',
-          page: () => ExperienceDetailesScreen(),
+          page: () => const ExperienceDetailesScreen(),
           binding: ExperienceDetailesBinding())
     ];

@@ -7,6 +7,7 @@ import 'package:maindmate/core/services/connectivity_service.dart';
 import 'package:maindmate/core/services/responsive.dart';
 import 'package:maindmate/core/services/store_service.dart';
 import 'package:maindmate/core/theme/app_theme.dart';
+
 StoreService storeService = StoreService();
 
 late AppTheme appTheme;
@@ -79,7 +80,7 @@ class _MyAppState extends State<MyApp> {
         themeMode: _themeMode,
         debugShowCheckedModeBanner: false,
         getPages: appRoutes(),
-        initialRoute: '/WelcomeScreen',
+        initialRoute: '/MainBottomNavigationBarWidget',
       ),
     );
   }

@@ -10,13 +10,19 @@ class ExperienceDetailesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        surfaceTintColor: appTheme.primaryBackground,
-        leading: Image.asset('assets/images/Component 2 – 2.png'),
-        title: const Center(
-          child: Text('Centered Title'),
-        ),
-        centerTitle:true
-        ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset(
+                'assets/images/Component 2 – 2.png',
+                width: 30,
+                height: 30,
+              ),
+            ),
+          ],
+          title: Text('Centered Title'),
+          surfaceTintColor: appTheme.primaryBackground,
+          centerTitle: true),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -29,7 +35,7 @@ class ExperienceDetailesScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            PostHeader()
+            const PostHeader()
           ],
         ),
       ),
@@ -53,7 +59,7 @@ class PostHeader extends StatelessWidget {
                 blurRadius: 5)
           ]),
       margin: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: Column(
         children: [
           Row(
@@ -61,7 +67,7 @@ class PostHeader extends StatelessWidget {
               Container(
                 width: 33.w,
                 height: 33.h,
-                padding: EdgeInsets.all(2),
+                padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(color: Colors.blue)),
@@ -82,22 +88,22 @@ class PostHeader extends StatelessWidget {
                   ),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               Container(
                 width: 38.w,
                 height: 38.h,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.sp),
-                    color: appTheme.lineColor),
-                child: Icon(Icons.star_border_outlined),
+                    color: appTheme.lineColor.withOpacity(0.5)),
+                child: const Icon(Icons.star_border_outlined),
               ),
               Container(
                 width: 38.w,
                 height: 38.h,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.sp),
-                    color: appTheme.lineColor),
-                child: Icon(Icons.star_border_outlined),
+                    color: appTheme.lineColor.withOpacity(0.5)),
+                child: const Icon(Icons.star_border_outlined),
               )
             ].divide(SizedBox(
               width: 10.w,

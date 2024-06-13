@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:maindmate/core/services/divide_widgets.dart';
+import 'package:maindmate/core/shared/widgets/general_app_bar.dart';
 import 'package:maindmate/features/Consultations/book_a_consultation/view/widgets/book_a_consiltation_widget.dart';
-import 'package:maindmate/main.dart';
 
 class BookAConsultationScreen extends StatelessWidget {
   const BookAConsultationScreen({super.key});
@@ -8,22 +9,16 @@ class BookAConsultationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        surfaceTintColor: appTheme.primaryBackground,
-        leading: Image.asset('assets/images/Component 2 – 2.png'),
-        title: const Center(
-          child: Text('Centered Title'),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {},
-          ),
-        ],
-      ),
+      appBar: generalAppBar(),
       body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         child: Column(
-          children: [BookAConsultationWidget()],
+          children: [
+            const BookAConsultationWidget(),
+            const BookAConsultationWidget()
+          ].divide(const SizedBox(
+            height: 10,
+          )),
         ),
       ),
     );

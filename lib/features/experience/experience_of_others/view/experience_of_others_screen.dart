@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:maindmate/core/services/divide_widgets.dart';
 import 'package:maindmate/core/shared/buttons/general_button.dart';
-import 'package:maindmate/features/experience/experience_of_others/view/widgets/experience_of_others_Widget.dart';
+import 'package:maindmate/features/experience/experience_of_others/view/widgets/experience_of_others_widget.dart';
 import 'package:maindmate/main.dart';
 
 class ExperienceOfOthersScreen extends StatelessWidget {

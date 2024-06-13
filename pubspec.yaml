@@ -43,6 +43,7 @@ dependencies:
   flutter_screenutil: ^5.0.0
   connectivity_plus: ^5.0.2
   intl_phone_number_input: ^0.7.4
+  http: 
 
 dev_dependencies:
   flutter_test:

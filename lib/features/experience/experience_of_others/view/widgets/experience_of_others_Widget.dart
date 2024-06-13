@@ -23,8 +23,8 @@ class ExperienceOfOthersWidget extends StatelessWidget {
                   spreadRadius: 1,
                   blurRadius: 5)
             ]),
-        padding: EdgeInsets.all(10),
-        child: Column(
+        padding: const EdgeInsets.all(10),
+        child: const Column(
           children: [PostHeader(), PostContent()],
         ),
       ),
@@ -42,7 +42,7 @@ class PostHeader extends StatelessWidget {
         Container(
           width: 33.w,
           height: 33.h,
-          padding: EdgeInsets.all(2),
+          padding: const EdgeInsets.all(2),
           decoration: BoxDecoration(
               shape: BoxShape.circle, border: Border.all(color: Colors.blue)),
           child: Image.asset('assets/images/Component 2 – 2.png'),
@@ -62,22 +62,22 @@ class PostHeader extends StatelessWidget {
             ),
           ],
         ),
-        Spacer(),
+        const Spacer(),
         Container(
           width: 38.w,
           height: 38.h,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.sp),
-              color: appTheme.lineColor),
-          child: Icon(Icons.star_border_outlined),
+              color: appTheme.lineColor.withOpacity(0.5)),
+          child: const Icon(Icons.star_border_outlined),
         ),
         Container(
           width: 38.w,
           height: 38.h,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.sp),
-              color: appTheme.lineColor),
-          child: Icon(Icons.star_border_outlined),
+              color: appTheme.lineColor.withOpacity(0.5)),
+          child: const Icon(Icons.star_border_outlined),
         )
       ].divide(SizedBox(
         width: 10.w,
@@ -96,7 +96,7 @@ class PostContent extends StatelessWidget {
       children: [
         Text(
           "يسنتلنتلاناشلالنلالنتاشيلمنىلاشاضتشنلال ع لاعلاع اعااضلنال ضعالضعلاضعلاضع لاضعلاضلاضعلا ضلضعلاضعلا علاعلاضعلاضخعلاعلاعل اضعلاضلعهاضلعاضعهلا قل قلضعلاضعلعقال عهضالعقللاعاضقعضعق",
-          style: appTheme.text18,
+          style: appTheme.text18.copyWith(fontSize: 16),
         ),
         Container(
           height: 195.h,

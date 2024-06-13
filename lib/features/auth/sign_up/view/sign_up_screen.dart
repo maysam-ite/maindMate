@@ -4,13 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:maindmate/core/services/divide_widgets.dart';
 import 'package:maindmate/core/shared/buttons/general_button.dart';
+import 'package:maindmate/core/shared/functions/validation/email_validation.dart';
 import 'package:maindmate/core/shared/functions/validation/name_validation.dart';
 import 'package:maindmate/core/shared/functions/validation/password_validation.dart';
-import 'package:maindmate/core/shared/functions/validation/phone_validation.dart';
 import 'package:maindmate/core/shared/text_fileds/custom_text_filed.dart';
 import 'package:maindmate/core/shared/text_fileds/international_field.dart';
 import 'package:maindmate/features/auth/sign_up/controller/sign_up_controller.dart';
-import 'package:maindmate/features/auth/sign_up/view/widgets/select_gender.dart';
 import 'package:maindmate/main.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -57,7 +56,7 @@ class SignUpScreen extends StatelessWidget {
                   label: tr('email'),
                   controller: signUpController.emailController,
                   validator: (val) {
-                    // return phoneValidation(val);
+                    return emailValidation(val);
                   }),
               Text(
                 'enter_phone',
@@ -206,7 +205,7 @@ class SignUpButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Obx(
-        ()=> ButtonWidget(
+        () => ButtonWidget(
           showLoadingIndicator: signUpController.isLoading.value,
           onPressed: () {
             signUpController.onPressContinue();
