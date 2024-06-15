@@ -158,7 +158,7 @@ class MobileTypography extends Typography {
   TextStyle get text14 => TextStyle(
         fontFamily: 'NeoSans',
         color: theme.primaryText,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.normal,
         fontSize: 14.0.sp,
       );
   TextStyle get text16 => TextStyle(

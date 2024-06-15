@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:maindmate/core/services/divide_widgets.dart';
 import 'package:maindmate/core/shared/buttons/general_button.dart';
 import 'package:maindmate/core/shared/widgets/general_app_bar.dart';
@@ -44,7 +45,7 @@ class BookNowButton extends StatelessWidget {
       child: ButtonWidget(
         // showLoadingIndicator: signUpController.isLoading.value,
         onPressed: () {
-          // signUpController.onPressContinue();
+          Get.toNamed('/AddPaymentCardScreen');
         },
         text: tr('book_now'),
         options: ButtonOptions(

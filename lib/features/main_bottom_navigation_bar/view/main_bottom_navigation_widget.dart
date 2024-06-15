@@ -42,7 +42,7 @@ class MainBottomNavigationBarWidget extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  height: 40.h,
+                  height: 50.h,
                   margin: const EdgeInsets.symmetric(horizontal: 5),
                   decoration: BoxDecoration(
                       color: appTheme.primaryBackground,

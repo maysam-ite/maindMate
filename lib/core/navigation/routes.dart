@@ -12,8 +12,14 @@ import 'package:maindmate/features/experience/experience_detailes/controller/exp
 import 'package:maindmate/features/experience/experience_detailes/view/experience_detailes_screen.dart';
 import 'package:maindmate/features/experience/experience_of_others/controller/experience_of_others_binding.dart';
 import 'package:maindmate/features/experience/experience_of_others/view/experience_of_others_screen.dart';
+import 'package:maindmate/features/group_therapy/select_group_therapy/controller/select_group_therapy_binding.dart';
+import 'package:maindmate/features/group_therapy/select_group_therapy/view/select_group_therapy_screen.dart';
 import 'package:maindmate/features/main_bottom_navigation_bar/controller/main_bottom_navigation_binding.dart';
 import 'package:maindmate/features/main_bottom_navigation_bar/view/main_bottom_navigation_widget.dart';
+import 'package:maindmate/features/payment/add_payment_card/controller/add_payment_card_binding.dart';
+import 'package:maindmate/features/payment/add_payment_card/view/add_payment_card_screen.dart';
+import 'package:maindmate/features/payment/confirm_payment/controller/confirm_payment_binding.dart';
+import 'package:maindmate/features/payment/confirm_payment/view/confirm_payment_view.dart';
 
 appRoutes() => [
       GetPage(
@@ -47,5 +53,17 @@ appRoutes() => [
       GetPage(
           name: '/ExperienceDetailesScreen',
           page: () => const ExperienceDetailesScreen(),
-          binding: ExperienceDetailesBinding())
+          binding: ExperienceDetailesBinding()),
+      GetPage(
+          name: '/SelectGroupTherapyScreen',
+          page: () => const SelectGroupTherapyScreen(),
+          binding: SelectGroupTherapyBinding()),
+      GetPage(
+          name: '/AddPaymentCardScreen',
+          page: () => const AddPaymentCardScreen(),
+          binding: AddPaymentCardBinding()),
+      GetPage(
+          name: '/ConfirmPaymentScreen',
+          page: () => const ConfirmPaymentScreen(),
+          binding: ConfirmPaymentBinding())
     ];
