@@ -81,6 +81,7 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         getPages: appRoutes(),
         initialRoute: '/MainBottomNavigationBarWidget',
+        // initialRoute: '/',
       ),
     );
   }

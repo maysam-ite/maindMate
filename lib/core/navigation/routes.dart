@@ -23,7 +23,7 @@ import 'package:maindmate/features/payment/confirm_payment/view/confirm_payment_
 
 appRoutes() => [
       GetPage(
-        name: '/WelcomeScreen',
+        name: '/',
         page: () => WelcomeScreen(),
       ),
       GetPage(
@@ -40,7 +40,7 @@ appRoutes() => [
           binding: SignInBinding()),
       GetPage(
           name: '/StoriesScreen',
-          page: () =>  StoriesScreen(),
+          page: () => StoriesScreen(),
           binding: StoriesBinding()),
       GetPage(
           name: '/BookAConsultationScreen',

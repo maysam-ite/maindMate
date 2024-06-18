@@ -4,7 +4,7 @@ import 'package:maindmate/main.dart';
 generalAppBar() {
   return AppBar(
     surfaceTintColor: appTheme.primaryBackground,
-    leading: Image.asset('assets/images/Component 2 – 2.png'),
+    leading: Image.asset('assets/images/Component.png'),
     title: const Center(
       child: Text('Centered Title'),
     ),

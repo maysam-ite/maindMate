@@ -14,7 +14,7 @@ class StoryDetailesScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.asset(
-                'assets/images/Component 2 – 2.png',
+                'assets/images/Component.png',
                 width: 30,
                 height: 30,
               ),
@@ -71,7 +71,7 @@ class PostHeader extends StatelessWidget {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(color: Colors.blue)),
-                child: Image.asset('assets/images/Component 2 – 2.png'),
+                child: Image.asset('assets/images/Component.png'),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

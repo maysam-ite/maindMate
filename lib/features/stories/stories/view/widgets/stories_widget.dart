@@ -45,7 +45,7 @@ class PostHeader extends StatelessWidget {
           padding: const EdgeInsets.all(2),
           decoration: BoxDecoration(
               shape: BoxShape.circle, border: Border.all(color: Colors.blue)),
-          child: Image.asset('assets/images/Component 2 – 2.png'),
+          child: Image.asset('assets/images/Component.png'),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -89,7 +89,7 @@ class UserPhoto extends StatelessWidget {
               border: Border.all(width: 2, color: appTheme.lineColor),
               shape: BoxShape.circle),
           child: Image.asset(
-            'assets/images/Component 2 – 2.png',
+            'assets/images/Component.png',
             fit: BoxFit.fill,
           ),
         ),

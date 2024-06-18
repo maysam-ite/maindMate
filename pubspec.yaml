@@ -90,7 +90,7 @@ flutter:
   fonts:
     - family: NeoSans
       fonts:
-        - asset: assets/fonts/alfont_com_NeoSansW23-Regular.ttf
+        - asset: assets/fonts/Neo Sans Std Light.otf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

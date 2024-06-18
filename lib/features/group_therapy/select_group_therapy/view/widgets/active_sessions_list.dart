@@ -229,7 +229,7 @@ class UserPhoto extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           child: Image.asset(
-            'assets/images/Component 2 – 2.png',
+            'assets/images/Component.png',
             fit: BoxFit.fill,
           ),
         ),

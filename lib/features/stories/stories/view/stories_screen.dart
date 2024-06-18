@@ -18,7 +18,7 @@ class StoriesScreen extends StatelessWidget {
       backgroundColor: appTheme.primaryBackground,
       appBar: AppBar(
         surfaceTintColor: appTheme.primaryBackground,
-        leading: Image.asset('assets/images/Component 2 – 2.png'),
+        leading: Image.asset('assets/images/Component.png'),
         title: const Center(
           child: Text('Centered Title'),
         ),
@@ -42,23 +42,24 @@ class StoriesScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Obx(
-        () => storiesController.isLoading.value
-            ? buildLoadingStoriesList()
-            : SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  children:
-                      [...List.generate(3, (index) => const StoriesWidget())]
-                          .divide(SizedBox(
-                            height: 15.h,
-                          ))
-                          .addToStart(SizedBox(
-                            height: 15.h,
-                          )),
-                ),
-              ),
+      body:
+          //  Obx(
+          //   () => storiesController.isLoading.value
+          //       ? buildLoadingStoriesList()
+          // :
+          SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [...List.generate(3, (index) => const StoriesWidget())]
+              .divide(SizedBox(
+                height: 15.h,
+              ))
+              .addToStart(SizedBox(
+                height: 15.h,
+              )),
+        ),
       ),
+      // ),
     );
   }
 }
