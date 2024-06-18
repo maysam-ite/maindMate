@@ -16,6 +16,7 @@ Widget customTextField(
     child: TextFormField(
       keyboardType: keyboardType,
       controller: controller,
+      
       obscureText: isPassWordVisible ?? false,
       decoration: InputDecoration(
         hoverColor: appTheme.secondaryBackground,
@@ -26,6 +27,8 @@ Widget customTextField(
         // labelText: label,
 
         hintText: label,
+        
+         
         labelStyle: appTheme.text16,
         hintStyle: appTheme.text16,
         enabledBorder: OutlineInputBorder(

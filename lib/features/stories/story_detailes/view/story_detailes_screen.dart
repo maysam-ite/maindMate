@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:maindmate/core/services/divide_widgets.dart';
 import 'package:maindmate/main.dart';
 
-class ExperienceDetailesScreen extends StatelessWidget {
-  const ExperienceDetailesScreen({super.key});
+class StoryDetailesScreen extends StatelessWidget {
+  const StoryDetailesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

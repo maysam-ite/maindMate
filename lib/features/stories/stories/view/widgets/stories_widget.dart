@@ -4,14 +4,14 @@ import 'package:get/get.dart';
 import 'package:maindmate/core/services/divide_widgets.dart';
 import 'package:maindmate/main.dart';
 
-class ExperienceOfOthersWidget extends StatelessWidget {
-  const ExperienceOfOthersWidget({super.key});
+class StoriesWidget extends StatelessWidget {
+  const StoriesWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed('/ExperienceDetailesScreen');
+        Get.toNamed('/StoryDetailesScreen');
       },
       child: Container(
         width: 382.w,

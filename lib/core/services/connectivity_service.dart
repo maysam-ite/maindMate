@@ -40,16 +40,17 @@ class ConnectivityService extends GetxService {
           SnackbarManager.showSnackbar(
             "internet connected.",
             icon: Icon(Icons.wifi_off_outlined, color: appTheme.primaryText),
-            backgroundColor: appTheme.primaryBackground,
+            backgroundColor: appTheme.primaryText,
           );
 
           // Optional: Uncomment and adjust SnackbarManager to show a snackbar here
         } else {
           // When connectivity is lost
+          print("the snackbar show");
           SnackbarManager.showSnackbar(
             "No internet connection.",
             icon: Icon(Icons.wifi_off_outlined, color: appTheme.primaryText),
-            backgroundColor: appTheme.primaryBackground,
+            backgroundColor: appTheme.primaryText,
           );
 
           // Optional: Uncomment and adjust SnackbarManager to show a snackbar here

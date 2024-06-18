@@ -8,10 +8,10 @@ import 'package:maindmate/features/auth/sign_in/view/sign_in_screen.dart';
 import 'package:maindmate/features/auth/sign_up/controller/sing_up_binding.dart';
 import 'package:maindmate/features/auth/sign_up/view/sign_up_screen.dart';
 import 'package:maindmate/features/auth/welcome_screen/view/welcome_screen.dart';
-import 'package:maindmate/features/experience/experience_detailes/controller/experience_detailes_binding.dart';
-import 'package:maindmate/features/experience/experience_detailes/view/experience_detailes_screen.dart';
-import 'package:maindmate/features/experience/experience_of_others/controller/experience_of_others_binding.dart';
-import 'package:maindmate/features/experience/experience_of_others/view/experience_of_others_screen.dart';
+import 'package:maindmate/features/stories/story_detailes/controller/story_detailes_binding.dart';
+import 'package:maindmate/features/stories/story_detailes/view/story_detailes_screen.dart';
+import 'package:maindmate/features/stories/stories/controller/stories_binding.dart';
+import 'package:maindmate/features/stories/stories/view/stories_screen.dart';
 import 'package:maindmate/features/group_therapy/select_group_therapy/controller/select_group_therapy_binding.dart';
 import 'package:maindmate/features/group_therapy/select_group_therapy/view/select_group_therapy_screen.dart';
 import 'package:maindmate/features/main_bottom_navigation_bar/controller/main_bottom_navigation_binding.dart';
@@ -39,9 +39,9 @@ appRoutes() => [
           page: () => SignInScreen(),
           binding: SignInBinding()),
       GetPage(
-          name: '/ExperienceOfOthersScreen',
-          page: () => const ExperienceOfOthersScreen(),
-          binding: ExperienceOfOThersBinding()),
+          name: '/StoriesScreen',
+          page: () =>  StoriesScreen(),
+          binding: StoriesBinding()),
       GetPage(
           name: '/BookAConsultationScreen',
           page: () => const BookAConsultationScreen(),
@@ -51,8 +51,8 @@ appRoutes() => [
           page: () => const BookNowScreen(),
           binding: BookNowBinding()),
       GetPage(
-          name: '/ExperienceDetailesScreen',
-          page: () => const ExperienceDetailesScreen(),
+          name: '/StoryDetailesScreen',
+          page: () => const StoryDetailesScreen(),
           binding: ExperienceDetailesBinding()),
       GetPage(
           name: '/SelectGroupTherapyScreen',

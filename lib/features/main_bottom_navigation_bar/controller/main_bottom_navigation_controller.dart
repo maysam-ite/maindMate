@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:maindmate/features/Consultations/book_a_consultation/view/book_a_consultation_screen.dart';
-import 'package:maindmate/features/experience/experience_of_others/view/experience_of_others_screen.dart';
+import 'package:maindmate/features/stories/add_story/view/add_story_screen.dart';
+import 'package:maindmate/features/stories/stories/view/stories_screen.dart';
 import 'package:maindmate/features/group_therapy/select_group_therapy/view/select_group_therapy_screen.dart';
 
 class MainBottomNavigationController extends GetxController {
@@ -26,13 +27,13 @@ class MainBottomNavigationController extends GetxController {
       // Initialize the screen if it hasn't been initialized yet
       switch (index) {
         case 0:
-          lazyLoadedScreens[index] = const ExperienceOfOthersScreen();
+          lazyLoadedScreens[index] =  StoriesScreen();
           break;
         case 1:
           lazyLoadedScreens[index] = const BookAConsultationScreen();
           break;
         case 2:
-          lazyLoadedScreens[index] = const SizedBox();
+          lazyLoadedScreens[index] =  AddStoryScreen();
           break;
         case 3:
           lazyLoadedScreens[index] =

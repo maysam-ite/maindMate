@@ -18,6 +18,7 @@ class SnackbarManager {
 
     Get.rawSnackbar(
       message: message,
+
       icon: icon,
       snackPosition: position,
       backgroundColor: backgroundColor,
