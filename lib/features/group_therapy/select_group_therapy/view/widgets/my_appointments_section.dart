@@ -31,7 +31,7 @@ class MyAppointmentsCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
       width: 384.w,
-      height: 130.h,
+      height: 140.h,
       decoration: BoxDecoration(
           color: appTheme.secondary, borderRadius: BorderRadius.circular(15)),
       child: Column(

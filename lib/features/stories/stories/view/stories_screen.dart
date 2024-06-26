@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:maindmate/core/services/divide_widgets.dart';
 import 'package:maindmate/core/shared/buttons/general_button.dart';
+import 'package:maindmate/core/shared/widgets/dialog/app_navigation_dialog.dart';
 import 'package:maindmate/features/stories/stories/controller/stories_controller.dart';
 import 'package:maindmate/features/stories/stories/view/widgets/stories_loading_widget.dart';
 import 'package:maindmate/features/stories/stories/view/widgets/stories_widget.dart';
@@ -19,15 +20,17 @@ class StoriesScreen extends StatelessWidget {
       appBar: AppBar(
         surfaceTintColor: appTheme.primaryBackground,
         leading: Image.asset('assets/images/Component.png'),
-        title: const Center(
-          child: Text('Centered Title'),
+        title:  Center(
+          child: const Text('others_excperience').tr(),
         ),
-        actions: [
+        actions:
+         [
           IconButton(
             icon: const Icon(Icons.menu),
-            onPressed: () {},
-          ),
-        ],
+            onPressed: () {
+              Get.dialog(const AppNavigationDialog());
+            })],
+        
         bottom: const PreferredSize(
           preferredSize: Size.fromHeight(60.0),
           child: Padding(
@@ -50,7 +53,7 @@ class StoriesScreen extends StatelessWidget {
           SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
-          children: [...List.generate(3, (index) => const StoriesWidget())]
+          children: [...List.generate(fakeStories.length, (index) =>  StoriesWidget(storyModel: fakeStories[index],))]
               .divide(SizedBox(
                 height: 15.h,
               ))

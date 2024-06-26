@@ -11,11 +11,9 @@ class CardsVideoWidget extends StatefulWidget {
   CardsVideoWidget(
       {super.key,
       required this.currentVideoUrl,
-      required this.soundControlCallback, // Require the callback in the constructor
       this.autoPlay = false,
       required this.videoHgiht,
       required this.videoWidth}) {}
-  final SoundControlCallback soundControlCallback; // Add the callback here
   final String currentVideoUrl;
   final double videoHgiht;
   final double videoWidth;
@@ -27,6 +25,7 @@ class CardsVideoWidget extends StatefulWidget {
 class _VideoWidgetState extends State<CardsVideoWidget>
     with WidgetsBindingObserver {
   bool videoInitialized = false;
+  bool hasError = false;
   late VideoPlayerController videoPlayerController;
   @override
   void initState() {
@@ -62,6 +61,10 @@ class _VideoWidgetState extends State<CardsVideoWidget>
             });
           }).catchError((error) {
             // Handle the error here
+            setState((){
+              hasError=true;
+            });
+              return;
           });
     videoPlayerController.addListener(() {
       if (videoPlayerController.value.isPlaying && !_isPlaying) {
@@ -107,7 +110,20 @@ class _VideoWidgetState extends State<CardsVideoWidget>
 
   @override
   Widget build(BuildContext context) {
-    return !videoInitialized
+    if (hasError) {
+      return SizedBox(
+            height: widget.videoHgiht, // Set your height
+              width: widget.videoWidth, // Set your width
+          child: Center(
+          child: Text(
+            'Error loading video',
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
+      );
+    }
+    return 
+    !videoInitialized
         ? ShimmerLoadingWidget(
             loadingShimmerWidget: SizedBox(
               height: widget.videoHgiht, // Set your height

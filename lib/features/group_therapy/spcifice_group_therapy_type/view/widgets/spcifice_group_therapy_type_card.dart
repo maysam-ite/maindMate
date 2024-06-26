@@ -1,44 +1,18 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:maindmate/core/services/divide_widgets.dart';
 import 'package:maindmate/features/Consultations/book_a_consultation/view/widgets/book_a_consiltation_widget_header.dart';
 import 'package:maindmate/main.dart';
 
-class ActiveSessionsList extends StatelessWidget {
-  const ActiveSessionsList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'الجلسات القائمة حالياً',
-          style: appTheme.text12,
-        ),
-        SizedBox(
-          height: 260.h,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: List.generate(3, (index) => const ActiveSessionCard())
-                  .divide(const SizedBox(width: 15)),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class ActiveSessionCard extends StatelessWidget {
-  const ActiveSessionCard({super.key});
+class SpcificeGroupTherapyTypeCard extends StatelessWidget {
+  const SpcificeGroupTherapyTypeCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 250.w,
-      height: 255.h,
+      width: double.infinity,
+      height: 250.h,
       decoration: BoxDecoration(
         color: appTheme.primaryBackground,
         boxShadow: [

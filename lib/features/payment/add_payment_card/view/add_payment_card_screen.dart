@@ -15,7 +15,7 @@ class AddPaymentCardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appTheme.secondaryBackground,
-      appBar: generalAppBar(),
+      appBar: generalAppBar(title:'عبد الله خالد'),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Column(
@@ -109,7 +109,6 @@ class AddPaymentCardScreen extends StatelessWidget {
           label: hint,
           controller: controller,
           prefix: Icon(icon),
-          height: 40,
           validator: (val) {
             return null;
             // Add your validation logic here

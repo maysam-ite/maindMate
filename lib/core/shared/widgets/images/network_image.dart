@@ -12,9 +12,10 @@ getImageNetwork(
     required double? height,
     Color? imgColor,
     AlignmentGeometry? alignmentGeometry}) {
-  String cleanUrl = url.contains("storage") ? url : "/storage/$url";
+  // String cleanUrl = url.contains("storage") ? url : "/storage/$url";
   return Image.network(
-    ServerConstApis.baseAPIImage + cleanUrl,
+    // ServerConstApis.baseAPIImage + cleanUrl,
+    url,
     width: width,
     alignment: alignmentGeometry ?? Alignment.center,
     height: height,

@@ -1,49 +1,39 @@
 import 'dart:convert';
 
+import 'package:maindmate/features/stories/stories/model/story_comment_model.dart';
+
 
 class StoryModel  {
   final int id;
-  final int user_id;
+  final int userId;
   final String text;
-  final String image;
-  final String video;
+  final String? image;
+  final String? video;
   final String status;
-  final String image_url;
-  final List<dynamic> story_comments;
+  final String imageUrl;
+  final List<StoryCommentModel> storyComments;
   const StoryModel({
     required this.id,
-    required this.user_id,
+    required this.userId,
     required this.text,
     required this.image,
     required this.video,
     required this.status,
-    required this.image_url,
-    required this.story_comments,
+    required this.imageUrl,
+    required this.storyComments,
   });
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'user_id': user_id,
-      'text': text,
-      'image': image,
-      'video': video,
-      'status': status,
-      'image_url': image_url,
-      'story_comments': story_comments,
-    };
-  }
 
   factory StoryModel.fromMap(Map<String, dynamic> map) {
     return StoryModel(
       id: (map['id'].toInt() ?? 0) as int,
-      user_id: (map['user_id'].toInt() ?? 0) as int,
+      userId: (map['user_id'].toInt() ?? 0) as int,
       text: (map['text'] ?? '') as String,
-      image: map['image'] ??"",
-      video: map['video']??"" ,
+      image: map['image'] ,
+      video: map['video'] ,
       status: (map['status'] ?? '') as String,
-      image_url: (map['image_url'] ?? '') as String,
-      story_comments: List<dynamic>.from((map['story_comments'] ?? const <dynamic>[]) as List<dynamic>),
+      imageUrl: (map['image_url'] ?? '') as String,
+      storyComments: List<StoryCommentModel>.from((map['story_comments'] ?? const <StoryCommentModel>[]) as List<StoryCommentModel>),
     );
   }
 
@@ -51,3 +41,5 @@ class StoryModel  {
   factory StoryModel.fromJson(String source) => StoryModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
 }
+
+

@@ -12,7 +12,7 @@ class ConfirmPaymentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: appTheme.secondaryBackground,
-        appBar: generalAppBar(),
+        appBar: generalAppBar(title: 'payment'),
         body: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Container(

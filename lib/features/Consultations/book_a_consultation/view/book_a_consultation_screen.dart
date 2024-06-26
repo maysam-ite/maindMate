@@ -9,7 +9,7 @@ class BookAConsultationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: generalAppBar(),
+      appBar: generalAppBar(title:'book_an_oppointment'),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         child: Column(

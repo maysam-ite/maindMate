@@ -42,6 +42,17 @@
     "The phone has already been taken.": "رقم الهاتف مأخوذ بالفعل",
   "country_search":"ابحث بالاسم أو رمز الاتصال الدولي",
   "group_call":"مكالمة جماعية",
-  "book_consultation":"حجز جلسة"
-  
+  "book_consultation":"حجز جلسة",
+  "home":"الرئيسية",
+  "show_profile":"استعراض البروفايل",
+  "my_story":"حالتي",
+  "my_Consultations":"جلساتي",
+  "log_out":"تسجيل الخروج",
+  "add_story":"انشاء مشاركة حائط",
+"book_an_oppointment":"حجز موعد",
+"active_now":"متاح حاليا",
+"select_group_therapy":"العلاج الجماعي",
+"payment":"الدفع",
+"others_excperience":"تجارب الاخرين"
+
 }

@@ -15,7 +15,7 @@ class BookNowScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: generalAppBar(),
+      appBar: generalAppBar(title:'active_now'),
       backgroundColor: appTheme.primaryBackground,
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),

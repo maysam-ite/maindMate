@@ -13,7 +13,7 @@ class SelectGroupTherapyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: generalAppBar(),
+      appBar: generalAppBar(title: 'select_group_therapy'),
       backgroundColor: appTheme.primaryBackground,
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 16.w),

@@ -8,6 +8,8 @@ import 'package:maindmate/features/auth/sign_in/view/sign_in_screen.dart';
 import 'package:maindmate/features/auth/sign_up/controller/sing_up_binding.dart';
 import 'package:maindmate/features/auth/sign_up/view/sign_up_screen.dart';
 import 'package:maindmate/features/auth/welcome_screen/view/welcome_screen.dart';
+import 'package:maindmate/features/group_therapy/spcifice_group_therapy_type/controller/spcifice_group_therapy_type_binding.dart';
+import 'package:maindmate/features/group_therapy/spcifice_group_therapy_type/view/spcifice_group_therapy_type_screen.dart';
 import 'package:maindmate/features/stories/story_detailes/controller/story_detailes_binding.dart';
 import 'package:maindmate/features/stories/story_detailes/view/story_detailes_screen.dart';
 import 'package:maindmate/features/stories/stories/controller/stories_binding.dart';
@@ -52,7 +54,7 @@ appRoutes() => [
           binding: BookNowBinding()),
       GetPage(
           name: '/StoryDetailesScreen',
-          page: () => const StoryDetailesScreen(),
+          page: () =>  StoryDetailesScreen(),
           binding: ExperienceDetailesBinding()),
       GetPage(
           name: '/SelectGroupTherapyScreen',
@@ -66,4 +68,8 @@ appRoutes() => [
           name: '/ConfirmPaymentScreen',
           page: () => const ConfirmPaymentScreen(),
           binding: ConfirmPaymentBinding())
+  ,    GetPage(
+          name: '/SpcificeGroupTherapyTypeScreen',
+          page: () =>  SpcificeGroupTherapyTypeScreen(),
+          binding: SpcificeGroupTherapyTypeBinding())
     ];

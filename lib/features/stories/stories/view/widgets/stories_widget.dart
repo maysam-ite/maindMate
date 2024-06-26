@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:maindmate/core/services/divide_widgets.dart';
+import 'package:maindmate/core/shared/widgets/images/network_image.dart';
+import 'package:maindmate/core/shared/widgets/videos/cards_video_widget.dart';
+import 'package:maindmate/features/stories/stories/model/story_model.dart';
 import 'package:maindmate/main.dart';
 
 class StoriesWidget extends StatelessWidget {
-  const StoriesWidget({super.key});
-
+  const StoriesWidget({super.key, required this.storyModel});
+final StoryModel storyModel;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed('/StoryDetailesScreen');
+        Get.toNamed('/StoryDetailesScreen',arguments: storyModel,preventDuplicates: false);
       },
       child: Container(
         width: 382.w,
@@ -24,8 +27,11 @@ class StoriesWidget extends StatelessWidget {
                   blurRadius: 5)
             ]),
         padding: const EdgeInsets.all(10),
-        child: const Column(
-          children: [PostHeader(), PostContent()],
+        child:  Column(
+          children: [PostHeader(
+
+            storyModel: storyModel,
+          ), PostContent(            storyModel: storyModel,)],
         ),
       ),
     );
@@ -33,7 +39,8 @@ class StoriesWidget extends StatelessWidget {
 }
 
 class PostHeader extends StatelessWidget {
-  const PostHeader({super.key});
+  const PostHeader({super.key, required this.storyModel});
+final StoryModel storyModel;
 
   @override
   Widget build(BuildContext context) {
@@ -69,16 +76,10 @@ class PostHeader extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.sp),
               color: appTheme.lineColor.withOpacity(0.5)),
-          child: const Icon(Icons.star_border_outlined),
+          child: const Icon(Icons.comment_outlined),
+
         ),
-        Container(
-          width: 38.w,
-          height: 38.h,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.sp),
-              color: appTheme.lineColor.withOpacity(0.5)),
-          child: const Icon(Icons.star_border_outlined),
-        )
+        Text(storyModel.storyComments.length.toString())
       ].divide(SizedBox(
         width: 10.w,
       )),
@@ -87,7 +88,8 @@ class PostHeader extends StatelessWidget {
 }
 
 class PostContent extends StatelessWidget {
-  const PostContent({super.key});
+  const PostContent({super.key, required this.storyModel});
+final StoryModel storyModel;
 
   @override
   Widget build(BuildContext context) {
@@ -95,18 +97,25 @@ class PostContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "يسنتلنتلاناشلالنلالنتاشيلمنىلاشاضتشنلال ع لاعلاع اعااضلنال ضعالضعلاضعلاضع لاضعلاضلاضعلا ضلضعلاضعلا علاعلاضعلاضخعلاعلاعل اضعلاضلعهاضلعاضعهلا قل قلضعلاضعلعقال ggggggggggggggggggggggggggggggggggggggggggggggggggggggعهضالعقللاعاضقعضعق",
+        storyModel.text,
           style: appTheme.text18.copyWith(fontSize: 16),
+          maxLines: 5,
         ),
+      SizedBox(height: 15,),
+      storyModel.video!=null?
+      CardsVideoWidget(currentVideoUrl:storyModel.video! ,videoHgiht: 195.h,videoWidth: double.infinity,):
+        // SizedBox():
         Container(
           height: 195.h,
+          alignment: Alignment.center,
           decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.sp)),
-          child: Image.asset(
-            'assets/images/post.png',
-            fit: BoxFit.contain,
-          ),
+          child:
+          getImageNetwork(url: storyModel.image!, width: null, height: 195.h)
+          
+         
         )
       ],
     );
   }
 }
+
