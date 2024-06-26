@@ -1,53 +1,72 @@
-class UserModel {
-  int id;
-  String name;
-  String email;
-  String? emailVerifiedAt;
-  String? twoFactorSecret;
-  String? twoFactorRecoveryCodes;
-  String? twoFactorConfirmedAt;
-  String createdAt;
-  String updatedAt;
+// Base User class common properties
+class User {
+  final int id;
+  final String name;
+  final String email;
+  final String phone;
+  final String? emailVerifiedAt;
+  final String? twoFactorSecret;
+  final String? twoFactorRecoveryCodes;
+  final String userType;
 
-  UserModel({
+  User({
     required this.id,
     required this.name,
     required this.email,
+    required this.phone,
     this.emailVerifiedAt,
     this.twoFactorSecret,
     this.twoFactorRecoveryCodes,
-    this.twoFactorConfirmedAt,
-    required this.createdAt,
-    required this.updatedAt,
+    required this.userType,
   });
 
-  // Factory constructor for creating a new user instance from a map structure
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
       id: json['id'],
       name: json['name'],
       email: json['email'],
+      phone: json['phone'],
       emailVerifiedAt: json['email_verified_at'],
       twoFactorSecret: json['two_factor_secret'],
       twoFactorRecoveryCodes: json['two_factor_recovery_codes'],
-      twoFactorConfirmedAt: json['two_factor_confirmed_at'],
-      createdAt: json['created_at'],
-      updatedAt: json['updated_at'],
+      userType: json['usertype'],
     );
   }
-
-  // Method to convert UserModel instance to map
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'email': email,
-      'email_verified_at': emailVerifiedAt,
-      'two_factor_secret': twoFactorSecret,
-      'two_factor_recovery_codes': twoFactorRecoveryCodes,
-      'two_factor_confirmed_at': twoFactorConfirmedAt,
-      'created_at': createdAt,
-      'updated_at': updatedAt,
-    };
-  }
 }
+
+
+// // Doctor-specific properties
+// class Doctor extends User {
+//   final DoctorProfile profile;
+//   final List<Rating> ratings;
+//   final List<Specialty> specialties;
+//   final List<Experience> experiences;
+
+//   Doctor({
+//     required int id,
+//     required String name,
+//     required String email,
+//     required String phone,
+//     String? emailVerifiedAt,
+//     String? twoFactorSecret,
+//     String? twoFactorRecoveryCodes,
+//     required String userType,
+//     required String createdAt,
+//     required String updatedAt,
+//     required this.profile,
+//     required this.ratings,
+//     required this.specialties,
+//     required this.experiences,
+//   }) : super(
+//           id: id,
+//           name: name,
+//           email: email,
+//           phone: phone,
+//           emailVerifiedAt: emailVerifiedAt,
+//           twoFactorSecret: twoFactorSecret,
+//           twoFactorRecoveryCodes: twoFactorRecoveryCodes,
+//           userType: userType,
+//           createdAt: createdAt,
+//           updatedAt: updatedAt,
+//         );
+// }

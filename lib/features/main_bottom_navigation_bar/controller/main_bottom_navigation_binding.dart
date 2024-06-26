@@ -1,3 +1,4 @@
+import 'package:maindmate/features/patient/profile/controller/patient_profile_controller.dart';
 import 'package:maindmate/features/stories/add_story/controller/add_story_controller.dart';
 import 'package:maindmate/features/stories/stories/controller/stories_controller.dart';
 
@@ -10,9 +11,8 @@ class MainBottomNavigationBinding implements Bindings {
   void dependencies() {
     Get.lazyPut<MainBottomNavigationController>(
         () => MainBottomNavigationController());
-    Get.lazyPut<StoriesController>(
-        () => StoriesController());
-    Get.lazyPut<AddStoryController>(
-        () => AddStoryController());
+    Get.lazyPut<StoriesController>(() => StoriesController());
+    Get.lazyPut<AddStoryController>(() => AddStoryController());
+    Get.lazyPut<PatientProfileController>(() => PatientProfileController());
   }
 }

@@ -53,6 +53,20 @@
 "active_now":"متاح حاليا",
 "select_group_therapy":"العلاج الجماعي",
 "payment":"الدفع",
-"others_excperience":"تجارب الاخرين"
+"others_excperience":"تجارب الاخرين",
+
+  "full_name": "الاسم الكامل",
+  "nick_name": "الاسم المستعار",
+  "age": "العمر",
+  "drug_history": "تاريخ الأدوية",
+  "medical_history": "التاريخ الطبي",
+  "country": "البلد",
+  "language": "اللغة",
+  "save": "حفظ",
+  "Done":"تم",
+  "Cancel":"الغاء",
+  "Select your language":"اختر لغتك"
+
+
 
 }

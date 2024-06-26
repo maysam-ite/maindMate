@@ -8,5 +8,8 @@ class ServerConstApis {
 
   ///////story
   static String stories = '$baseAPI/api/stories';
-
+  ///////storycomments
+  static String storyComments = '$baseAPI/api/storycomments';
+  ///////patient profile
+  static String patientProfile = '$baseAPI/api/patientprofile';
 }
