@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:maindmate/core/const/languages_code.dart';
+import 'package:maindmate/features/doctor/profile/controller/doctor_profile_controller.dart';
 import 'package:maindmate/features/patient/profile/controller/patient_profile_controller.dart';
 import 'package:maindmate/features/patient/profile/view/widgets/test_language_picker.dart';
 import 'package:maindmate/main.dart';
@@ -15,7 +16,7 @@ class PickLanguage extends StatefulWidget {
 }
 
 class _PickLanguageState extends State<PickLanguage> {
-  final PatientProfileController patientProfileController = Get.find();
+  final DoctorProfileController doctorProfileController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -35,16 +36,15 @@ class _PickLanguageState extends State<PickLanguage> {
           ),
         ),
         alignment: const AlignmentDirectional(-1, 0.00),
-        child: GetBuilder<PatientProfileController>(builder: (context) {
+        child: GetBuilder<DoctorProfileController>(builder: (context) {
           return Text(
-            patientProfileController.language ?? "",
+            doctorProfileController.country ?? "",
             style: appTheme.text16,
           );
         }),
       ),
     );
   }
-
 
 // It's sample code of Dialog Item.
   Widget _buildDialogItem(AppLanguage language) => Row(
@@ -61,11 +61,12 @@ class _PickLanguageState extends State<PickLanguage> {
             data: Theme.of(context).copyWith(),
             child: CustomLanguagePickerDialog(
                 titlePadding: const EdgeInsets.all(8.0),
-                searchInputDecoration: const InputDecoration(hintText: ('البحث...')),
+                searchInputDecoration:
+                    const InputDecoration(hintText: ('البحث...')),
                 isSearchable: true,
-                title:  const Text('Select your language').tr(),
+                title: const Text('Select your language').tr(),
                 onValuePicked: (AppLanguage language) => setState(() {
-                      patientProfileController.language=language.name;
+                      doctorProfileController.language = language.name;
                     }),
                 itemBuilder: _buildDialogItem)),
       );

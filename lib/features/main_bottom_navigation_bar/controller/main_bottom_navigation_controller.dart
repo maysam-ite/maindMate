@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:maindmate/features/Consultations/book_a_consultation/view/book_a_consultation_screen.dart';
+import 'package:maindmate/features/doctor/profile/view/profile_screen.dart';
 import 'package:maindmate/features/patient/profile/view/profile_screen.dart';
 import 'package:maindmate/features/stories/add_story/view/add_story_screen.dart';
 import 'package:maindmate/features/stories/stories/view/stories_screen.dart';
@@ -42,7 +43,7 @@ class MainBottomNavigationController extends GetxController {
           break;
         case 4:
           lazyLoadedScreens[index] =
-              true ? PatientProfileScreen() : const SizedBox();
+              true ? DoctorProfileScreen() : const SizedBox();
           break;
       }
     }

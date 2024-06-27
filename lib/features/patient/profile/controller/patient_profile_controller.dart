@@ -17,7 +17,6 @@ class PatientProfileController extends GetxController {
   DateTime? patientBirthDay;
   final TextEditingController fullName = TextEditingController();
   final TextEditingController nickName = TextEditingController();
-  final TextEditingController socialStatus = TextEditingController();
   final TextEditingController drugHistory = TextEditingController();
   final TextEditingController medicalHistory = TextEditingController();
   RxString gender = ''.obs;

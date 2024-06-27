@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 import 'package:maindmate/core/services/divide_widgets.dart';
 import 'package:maindmate/core/shared/functions/validation/name_validation.dart';
 import 'package:maindmate/core/shared/text_fileds/custom_text_filed.dart';
+import 'package:maindmate/features/doctor/profile/controller/doctor_profile_controller.dart';
+import 'package:maindmate/features/doctor/profile/view/widgets/pick_video_for_doctor.dart';
+import 'package:maindmate/features/doctor/profile/view/widgets/specialties_section.dart';
 import 'package:maindmate/features/patient/profile/controller/patient_profile_controller.dart';
 import 'package:maindmate/features/patient/profile/view/widgets/date_of_birth.dart';
 import 'package:maindmate/features/patient/profile/view/widgets/patient_profile_buttons.dart';
@@ -14,9 +17,9 @@ import 'package:maindmate/features/patient/profile/view/widgets/profile_image.da
 import 'package:maindmate/features/patient/profile/view/widgets/select_gender.dart';
 import 'package:maindmate/main.dart';
 
-class PatientProfileScreen extends StatelessWidget {
-  PatientProfileScreen({super.key});
-  final PatientProfileController patientProfileController = Get.find();
+class DoctorProfileScreen extends StatelessWidget {
+  DoctorProfileScreen({super.key});
+  final DoctorProfileController doctorProfileController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +37,7 @@ class PatientProfileScreen extends StatelessWidget {
               ).tr(),
               customTextField(
                   label: '',
-                  controller: patientProfileController.fullName,
+                  controller: doctorProfileController.fullName,
                   validator: (val) {
                     return nameValidation(val);
                   }),
@@ -44,7 +47,7 @@ class PatientProfileScreen extends StatelessWidget {
               ).tr(),
               customTextField(
                   label: '',
-                  controller: patientProfileController.nickName,
+                  controller: doctorProfileController.nickName,
                   validator: (val) {
                     return nameValidation(val);
                   }),
@@ -53,26 +56,6 @@ class PatientProfileScreen extends StatelessWidget {
                 style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
               ).tr(),
               SetDateOfBirth(),
-              Text(
-                'drug_history',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              customTextField(
-                  label: '',
-                  controller: patientProfileController.drugHistory,
-                  validator: (val) {
-                    return null;
-                  }),
-              Text(
-                'medical_history',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              customTextField(
-                  label: '',
-                  controller: patientProfileController.medicalHistory,
-                  validator: (val) {
-                    return null;
-                  }),
               Text(
                 'country',
                 style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
@@ -88,6 +71,12 @@ class PatientProfileScreen extends StatelessWidget {
                 style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
               ).tr(),
               SelectGender(),
+              Text(
+                'video',
+                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
+              ).tr(),
+              PickVideo(),
+              SpecialtiesSection(),
               SizedBox(
                 height: 30.h,
               ),
