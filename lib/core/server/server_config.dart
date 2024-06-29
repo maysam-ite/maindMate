@@ -1,10 +1,13 @@
 class ServerConstApis {
-  static String baseAPI = 'http://10.0.2.2:8000';
-  static String baseAPIImage = 'https://evento.sy';
+  static String baseAPI = 'https://mindmate.a2hosted.com';
+  // static String baseAPI = 'http://10.0.2.2:8000';
 
 ///// auth
   static String register = '$baseAPI/api/auth/register';
   static String signIn = '$baseAPI/api/auth/login';
+  static String logout = '$baseAPI/api/auth/logout';
+//////////// user
+  static String user = '$baseAPI/api/user';
 
   ///////story
   static String stories = '$baseAPI/api/stories';

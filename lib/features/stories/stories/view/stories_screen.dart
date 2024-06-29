@@ -13,6 +13,7 @@ import 'package:maindmate/main.dart';
 class StoriesScreen extends StatelessWidget {
   StoriesScreen({super.key});
   final StoriesController storiesController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,17 +21,16 @@ class StoriesScreen extends StatelessWidget {
       appBar: AppBar(
         surfaceTintColor: appTheme.primaryBackground,
         leading: Image.asset('assets/images/Component.png'),
-        title:  Center(
+        title: Center(
           child: const Text('others_excperience').tr(),
         ),
-        actions:
-         [
+        actions: [
           IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {
-              Get.dialog(const AppNavigationDialog());
-            })],
-        
+              icon: const Icon(Icons.menu),
+              onPressed: () {
+                Get.dialog(const AppNavigationDialog());
+              })
+        ],
         bottom: const PreferredSize(
           preferredSize: Size.fromHeight(60.0),
           child: Padding(
@@ -45,24 +45,33 @@ class StoriesScreen extends StatelessWidget {
           ),
         ),
       ),
-      body:
-          //  Obx(
-          //   () => storiesController.isLoading.value
-          //       ? buildLoadingStoriesList()
-          // :
-          SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          children: [...List.generate(fakeStories.length, (index) =>  StoriesWidget(storyModel: fakeStories[index],))]
-              .divide(SizedBox(
-                height: 15.h,
-              ))
-              .addToStart(SizedBox(
-                height: 15.h,
-              )),
-        ),
+      body: Obx(
+        () => storiesController.isLoading.value
+            ? buildLoadingStoriesList()
+            : RefreshIndicator(
+                onRefresh: () async {
+                  await storiesController.refreshData();
+                },
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    children: [
+                      ...List.generate(
+                          storiesController.itemList.length,
+                          (index) => StoriesWidget(
+                                storyModel: storiesController.itemList[index],
+                              ))
+                    ]
+                        .divide(SizedBox(
+                          height: 15.h,
+                        ))
+                        .addToStart(SizedBox(
+                          height: 15.h,
+                        )),
+                  ),
+                ),
+              ),
       ),
-      // ),
     );
   }
 }

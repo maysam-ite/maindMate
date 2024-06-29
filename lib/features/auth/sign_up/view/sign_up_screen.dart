@@ -18,101 +18,103 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 50),
-        child: Form(
-          key: signUpController.formstate,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 50.h),
-              Center(
-                  child: Image.asset('assets/images/logo.png',
-                      width: 200.w, height: 100.h)),
-              Center(
-                child: Text(
-                  'create_account',
-                  style: appTheme.text18.copyWith(
-                      fontWeight: FontWeight.normal,
-                      fontSize: 30.sp,
-                      color: appTheme.primary),
-                ).tr(),
-              ),
-              Text(
-                tr('user_name'),
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ),
-              customTextField(
-                  label: tr('enter_user_name'),
-                  controller: signUpController.nameController,
-                  validator: (val) {
-                    return nameValidation(val);
-                  }),
-              Text(
-                'enter_email',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              customTextField(
-                  label: tr('email'),
-                  controller: signUpController.emailController,
-                  validator: (val) {
-                    return emailValidation(val);
-                  }),
-              Text(
-                'enter_phone',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              internationalField(signUpController.phoneController),
-              Text(
-                'enter_password',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              customTextField(
-                  label: tr('password'),
-                  controller: signUpController.passwordController,
-                  validator: (val) {
-                    return passwordValidation(val);
-                  }),
-              Text(
-                'اعد ادخال كلمة المرور',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ),
-              customTextField(
-                  label: tr('re_enter_password'),
-                  controller: signUpController.confirmPasswordController,
-                  validator: (val) {
-                    return signUpController.confirmPasswordController.text ==
-                            signUpController.passwordController.text
-                        ? null
-                        : tr(
-                            "The confirm password doesn't mathcing the new password");
-                  }),
-              ContinueAsDoctor(),
-              RemmeberMe(),
-              TermOfUs(),
-              SignUpButton(),
-              const SignUpUsingFacebookGoogle(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'i_have_an_account',
-                    style:
-                        appTheme.text16.copyWith(fontWeight: FontWeight.normal),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 50),
+          child: Form(
+            key: signUpController.formstate,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 50.h),
+                Center(
+                    child: Image.asset('assets/images/logo.png',
+                        width: 200.w, height: 100.h)),
+                Center(
+                  child: Text(
+                    'create_account',
+                    style: appTheme.text18.copyWith(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 30.sp,
+                        color: appTheme.primary),
                   ).tr(),
-                  GestureDetector(
-                    onTap: () {
-                      Get.offAndToNamed('/SignInScreen');
-                    },
-                    child: Text(
-                      'login',
-                      style: appTheme.text18.copyWith(
-                          fontWeight: FontWeight.w500, color: appTheme.primary),
+                ),
+                Text(
+                  tr('user_name'),
+                  style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
+                ),
+                customTextField(
+                    label: tr('enter_user_name'),
+                    controller: signUpController.nameController,
+                    validator: (val) {
+                      return nameValidation(val);
+                    }),
+                Text(
+                  'enter_email',
+                  style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
+                ).tr(),
+                customTextField(
+                    label: tr('email'),
+                    controller: signUpController.emailController,
+                    validator: (val) {
+                      return emailValidation(val);
+                    }),
+                Text(
+                  'enter_phone',
+                  style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
+                ).tr(),
+                internationalField(signUpController.phoneController),
+                Text(
+                  'enter_password',
+                  style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
+                ).tr(),
+                customTextField(
+                    label: tr('password'),
+                    controller: signUpController.passwordController,
+                    validator: (val) {
+                      return passwordValidation(val);
+                    }),
+                Text(
+                  'اعد ادخال كلمة المرور',
+                  style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
+                ),
+                customTextField(
+                    label: tr('re_enter_password'),
+                    controller: signUpController.confirmPasswordController,
+                    validator: (val) {
+                      return signUpController.confirmPasswordController.text ==
+                              signUpController.passwordController.text
+                          ? null
+                          : tr(
+                              "The confirm password doesn't mathcing the new password");
+                    }),
+                ContinueAsDoctor(),
+                RemmeberMe(),
+                TermOfUs(),
+                SignUpButton(),
+                const SignUpUsingFacebookGoogle(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'i_have_an_account',
+                      style:
+                          appTheme.text16.copyWith(fontWeight: FontWeight.normal),
                     ).tr(),
-                  )
-                ],
-              ),
-            ].divide(const SizedBox(height: 5)),
+                    GestureDetector(
+                      onTap: () {
+                        Get.offAndToNamed('/SignInScreen');
+                      },
+                      child: Text(
+                        'login',
+                        style: appTheme.text18.copyWith(
+                            fontWeight: FontWeight.w500, color: appTheme.primary),
+                      ).tr(),
+                    )
+                  ],
+                ),
+              ].divide(const SizedBox(height: 5)),
+            ),
           ),
         ),
       ),
@@ -158,9 +160,9 @@ class ContinueAsDoctor extends StatelessWidget {
         ).tr(),
         Obx(
           () => Switch(
-              value: signUpController.isRemmberMeActive.value,
+              value: signUpController.isDoctor.value,
               onChanged: (value) {
-                signUpController.isRemmberMeActive.value = value;
+                signUpController.isDoctor.value = value;
               }),
         )
       ],
@@ -177,11 +179,12 @@ class TermOfUs extends StatelessWidget {
     return Row(
       children: [
         Obx(
-          () => Radio(
-              value: false,
-              groupValue: signUpController.isAcceptTermOfUs.value,
+          () => Checkbox(
+            isError: signUpController.isAcceptTermOfUsWarningActive.value,
+              value:  signUpController.isAcceptTermOfUs.value,
               onChanged: (val) {
                 signUpController.isAcceptTermOfUs.value = val!;
+                signUpController.isAcceptTermOfUsWarningActive.value=false;
               }),
         ),
         Text(
@@ -216,7 +219,7 @@ class SignUpButton extends StatelessWidget {
             height: 50,
             padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
             iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-            color: appTheme.primary,
+            color:signUpController.isAcceptTermOfUs.value? appTheme.primary:appTheme.primary.withOpacity(0.5),
             textStyle: appTheme.text18.copyWith(color: Colors.white),
             elevation: 3,
             borderSide: const BorderSide(

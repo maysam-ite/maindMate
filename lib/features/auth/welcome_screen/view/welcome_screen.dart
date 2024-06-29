@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:maindmate/core/shared/buttons/general_button.dart';
 import 'package:maindmate/core/theme/app_theme.dart';
-// import 'package:maindmate/features/auth/welcome_screen/view/widgets/build_page_indecator.dart';
 import 'package:maindmate/features/auth/welcome_screen/view/widgets/build_page_view.dart';
 import 'package:maindmate/main.dart';
 
@@ -18,12 +17,12 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: appTheme.primaryBackground,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 50),
+        padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           SizedBox(
             height: 50.h,
           ),
-          Image.asset('assets/images/logo.png'),
+          Image.asset('assets/images/Component.png'),
           SizedBox(
             height: 30.h,
           ),
@@ -60,7 +59,7 @@ class WelcomeScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           ButtonWidget(

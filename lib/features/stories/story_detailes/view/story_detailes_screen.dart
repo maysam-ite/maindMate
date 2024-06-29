@@ -26,15 +26,24 @@ class StoryDetailesScreen extends StatelessWidget {
               ),
             ),
           ],
-          title: Text('Centered Title'),
+          // title: Text(
+          //     ' story_by ${storyDetailesController.storyModel.storyAuthor}'),
           surfaceTintColor: appTheme.primaryBackground,
           centerTitle: true),
-      body: Column(
-        children: [
-          PostWidget(storyDetailesController: storyDetailesController),
-          SendComment(storyDetailesController: storyDetailesController)
-        ],
-      ),
+      body: GetBuilder<StoryDetailesController>(builder: (context) {
+        return storyDetailesController.isLoadingPage.value
+            ? const Center(child: CircularProgressIndicator())
+            : SingleChildScrollView(
+                child: Column(
+                  children: [
+                    PostWidget(
+                        storyDetailesController: storyDetailesController),
+                    SendComment(
+                        storyDetailesController: storyDetailesController)
+                  ],
+                ),
+              );
+      }),
     );
   }
 }
@@ -53,24 +62,32 @@ class SendComment extends StatelessWidget {
       children: [
         Expanded(
           child: customTextField(
-              label: 'comment',
-              validator: (value) {
-                return null;
-              },
-              controller: storyDetailesController.comment),
-        ),
-        Obx(() => 
-        IconButton(
-            onPressed: () {
-              storyDetailesController.sendComment();
+            label: 'comment',
+            validator: (value) {
+              return null;
             },
+            controller: storyDetailesController.comment,
+          ),
+        ),
+        Obx(() {
+          bool isSendButtonEnabled =
+              storyDetailesController.commentText.value.isNotEmpty &&
+                  !storyDetailesController.isLoadingSendComment.value;
+          return IconButton(
+            onPressed: isSendButtonEnabled
+                ? () {
+                    storyDetailesController.sendComment();
+                  }
+                : null,
             icon: Icon(
               Icons.send_rounded,
-              color:storyDetailesController.isLoadingSendComment.value || storyDetailesController.comment.text.isEmpty?appTheme.primary.withOpacity(0.5): appTheme.primary,
-            ))
-      
-        )
-        ],
+              color: isSendButtonEnabled
+                  ? appTheme.primary
+                  : appTheme.primary.withOpacity(0.5),
+            ),
+          );
+        }),
+      ],
     );
   }
 }
@@ -101,7 +118,7 @@ class PostWidget extends StatelessWidget {
                 SizedBox(
                     height: 275.h,
                     child: getImageNetwork(
-                        url: storyDetailesController.storyModel.image!,
+                        url: storyDetailesController.storyModel.imageUrl!,
                         width: null,
                         height: 275.h))
 
@@ -129,15 +146,43 @@ class PostWidget extends StatelessWidget {
 class PostComments extends StatelessWidget {
   const PostComments({super.key, required this.storyComments});
   final List<StoryCommentModel> storyComments;
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  height: 1,
+                  color: Colors.grey,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(
+                  'Comments (${storyComments.length})',
+                  style: appTheme.text14.copyWith(fontWeight: FontWeight.w600),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  height: 1,
+                  color: Colors.grey,
+                ),
+              ),
+            ],
+          ),
+        ),
         ...List.generate(
-            storyComments.length,
-            (index) => PostCommentsCard(
-                  storyCommentModel: storyComments[index],
-                ))
+          storyComments.length,
+          (index) => PostCommentsCard(
+            storyCommentModel: storyComments[index],
+          ),
+        ),
       ],
     );
   }
@@ -165,17 +210,8 @@ class PostCommentsCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(
-                width: 33.w,
-                height: 33.h,
-                padding: const EdgeInsets.all(2),
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: Colors.blue)),
-                child: Image.asset('assets/images/Component.png'),
-              ),
               Text(
-                'أحمد محمد احمد',
+                storyCommentModel.commentAuthor,
                 style: appTheme.text16,
               ),
             ].divide(SizedBox(
@@ -219,9 +255,18 @@ class PostHeader extends StatelessWidget {
                 height: 33.h,
                 padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image:
+                            storyDetailesController.storyModel.authorImage == ''
+                                ? const AssetImage(
+                                    'assets/images/faceBookProfile.jfif')
+                                : getImageNetworkImageProvider(
+                                    url: storyDetailesController
+                                        .storyModel.authorImage,
+                                    width: null,
+                                    height: null)),
                     shape: BoxShape.circle,
                     border: Border.all(color: Colors.blue)),
-                child: Image.asset('assets/images/Component.png'),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -229,24 +274,24 @@ class PostHeader extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'أحمد محمد احمد',
+                    storyDetailesController.storyModel.storyAuthor,
                     style: appTheme.text16,
                   ),
-                  Text(
-                    'المنصب او الاشتراك',
-                    style: appTheme.text10,
-                  ),
+                  // Text(
+                  //   'المنصب او الاشتراك',
+                  //   style: appTheme.text10,
+                  // ),
                 ],
               ),
-              const Spacer(),
-              Container(
-                width: 38.w,
-                height: 38.h,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.sp),
-                    color: appTheme.lineColor.withOpacity(0.5)),
-                child: const Icon(Icons.star_border_outlined),
-              ),
+              // const Spacer(),
+              // Container(
+              //   width: 38.w,
+              //   height: 38.h,
+              //   decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(10.sp),
+              //       color: appTheme.lineColor.withOpacity(0.5)),
+              //   child: const Icon(Icons.star_border_outlined),
+              // ),
             ].divide(SizedBox(
               width: 10.w,
             )),

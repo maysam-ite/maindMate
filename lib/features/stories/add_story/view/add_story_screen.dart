@@ -188,25 +188,27 @@ class UploadButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ButtonWidget(
-      showLoadingIndicator: addStoryController.isLoading.value,
-      onPressed: () {
-        addStoryController.onPressContinue();
-      },
-      text: tr('publish_story'),
-      options: ButtonOptions(
-        width: MediaQuery.sizeOf(context).width * 0.8,
-        height: 55.h,
-        padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
-        iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-        color: appTheme.secondary,
-        textStyle: appTheme.text18.copyWith(color: Colors.white),
-        elevation: 3,
-        borderSide: const BorderSide(
-          color: Colors.transparent,
-          width: 1,
+    return Obx(
+      ()=> ButtonWidget(
+        showLoadingIndicator: addStoryController.isLoading.value,
+        onPressed: () {
+          addStoryController.onPressContinue();
+        },
+        text: tr('publish_story'),
+        options: ButtonOptions(
+          width: MediaQuery.sizeOf(context).width * 0.8,
+          height: 55.h,
+          padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+          iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+          color: appTheme.secondary,
+          textStyle: appTheme.text18.copyWith(color: Colors.white),
+          elevation: 3,
+          borderSide: const BorderSide(
+            color: Colors.transparent,
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(40),
         ),
-        borderRadius: BorderRadius.circular(40),
       ),
     );
   }

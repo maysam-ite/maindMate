@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:maindmate/core/server/helper_api.dart';
 import 'package:maindmate/core/server/parse_response.dart';
 import 'package:maindmate/core/server/server_config.dart';
+import 'package:maindmate/core/services/user_session_service.dart';
 import 'package:maindmate/core/shared/widgets/snackbar_manager.dart';
 import 'package:maindmate/main.dart';
 
@@ -12,6 +13,7 @@ class SignUpController extends GetxController {
   RxBool isRemmberMeActive = false.obs;
   RxBool isDoctor = false.obs;
   RxBool isAcceptTermOfUs = false.obs;
+  RxBool isAcceptTermOfUsWarningActive = false.obs;
   RxBool isLoading = false.obs;
   late GlobalKey<FormState> formstate = GlobalKey<FormState>();
 
@@ -25,6 +27,10 @@ class SignUpController extends GetxController {
     FormState? formdata = formstate.currentState;
     if (formdata!.validate()) {
       formdata.save();
+      if (!isAcceptTermOfUs.value) {
+        isAcceptTermOfUsWarningActive.value = true;
+        return;
+      }
       isLoading.value = true;
       Either<ErrorResponse, Map<String, dynamic>> response;
       response = await ApiHelper.makeRequest(
@@ -39,23 +45,26 @@ class SignUpController extends GetxController {
             'usertype': isDoctor.value ? 'doctor' : 'user',
           });
       dynamic handlingResponse = response.fold((l) => l, (r) => r);
-      print("ddddddddddddd");
-      print("ddddddddddddd");
       if (handlingResponse is ErrorResponse) {
-      print(handlingResponse.validationErrors!.getAllMessages());
-        // isLoading.value = false;
+        isLoading.value = false;
         SnackbarManager.showSnackbar(
-            handlingResponse.validationErrors!.getAllMessages()[0], backgroundColor: appTheme.error);
+            handlingResponse.validationErrors != null
+                ? handlingResponse.validationErrors!.getAllMessages()[0]
+                : handlingResponse.message!,
+            backgroundColor: appTheme.error);
       } else {
         whenResponseSuccess(handlingResponse);
       }
     }
   }
-        whenResponseSuccess(handlingResponse){
-               if(isRemmberMeActive.value){
-                String token=handlingResponse['token'];
-                storeService.createString('token',token);
-               }
-               Get.offAllNamed('/MainBottomNavigationBarWidget');
-        }
+
+  whenResponseSuccess(handlingResponse) async {
+    if (isRemmberMeActive.value) {
+      String token = handlingResponse['token'];
+      storeService.createString('token', token);
+    }
+    UserSessionService userSessionService = Get.find<UserSessionService>();
+    await userSessionService.getUserType();
+    Get.offAllNamed('/MainBottomNavigationBarWidget');
+  }
 }

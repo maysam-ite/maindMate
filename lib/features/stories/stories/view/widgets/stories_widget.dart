@@ -9,12 +9,13 @@ import 'package:maindmate/main.dart';
 
 class StoriesWidget extends StatelessWidget {
   const StoriesWidget({super.key, required this.storyModel});
-final StoryModel storyModel;
+  final StoryModel storyModel;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed('/StoryDetailesScreen',arguments: storyModel,preventDuplicates: false);
+        Get.toNamed('/StoryDetailesScreen',
+            arguments: storyModel.id, preventDuplicates: false);
       },
       child: Container(
         width: 382.w,
@@ -27,11 +28,15 @@ final StoryModel storyModel;
                   blurRadius: 5)
             ]),
         padding: const EdgeInsets.all(10),
-        child:  Column(
-          children: [PostHeader(
-
-            storyModel: storyModel,
-          ), PostContent(            storyModel: storyModel,)],
+        child: Column(
+          children: [
+            PostHeader(
+              storyModel: storyModel,
+            ),
+            PostContent(
+              storyModel: storyModel,
+            )
+          ],
         ),
       ),
     );
@@ -40,7 +45,7 @@ final StoryModel storyModel;
 
 class PostHeader extends StatelessWidget {
   const PostHeader({super.key, required this.storyModel});
-final StoryModel storyModel;
+  final StoryModel storyModel;
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +56,15 @@ final StoryModel storyModel;
           height: 33.h,
           padding: const EdgeInsets.all(2),
           decoration: BoxDecoration(
-              shape: BoxShape.circle, border: Border.all(color: Colors.blue)),
-          child: Image.asset('assets/images/Component.png'),
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.blue),
+              image: DecorationImage(
+                  image: storyModel.authorImage == ''
+                      ? const AssetImage('assets/images/faceBookProfile.jfif')
+                      : getImageNetworkImageProvider(
+                          url: storyModel.authorImage,
+                          width: null,
+                          height: null))),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,13 +72,13 @@ final StoryModel storyModel;
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'أحمد محمد احمد',
+              storyModel.storyAuthor,
               style: appTheme.text16,
             ),
-            Text(
-              'المنصب او الاشتراك',
-              style: appTheme.text10,
-            ),
+            // Text(
+            //   'المنصب او الاشتراك',
+            //   style: appTheme.text10,
+            // ),
           ],
         ),
         const Spacer(),
@@ -77,9 +89,8 @@ final StoryModel storyModel;
               borderRadius: BorderRadius.circular(10.sp),
               color: appTheme.lineColor.withOpacity(0.5)),
           child: const Icon(Icons.comment_outlined),
-
         ),
-        Text(storyModel.storyComments.length.toString())
+        Text(storyModel.storyCommentsCount.toString())
       ].divide(SizedBox(
         width: 10.w,
       )),
@@ -89,7 +100,7 @@ final StoryModel storyModel;
 
 class PostContent extends StatelessWidget {
   const PostContent({super.key, required this.storyModel});
-final StoryModel storyModel;
+  final StoryModel storyModel;
 
   @override
   Widget build(BuildContext context) {
@@ -97,25 +108,29 @@ final StoryModel storyModel;
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-        storyModel.text,
+          storyModel.text,
           style: appTheme.text18.copyWith(fontSize: 16),
           maxLines: 5,
         ),
-      SizedBox(height: 15,),
-      storyModel.video!=null?
-      CardsVideoWidget(currentVideoUrl:storyModel.video! ,videoHgiht: 195.h,videoWidth: double.infinity,):
-        // SizedBox():
-        Container(
-          height: 195.h,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(15.sp)),
-          child:
-          getImageNetwork(url: storyModel.image!, width: null, height: 195.h)
-          
-         
-        )
+        SizedBox(
+          height: 15,
+        ),
+        storyModel.videoUrl != null
+            ? CardsVideoWidget(
+                currentVideoUrl: storyModel.videoUrl!,
+                videoHgiht: 195.h,
+                videoWidth: double.infinity,
+              )
+            :
+            // SizedBox():
+            Container(
+                height: 195.h,
+                alignment: Alignment.center,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(15.sp)),
+                child: getImageNetwork(
+                    url: storyModel.imageUrl!, width: null, height: 195.h))
       ],
     );
   }
 }
-

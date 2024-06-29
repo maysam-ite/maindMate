@@ -6,10 +6,12 @@ import 'package:maindmate/core/navigation/routes.dart';
 import 'package:maindmate/core/services/connectivity_service.dart';
 import 'package:maindmate/core/services/responsive.dart';
 import 'package:maindmate/core/services/store_service.dart';
+import 'package:maindmate/core/services/user_session_service.dart';
 import 'package:maindmate/core/theme/app_theme.dart';
+import 'package:maindmate/features/main_bottom_navigation_bar/controller/main_bottom_navigation_binding.dart';
 
 StoreService storeService = StoreService();
-
+late String? targetRout;
 late AppTheme appTheme;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,7 +19,15 @@ void main() async {
 
   await AppTheme.initialize();
   Get.put(ConnectivityService());
+  await Get.putAsync(() => UserSessionService().init());
 
+  // Initialize MainBottomNavigationBinding
+  MainBottomNavigationBinding().dependencies();
+  if (await storeService.isContainKey('token')) {
+    targetRout = '/MainBottomNavigationBarWidget';
+  } else {
+    targetRout = "/";
+  }
   runApp(EasyLocalization(
       supportedLocales: const [Locale('ar')],
       path:
@@ -80,8 +90,8 @@ class _MyAppState extends State<MyApp> {
         themeMode: _themeMode,
         debugShowCheckedModeBanner: false,
         getPages: appRoutes(),
-        initialRoute: '/MainBottomNavigationBarWidget',
-        // initialRoute: '/',
+        // initialRoute: '/MainBottomNavigationBarWidget',
+        initialRoute: targetRout,
       ),
     );
   }

@@ -22,88 +22,103 @@ class PatientProfileScreen extends StatelessWidget {
     return Scaffold(
       body: SizedBox(
         width: double.infinity,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 60),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const ProfileImage(),
-              Text(
-                'full_name',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              customTextField(
-                  label: '',
-                  controller: patientProfileController.fullName,
-                  validator: (val) {
-                    return nameValidation(val);
-                  }),
-              Text(
-                'nick_name',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              customTextField(
-                  label: '',
-                  controller: patientProfileController.nickName,
-                  validator: (val) {
-                    return nameValidation(val);
-                  }),
-              Text(
-                'age',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              SetDateOfBirth(),
-              Text(
-                'drug_history',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              customTextField(
-                  label: '',
-                  controller: patientProfileController.drugHistory,
-                  validator: (val) {
-                    return null;
-                  }),
-              Text(
-                'medical_history',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              customTextField(
-                  label: '',
-                  controller: patientProfileController.medicalHistory,
-                  validator: (val) {
-                    return null;
-                  }),
-              Text(
-                'country',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              PickCountries(),
-              Text(
-                'language',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              PickLanguage(),
-              Text(
-                'gender',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              SelectGender(),
-              SizedBox(
-                height: 30.h,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  // children: [SkipButton(), CountinueButton()],
-                  children: [SaveButton()],
-                ),
-              )
-            ].divide(SizedBox(
-              height: 5.h,
-            )),
-          ),
-        ),
+        child: GetBuilder<PatientProfileController>(builder: (context) {
+          return patientProfileController.isLoadingPage.value
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : SingleChildScrollView(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 50, horizontal: 60),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const ProfileImage(),
+                      Text(
+                        'full_name',
+                        style: appTheme.text16
+                            .copyWith(fontWeight: FontWeight.normal),
+                      ).tr(),
+                      customTextField(
+                          label: '',
+                          controller: patientProfileController.fullName,
+                          validator: (val) {
+                            return nameValidation(val);
+                          }),
+                      Text(
+                        'nick_name',
+                        style: appTheme.text16
+                            .copyWith(fontWeight: FontWeight.normal),
+                      ).tr(),
+                      customTextField(
+                          label: '',
+                          controller: patientProfileController.nickName,
+                          validator: (val) {
+                            return nameValidation(val);
+                          }),
+                      Text(
+                        'age',
+                        style: appTheme.text16
+                            .copyWith(fontWeight: FontWeight.normal),
+                      ).tr(),
+                      SetDateOfBirth(),
+                      Text(
+                        'drug_history',
+                        style: appTheme.text16
+                            .copyWith(fontWeight: FontWeight.normal),
+                      ).tr(),
+                      customTextField(
+                          label: '',
+                          controller: patientProfileController.drugHistory,
+                          validator: (val) {
+                            return null;
+                          }),
+                      Text(
+                        'medical_history',
+                        style: appTheme.text16
+                            .copyWith(fontWeight: FontWeight.normal),
+                      ).tr(),
+                      customTextField(
+                          label: '',
+                          controller: patientProfileController.medicalHistory,
+                          validator: (val) {
+                            return null;
+                          }),
+                      Text(
+                        'country',
+                        style: appTheme.text16
+                            .copyWith(fontWeight: FontWeight.normal),
+                      ).tr(),
+                      PickCountries(),
+                      Text(
+                        'language',
+                        style: appTheme.text16
+                            .copyWith(fontWeight: FontWeight.normal),
+                      ).tr(),
+                      PickLanguage(),
+                      Text(
+                        'gender',
+                        style: appTheme.text16
+                            .copyWith(fontWeight: FontWeight.normal),
+                      ).tr(),
+                      SelectGender(),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // children: [SkipButton(), CountinueButton()],
+                          children: [SaveButton()],
+                        ),
+                      )
+                    ].divide(SizedBox(
+                      height: 5.h,
+                    )),
+                  ),
+                );
+        }),
       ),
     );
   }

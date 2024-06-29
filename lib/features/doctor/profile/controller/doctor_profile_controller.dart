@@ -10,7 +10,6 @@ import 'package:maindmate/core/server/server_config.dart';
 import 'package:maindmate/core/services/divide_widgets.dart';
 import 'package:maindmate/core/shared/widgets/snackbar_manager.dart';
 import 'package:maindmate/features/doctor/profile/model/doctor_profile_model.dart';
-import 'package:maindmate/features/patient/profile/model/patient_model.dart';
 import 'package:maindmate/main.dart';
 
 class DoctorProfileController extends GetxController {
@@ -26,6 +25,7 @@ class DoctorProfileController extends GetxController {
   String? language;
   RxBool isLoading = false.obs;
   RxList<String> specialtiesList = <String>[].obs;
+  RxList<Experience> generalExperienceList = <Experience>[].obs;
 
   @override
   void onInit() {
@@ -67,6 +67,37 @@ class DoctorProfileController extends GetxController {
 
   removeSpecialtie(int index) {
     specialtiesList.removeAt(index);
+  }
+
+  addNewExperience(String edExCe, String title, String experienceFrom,
+      DateTime? startDate, DateTime? endDate) {
+    generalExperienceList.add(Experience(
+        id: 0,
+        edExCe: edExCe,
+        title: title,
+        from: experienceFrom,
+        startDate: startDate!,
+        endDate: endDate!));
+  }
+
+  updateExistExperience(String edExCe, String title, String experienceFrom,
+      DateTime? startDate, DateTime? endDate, int experienceIndex) {
+    if (experienceIndex >= 0 &&
+        experienceIndex < generalExperienceList.length) {
+      generalExperienceList[experienceIndex] = Experience(
+        id: generalExperienceList[experienceIndex]
+            .id, // Preserve the original ID
+        edExCe: edExCe,
+        title: title,
+        from: experienceFrom,
+        startDate: startDate!,
+        endDate: endDate!,
+      );
+    }
+  }
+
+  removeExistexperience(int experienceIndex) {
+    generalExperienceList.removeAt(experienceIndex);
   }
 
   onPressSave() async {

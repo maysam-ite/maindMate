@@ -61,7 +61,7 @@ getImageNetworkforCahing({
   Alignment? alignmentGeometry,
 }) {
   String cleanUrl = url.contains("storage") ? url : "/storage/$url";
-  final fullUrl = ServerConstApis.baseAPIImage + cleanUrl;
+  final fullUrl = ServerConstApis.baseAPI + cleanUrl;
 
   return CachedNetworkImage(
     imageUrl: fullUrl,
@@ -103,7 +103,7 @@ getImageNetworkImageProvider({
   Alignment? alignmentGeometry,
 }) {
   String cleanUrl = url.contains("storage") ? url : "/storage/$url";
-  final fullUrl = ServerConstApis.baseAPIImage + cleanUrl;
+  final fullUrl = ServerConstApis.baseAPI + cleanUrl;
 
   return CachedNetworkImageProvider(
     fullUrl,

@@ -7,7 +7,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:maindmate/core/server/helper_api.dart';
 import 'package:maindmate/core/server/parse_response.dart';
 import 'package:maindmate/core/server/server_config.dart';
-import 'package:maindmate/core/services/divide_widgets.dart';
 import 'package:maindmate/core/shared/widgets/snackbar_manager.dart';
 import 'package:maindmate/features/patient/profile/model/patient_model.dart';
 import 'package:maindmate/main.dart';
@@ -23,11 +22,48 @@ class PatientProfileController extends GetxController {
   File? profilePictuer;
   String? country;
   String? language;
-  RxBool isLoading=false.obs;
+  RxBool isLoading = false.obs;
+  RxBool isLoadingPage = false.obs;
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    patient = Patient.fromJson(fakePatientProfile);
+    await getPatientprofile();
+  }
+
+  void populateFieldsWithProfileData(PatientProfile profile) {
+    fullName.text = profile.fullName ?? '';
+    nickName.text = profile.nickName ?? '';
+    drugHistory.text = profile.drugHistory ?? '';
+    medicalHistory.text = profile.medicalHistory ?? '';
+    gender.value = profile.sex ?? '';
+    patientBirthDay =
+        profile.birthdate != null ? DateTime.parse(profile.birthdate!) : null;
+    country = profile.country == 'null' ? null : profile.country;
+    language = profile.language == 'null' ? null : profile.language;
+  }
+
+  Future<void> getPatientprofile() async {
+    isLoadingPage.value = true;
+    Either<ErrorResponse, Map<String, dynamic>> response;
+    String token = await storeService.readString("token");
+    print(token);
+    response = await ApiHelper.makeRequest(
+      targetRout: '${ServerConstApis.patientProfile}',
+      method: "GET",
+      token: token,
+    );
+
+    dynamic handlingResponse = response.fold((l) => l, (r) => r);
+    if (handlingResponse is ErrorResponse) {
+      // Handle error appropriately
+      isLoadingPage.value = false;
+    } else {
+      patient = Patient.fromJson(handlingResponse);
+      populateFieldsWithProfileData(patient.profile);
+      isLoadingPage.value = false;
+
+      update();
+    }
   }
 
   final imagePicker = ImagePicker();
@@ -42,72 +78,40 @@ class PatientProfileController extends GetxController {
   }
 
   onPressSave() async {
-      isLoading.value = true;
+    isLoading.value = true;
     Either<ErrorResponse, Map<String, dynamic>> response;
-    String token=await storeService.readString('token');
+    String token = await storeService.readString('token');
+    print(token);
     Map<String, File> files = {};
     if (profilePictuer != null) {
-    files['image'] = profilePictuer!;
+      files['image'] = profilePictuer!;
     }
-    Map<String,dynamic> data= {
-    "full_name": fullName.text,
-    "nick_name": nickName.text,
-    "sex": gender.value==''?null:gender.value,
-    "birthdate":DateFormat.yMd(patientBirthDay) ,
-    "language": language,
-    "country": country,
-    "drug_history": drugHistory.text,
-    "medical_history": medicalHistory.text,
-  };
+    Map<String, dynamic> data = {
+      "full_name": fullName.text,
+      "nick_name": nickName.text,
+      "sex": gender.value == '' ? null : gender.value,
+      "birthdate": patientBirthDay.toString(),
+      "language": language,
+      "country": country,
+      "drug_history": drugHistory.text,
+      "medical_history": medicalHistory.text,
+      "_method": "PATCH"
+    };
     response = await ApiHelper.makeRequest(
         targetRout: ServerConstApis.patientProfile,
         method: "Post",
         files: files,
-        token:token,
-        data: data
-        );
+        token: token,
+        data: data);
     dynamic handlingResponse = response.fold((l) => l, (r) => r);
     if (handlingResponse is ErrorResponse) {
       // isLoading.value = false;
-      SnackbarManager.showSnackbar(
-          handlingResponse.message!,
+      SnackbarManager.showSnackbar(handlingResponse.message!,
           backgroundColor: appTheme.error);
     } else {
       whenResponseSuccess(handlingResponse);
     }
-  
   }
-  whenResponseSuccess(handlingResponse){
 
-  }
+  whenResponseSuccess(handlingResponse) {}
 }
-
-Map<String, dynamic> fakePatientProfile = {
-  "id": 2,
-  "name": "abood1",
-  "email": "abood@gmail.com1",
-  "phone": "09488422602",
-  "email_verified_at": null,
-  "two_factor_secret": null,
-  "two_factor_recovery_codes": null,
-  "usertype": "user",
-  "status": "active",
-  "created_at": "2024-06-19T16:53:55.000000Z",
-  "updated_at": "2024-06-19T16:53:55.000000Z",
-  "patientprofile": {
-    "id": 1,
-    "user_id": 2,
-    "full_name": "عبد المهيمن",
-    "nick_name": "aboodr",
-    "sex": "male",
-    "birthdate": "1987-06-09",
-    "language": null,
-    "country": null,
-    "image": null,
-    "drug_history": null,
-    "medical_history": "سوابق مرضية",
-    "created_at": "2024-06-19T17:00:08.000000Z",
-    "updated_at": "2024-06-19T17:01:21.000000Z",
-    "image_url": null
-  }
-};

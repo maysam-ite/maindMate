@@ -4,6 +4,8 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:maindmate/core/server/parse_response.dart';
 import 'package:get/get.dart';
+import 'package:maindmate/core/shared/widgets/snackbar_manager.dart';
+import 'package:maindmate/main.dart';
 
 /// PaginationController is a generic class for managing paginated data.
 /// It is designed to be extended by specific controllers for different types of data.
@@ -95,48 +97,53 @@ class PaginationController<T> extends GetxController {
     // Indicate that a fetch operation is now in progress
     isFetchInProgress = true;
 
-    try {
-      isLoading.value = itemList.isNotEmpty ? false : true;
-      // if (!_connectivityService.isConnected.value) {
-      //   log("from cache");
-      //   final d = await cacheService.getObject<Map<String, dynamic>>(
-      //     cacheKey: cacheKey,
-      //     deserializeFunction: (jsonMap) => jsonMap,
-      //   );
-      //   if (d != null) {
-      //     handleDataSuccess(d);
-      //   } else {
-      //     isLoading.value = false;
-      //   }
-     
-      // }
-      //  else {
-        Either<ErrorResponse, Map<String, dynamic>> response =
-            await fetchDataCallback('your-api-url', pageId,
-                {}); // Replace 'your-api-url' and {} with actual values
-        dynamic handlingResponse = response.fold((l) => l, (r) => r);
+    // try {
+    isLoading.value = itemList.isNotEmpty ? false : true;
+    // if (!_connectivityService.isConnected.value) {
+    //   log("from cache");
+    //   final d = await cacheService.getObject<Map<String, dynamic>>(
+    //     cacheKey: cacheKey,
+    //     deserializeFunction: (jsonMap) => jsonMap,
+    //   );
+    //   if (d != null) {
+    //     handleDataSuccess(d);
+    //   } else {
+    //     isLoading.value = false;
+    //   }
 
-        if (handlingResponse is ErrorResponse) {
-          errorMessage.value = handlingResponse.getErrorMessages();
-          isError.value = true;
-        } else {
-          handleDataSuccess(handlingResponse);
-          // cacheService.cacheObject<Map<String, dynamic>>(
-          //   object: handlingResponse,
-          //   cacheKey: cacheKey,
-          //   serializeFunction: (data) => data,
-          // );
-        }
-      // }
-      isLoading.value = false;
-      isLoadingMoreData.value = false;
-      isFetchInProgress = false;
-    } catch (e) {
-      isLoading.value = false;
-      isLoadingMoreData.value = false;
+    // }
+    //  else {
+    Either<ErrorResponse, Map<String, dynamic>> response =
+        await fetchDataCallback('your-api-url', pageId,
+            {}); // Replace 'your-api-url' and {} with actual values
+    dynamic handlingResponse = response.fold((l) => l, (r) => r);
+
+    if (handlingResponse is ErrorResponse) {
+      errorMessage.value = handlingResponse.getErrorMessages();
       isError.value = true;
-      isFetchInProgress = false;
+      SnackbarManager.showSnackbar(
+          handlingResponse.validationErrors != null
+              ? handlingResponse.validationErrors!.getAllMessages()[0]
+              : handlingResponse.message!,
+          backgroundColor: appTheme.error);
+    } else {
+      handleDataSuccess(handlingResponse);
+      // cacheService.cacheObject<Map<String, dynamic>>(
+      //   object: handlingResponse,
+      //   cacheKey: cacheKey,
+      //   serializeFunction: (data) => data,
+      // );
     }
+    // }
+    isLoading.value = false;
+    isLoadingMoreData.value = false;
+    isFetchInProgress = false;
+    // } catch (e) {
+    //   isLoading.value = false;
+    //   isLoadingMoreData.value = false;
+    //   isError.value = true;
+    //   isFetchInProgress = false;
+    // }
   }
 
   // A method that can be overridden in subclasses to handle data differently upon successful fetch.

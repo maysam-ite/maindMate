@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:maindmate/core/shared/buttons/general_button.dart';
+import 'package:maindmate/features/patient/profile/controller/patient_profile_controller.dart';
 import 'package:maindmate/main.dart';
 
 class SkipButton extends StatelessWidget {
@@ -64,13 +66,13 @@ class CountinueButton extends StatelessWidget {
 
 class SaveButton extends StatelessWidget {
   SaveButton({super.key});
-  // final SignUpController signUpController = Get.find();
+  final PatientProfileController patientProfileController = Get.find();
   @override
   Widget build(BuildContext context) {
     return ButtonWidget(
-      // showLoadingIndicator: signUpController.isLoading.value,
+      showLoadingIndicator: patientProfileController.isLoading.value,
       onPressed: () {
-        // signUpController.onPressContinue();
+        patientProfileController.onPressSave();
       },
       text: tr('save'),
       options: ButtonOptions(

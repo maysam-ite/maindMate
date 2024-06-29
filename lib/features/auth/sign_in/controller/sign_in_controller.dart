@@ -5,6 +5,7 @@ import 'package:maindmate/core/server/handling_status_code.dart';
 import 'package:maindmate/core/server/helper_api.dart';
 import 'package:maindmate/core/server/parse_response.dart';
 import 'package:maindmate/core/server/server_config.dart';
+import 'package:maindmate/core/services/user_session_service.dart';
 import 'package:maindmate/core/shared/widgets/snackbar_manager.dart';
 import 'package:maindmate/main.dart';
 
@@ -31,21 +32,23 @@ class SignInController extends GetxController {
       dynamic handlingResponse = response.fold((l) => l, (r) => r);
       print(handlingResponse);
       if (handlingResponse is ErrorResponse) {
-        SnackbarManager.showSnackbar(
-            getMessageFromStatus(handlingResponse.status!));
+        isLoading.value = false;
+        SnackbarManager.showSnackbar(handlingResponse.getErrorMessages()[0]);
       } else {
         whenResponseSuccess(handlingResponse);
       }
     }
   }
 
-  whenResponseSuccess(handlingResponse) {
+  whenResponseSuccess(handlingResponse) async {
+    isLoading.value = false;
     if (isRemmberMeActive.value) {
-      
       String token = handlingResponse['token'];
       storeService.createString('token', token);
       print(token);
     }
-    // Get.offAllNamed('/MainBottomNavigationBarWidget');
+    UserSessionService userSessionService = Get.find<UserSessionService>();
+    await userSessionService.getUserType();
+    Get.offAllNamed('/MainBottomNavigationBarWidget');
   }
 }

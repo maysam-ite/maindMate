@@ -158,16 +158,14 @@ class Specialty {
 
 class Experience {
   final int id;
-  final int userId;
   final String edExCe;
   final String title;
   final String from;
-  final String startDate;
-  final String endDate;
+  final DateTime startDate;
+  final DateTime endDate;
 
   Experience({
     required this.id,
-    required this.userId,
     required this.edExCe,
     required this.title,
     required this.from,
@@ -178,12 +176,15 @@ class Experience {
   factory Experience.fromJson(Map<String, dynamic> json) {
     return Experience(
       id: json['id'],
-      userId: json['user_id'],
       edExCe: json['ed_ex_ce'],
       title: json['title'],
       from: json['from'],
-      startDate: json['start_date'],
-      endDate: json['end_date'],
+      startDate: json['start_date'] != null
+          ? DateTime.parse(json['start_date'])
+          : DateTime.now(),
+      endDate: json['end_date'] != null
+          ? DateTime.parse(json['end_date'])
+          : DateTime.now(),
     );
   }
 }

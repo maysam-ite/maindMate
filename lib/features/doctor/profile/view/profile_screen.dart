@@ -6,15 +6,17 @@ import 'package:maindmate/core/services/divide_widgets.dart';
 import 'package:maindmate/core/shared/functions/validation/name_validation.dart';
 import 'package:maindmate/core/shared/text_fileds/custom_text_filed.dart';
 import 'package:maindmate/features/doctor/profile/controller/doctor_profile_controller.dart';
+import 'package:maindmate/features/doctor/profile/view/widgets/certificates_section.dart';
+import 'package:maindmate/features/doctor/profile/view/widgets/date_of_birth.dart';
+import 'package:maindmate/features/doctor/profile/view/widgets/doctor_profile_buttons.dart';
+import 'package:maindmate/features/doctor/profile/view/widgets/education_section.dart';
+import 'package:maindmate/features/doctor/profile/view/widgets/experience_section.dart';
+import 'package:maindmate/features/doctor/profile/view/widgets/pick_countries.dart';
+import 'package:maindmate/features/doctor/profile/view/widgets/pick_language.dart';
 import 'package:maindmate/features/doctor/profile/view/widgets/pick_video_for_doctor.dart';
+import 'package:maindmate/features/doctor/profile/view/widgets/profile_image.dart';
+import 'package:maindmate/features/doctor/profile/view/widgets/select_gender.dart';
 import 'package:maindmate/features/doctor/profile/view/widgets/specialties_section.dart';
-import 'package:maindmate/features/patient/profile/controller/patient_profile_controller.dart';
-import 'package:maindmate/features/patient/profile/view/widgets/date_of_birth.dart';
-import 'package:maindmate/features/patient/profile/view/widgets/patient_profile_buttons.dart';
-import 'package:maindmate/features/patient/profile/view/widgets/pick_countries.dart';
-import 'package:maindmate/features/patient/profile/view/widgets/pick_language.dart';
-import 'package:maindmate/features/patient/profile/view/widgets/profile_image.dart';
-import 'package:maindmate/features/patient/profile/view/widgets/select_gender.dart';
 import 'package:maindmate/main.dart';
 
 class DoctorProfileScreen extends StatelessWidget {
@@ -77,6 +79,9 @@ class DoctorProfileScreen extends StatelessWidget {
               ).tr(),
               PickVideo(),
               SpecialtiesSection(),
+              ExperienceSection(),
+              CertificatesSection(),
+              EducationSection(),
               SizedBox(
                 height: 30.h,
               ),

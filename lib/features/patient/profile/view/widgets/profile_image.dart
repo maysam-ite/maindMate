@@ -26,20 +26,26 @@ class ProfileImage extends StatelessWidget {
       },
       child: Center(
         child: GetBuilder<PatientProfileController>(builder: (controller) {
+          ImageProvider imageProvider;
+
+          if (controller.profilePictuer != null) {
+            imageProvider = FileImage(controller.profilePictuer!);
+          } else if (controller.patient.profile.imageUrl != null &&
+              controller.patient.profile.imageUrl!.isNotEmpty) {
+            imageProvider = NetworkImage(controller.patient.profile.imageUrl!);
+          } else {
+            imageProvider = AssetImage('assets/images/faceBookProfile.jfif');
+          }
+
           return Container(
             width: 120.w,
             height: 120.w,
-            // padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(color: Colors.blue, width: 5),
               image: DecorationImage(
-                image: controller.profilePictuer == null
-                    ? AssetImage('assets/images/faceBookProfile.jfif')
-                        as ImageProvider
-                    : FileImage(controller.profilePictuer
-                        as File), // Cast to File if not already typed
-                fit: BoxFit.contain,
+                image: imageProvider,
+                fit: BoxFit.cover,
               ),
             ),
             child: Align(

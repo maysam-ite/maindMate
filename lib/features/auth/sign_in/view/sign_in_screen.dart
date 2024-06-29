@@ -58,12 +58,12 @@ class SignInScreen extends StatelessWidget {
                 style: appTheme.text18.copyWith(fontWeight: FontWeight.normal),
               ).tr(),
               customTextField(
-                label: tr('password'),
-                controller: signInController.passwordController,
-                validator: (val) {
-                  return passwordValidation(val);
-                },
-              ),
+                  label: tr('password'),
+                  controller: signInController.passwordController,
+                  validator: (val) {
+                    return passwordValidation(val);
+                  },
+                  isPassWordVisible: false),
               RemmeberMe(),
               SizedBox(height: 30.h),
               SignInButton(),

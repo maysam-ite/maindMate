@@ -61,7 +61,7 @@ class AddStoryController extends GetxController {
         });
     dynamic handlingResponse = response.fold((l) => l, (r) => r);
     if (handlingResponse is ErrorResponse) {
-      // isLoading.value = false;
+      isLoading.value = false;
       SnackbarManager.showSnackbar(
           handlingResponse.message!,
           backgroundColor: appTheme.error);

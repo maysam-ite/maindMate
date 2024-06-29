@@ -1,11 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:maindmate/core/shared/widgets/bottom_sheet/show_bottom_sheet.dart';
-import 'package:maindmate/features/Consultations/book_a_consultation/view/widgets/book_a_consiltation_widget_header.dart';
 import 'package:maindmate/features/doctor/profile/controller/doctor_profile_controller.dart';
 import 'package:maindmate/features/doctor/profile/view/widgets/add_new_specialties.dart';
 import 'package:maindmate/main.dart';

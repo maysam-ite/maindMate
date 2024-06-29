@@ -28,67 +28,69 @@ class Patient extends User {
   factory Patient.fromJson(Map<String, dynamic> json) {
     return Patient(
       id: json['id'] ?? 0,
-      name: json['name'] ?? "UnKnown",
+      name: json['name'] ?? "Unknown",
       email: json['email'] ?? '',
       phone: json['phone'] ?? "",
       emailVerifiedAt: json['email_verified_at'],
       twoFactorSecret: json['two_factor_secret'],
       twoFactorRecoveryCodes: json['two_factor_recovery_codes'],
       userType: json['usertype'] ?? "User",
-      profile: PatientProfile.fromJson(json['patientprofile']),
+      profile: json['patientprofile'] != null
+          ? PatientProfile.fromJson(json['patientprofile'])
+          : PatientProfile(userId: json['id'] ?? 0),
     );
   }
 }
 
 class PatientProfile {
-  final int id;
+  final int? id;
   final int userId;
-  final String fullName;
-  final String nickName;
-  final String sex;
-  final String birthdate;
+  final String? fullName;
+  final String? nickName;
+  final String? sex;
+  final String? birthdate;
   final String? language;
   final String? country;
   final String? image;
   final String? drugHistory;
   final String? medicalHistory;
-  final String createdAt;
-  final String updatedAt;
+  final String? createdAt;
+  final String? updatedAt;
   final String? imageUrl;
 
   PatientProfile({
-    required this.id,
+    this.id,
     required this.userId,
-    required this.fullName,
-    required this.nickName,
-    required this.sex,
-    required this.birthdate,
+    this.fullName,
+    this.nickName,
+    this.sex,
+    this.birthdate,
     this.language,
     this.country,
     this.image,
     this.drugHistory,
     this.medicalHistory,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
     this.imageUrl,
   });
 
   factory PatientProfile.fromJson(Map<String, dynamic> json) {
     return PatientProfile(
-      id: json['id'],
-      userId: json['user_id'],
-      fullName: json['full_name'],
-      nickName: json['nick_name'],
-      sex: json['sex'],
-      birthdate: json['birthdate'],
-      language: json['language'],
-      country: json['country'],
-      image: json['image'],
-      drugHistory: json['drug_history'],
-      medicalHistory: json['medical_history'],
-      createdAt: json['created_at'],
-      updatedAt: json['updated_at'],
-      imageUrl: json['image_url'],
+      id: json['id'] as int?,
+      userId: int.parse(json['user_id'] ?? 0),
+      fullName: json['full_name'] as String?,
+      nickName: json['nick_name'] as String?,
+      sex: json['sex'] as String?,
+      birthdate: json['birthdate'] as String?,
+      language: json['language'] as String?,
+      country: json['country'] as String?,
+      image: json['image'] as String?,
+      drugHistory: json['drug_history'] as String?,
+      medicalHistory: json['medical_history'] as String?,
+      createdAt: json['created_at'] as String?,
+      updatedAt: json['updated_at'] as String?,
+      imageUrl: json['image_url'] as String?,
     );
   }
 }
