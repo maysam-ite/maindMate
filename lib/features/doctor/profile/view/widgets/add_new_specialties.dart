@@ -75,7 +75,7 @@ class addNewSpecialtie extends StatelessWidget {
                       style: appTheme.text12,
                       validator: (value) {
                         if (value!.length < 2) {
-                          return tr("The folder name should at least 2 char");
+                          return tr("type_longer_text");
                         }
                         return null;
                       }),
@@ -112,29 +112,33 @@ class addNewSpecialtie extends StatelessWidget {
                         ),
                         showLoadingIndicator: false,
                       ),
-                      ButtonWidget(
-                        onPressed: () async {
-                          doctorProfileController.addNewSpecialtie();
-                          Get.back();
-                        },
-                        text: tr("Create"),
-                        options: ButtonOptions(
-                          width: 100,
-                          height: 45,
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              20, 0, 20, 0),
-                          iconPadding:
-                              const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                          color: appTheme.primary,
-                          textStyle: appTheme.text12,
-                          elevation: 0,
-                          borderSide: BorderSide(
+                      Obx(
+                        () => ButtonWidget(
+                          onPressed: () async {
+                            doctorProfileController.addNewSpecialtie();
+                            Get.back();
+                          },
+                          text: tr("Create"),
+                          options: ButtonOptions(
+                            width: 100,
+                            height: 45,
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                20, 0, 20, 0),
+                            iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                0, 0, 0, 0),
                             color: appTheme.primary,
-                            width: 2,
+                            textStyle:
+                                appTheme.text12.copyWith(color: Colors.white),
+                            elevation: 0,
+                            borderSide: BorderSide(
+                              color: appTheme.primary,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          borderRadius: BorderRadius.circular(10),
+                          showLoadingIndicator:
+                              doctorProfileController.isAddingSpecialty.value,
                         ),
-                        showLoadingIndicator: false,
                       ),
                     ],
                   ),

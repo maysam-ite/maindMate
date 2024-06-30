@@ -59,12 +59,13 @@ class SignUpController extends GetxController {
   }
 
   whenResponseSuccess(handlingResponse) async {
+    String token = handlingResponse['token'];
+    storeService.createString('token', token);
     if (isRemmberMeActive.value) {
-      String token = handlingResponse['token'];
-      storeService.createString('token', token);
+      storeService.createString('isRemmberMeActive', 'true');
     }
     UserSessionService userSessionService = Get.find<UserSessionService>();
     await userSessionService.getUserType();
-    Get.offAllNamed('/MainBottomNavigationBarWidget');
+    Get.offAllNamed('/VerifyEmailScreen');
   }
 }

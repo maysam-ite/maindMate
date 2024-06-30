@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:maindmate/core/shared/buttons/general_button.dart';
 import 'package:maindmate/core/shared/functions/helper/date_formatter.dart';
 import 'package:maindmate/core/shared/text_fileds/custom_text_filed.dart';
+import 'package:maindmate/features/doctor/profile/controller/doctor_profile_controller.dart';
 import 'package:maindmate/features/doctor/profile/model/doctor_profile_model.dart';
 import 'package:maindmate/main.dart';
 
@@ -37,6 +38,7 @@ class _UpdateAndDeleteExistExperienceState
   DateTime? endDate;
   String? dateError;
   late GlobalKey<FormState> formstate = GlobalKey<FormState>();
+  final DoctorProfileController doctorProfileController = Get.find();
 
   @override
   void initState() {
@@ -121,37 +123,83 @@ class _UpdateAndDeleteExistExperienceState
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            widget.onDelete();
-                          },
-                          child: Text(tr("Delete")),
-                          style: ElevatedButton.styleFrom(
-                            textStyle:
-                                appTheme.text12.copyWith(color: Colors.white),
-                          ),
-                        ),
-                        CreateButton(
-                          onCreate: () {
-                            FormState? formdata = formstate.currentState;
-                            if (formdata!.validate()) {
-                              formdata.save();
-                              String? validationMessage =
-                                  handlingStartEndDate(startDate, endDate);
-                              setState(() {
-                                dateError = validationMessage;
-                              });
-                              if (validationMessage == null) {
-                                widget.onUpdate(
-                                  experienceTitle.text,
-                                  experienceFrom.text,
-                                  startDate!,
-                                  endDate!,
-                                );
-                              }
-                            }
-                          },
-                        ),
+                        Obx(() {
+                          return ButtonWidget(
+                            onPressed: doctorProfileController
+                                    .isDeletingExperience.value
+                                ? null
+                                : () async {
+                                    await widget.onDelete();
+                                    Get.back();
+                                  },
+                            text: tr("Delete"),
+                            options: ButtonOptions(
+                              width: 100,
+                              height: 45,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  20, 0, 20, 0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 0, 0),
+                              color: appTheme.error,
+                              textStyle: appTheme.text12.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500),
+                              elevation: 0,
+                              borderSide:
+                                  BorderSide(color: appTheme.error, width: 2),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            showLoadingIndicator: doctorProfileController
+                                .isDeletingExperience.value,
+                          );
+                        }),
+                        Obx(() {
+                          return ButtonWidget(
+                            onPressed: doctorProfileController
+                                    .isUpdatingExperience.value
+                                ? null
+                                : () {
+                                    FormState? formdata =
+                                        formstate.currentState;
+                                    if (formdata!.validate()) {
+                                      formdata.save();
+                                      String? validationMessage =
+                                          handlingStartEndDate(
+                                              startDate, endDate);
+                                      setState(() {
+                                        dateError = validationMessage;
+                                      });
+                                      if (validationMessage == null) {
+                                        widget.onUpdate(
+                                          experienceTitle.text,
+                                          experienceFrom.text,
+                                          startDate!,
+                                          endDate!,
+                                        );
+                                      }
+                                    }
+                                  },
+                            text: tr("Update"),
+                            options: ButtonOptions(
+                              width: 100,
+                              height: 45,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  20, 0, 20, 0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 0, 0),
+                              color: appTheme.primary,
+                              textStyle: appTheme.text12,
+                              elevation: 0,
+                              borderSide: BorderSide(
+                                color: appTheme.primary,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            showLoadingIndicator: doctorProfileController
+                                .isUpdatingExperience.value,
+                          );
+                        }),
                       ],
                     ),
                   ),
@@ -425,11 +473,11 @@ class CancelButton extends StatelessWidget {
 
 String? handlingStartEndDate(DateTime? startDate, DateTime? endDate) {
   if (startDate == null) {
-    return "start_date_required";
+    return tr("start_date_required");
   } else if (endDate == null) {
-    return "end_date_required";
+    return tr("end_date_required");
   } else if (startDate.isAfter(endDate)) {
-    return 'start_date_after_end_date';
+    return tr('start_date_after_end_date');
   } else {
     return null;
   }

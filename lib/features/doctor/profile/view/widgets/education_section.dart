@@ -29,9 +29,13 @@ class EducationSection extends StatelessWidget {
                     widget: AddNewExperience(
                       experienceType: 'education',
                       onCreate: (String title, String experienceFrom,
-                          DateTime? startDate, DateTime? endDate) {
-                        doctorProfileController.addNewExperience('education',
-                            title, experienceFrom, startDate, endDate);
+                          DateTime? startDate, DateTime? endDate) async {
+                        await doctorProfileController.addNewExperience(
+                            'education',
+                            title,
+                            experienceFrom,
+                            startDate,
+                            endDate);
                         Get.back();
                       },
                     ),

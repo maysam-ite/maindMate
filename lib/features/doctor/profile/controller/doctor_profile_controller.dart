@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:maindmate/core/server/helper_api.dart';
 import 'package:maindmate/core/server/parse_response.dart';
 import 'package:maindmate/core/server/server_config.dart';
-import 'package:maindmate/core/services/divide_widgets.dart';
 import 'package:maindmate/core/shared/widgets/snackbar_manager.dart';
 import 'package:maindmate/features/doctor/profile/model/doctor_profile_model.dart';
 import 'package:maindmate/main.dart';
@@ -19,26 +17,68 @@ class DoctorProfileController extends GetxController {
   final TextEditingController nickName = TextEditingController();
   final TextEditingController newSpecialtieName = TextEditingController();
   RxString gender = ''.obs;
-  File? profilePictuer;
+  File? profilePicture;
   File? profileVideo;
   String? country;
   String? language;
   RxBool isLoading = false.obs;
-  RxList<String> specialtiesList = <String>[].obs;
+  RxBool isLoadingPage = false.obs;
+  RxBool isAddingSpecialty = false.obs;
+  RxBool isUpdatingSpecialty = false.obs;
+  RxBool isDeletingSpecialty = false.obs;
+  RxBool isAddingExperience = false.obs;
+  RxBool isUpdatingExperience = false.obs;
+  RxBool isDeletingExperience = false.obs;
+  RxList<Specialty> specialtiesList = <Specialty>[].obs;
   RxList<Experience> generalExperienceList = <Experience>[].obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    doctor = Doctor.fromJson(fakeDoctorProfile);
+    await getDoctorProfile();
+  }
+
+  void populateFieldsWithProfileData(Doctor profile) {
+    fullName.text = profile.profile.fullName ?? '';
+    nickName.text = profile.profile.nickName ?? '';
+    gender.value = profile.profile.sex ?? '';
+    doctorBirthDay = profile.profile.birthdate != null
+        ? DateTime.parse(profile.profile.birthdate!)
+        : null;
+    country =
+        profile.profile.country == 'null' ? null : profile.profile.country;
+    language =
+        profile.profile.language == 'null' ? null : profile.profile.language;
+    specialtiesList.value = profile.specialties;
+    generalExperienceList.value = profile.experiences;
+  }
+
+  Future<void> getDoctorProfile() async {
+    isLoadingPage.value = true;
+    Either<ErrorResponse, Map<String, dynamic>> response;
+    String token = await storeService.readString("token");
+    response = await ApiHelper.makeRequest(
+      targetRout: '${ServerConstApis.doctorProfile}',
+      method: "GET",
+      token: token,
+    );
+
+    dynamic handlingResponse = response.fold((l) => l, (r) => r);
+    if (handlingResponse is ErrorResponse) {
+      isLoadingPage.value = false;
+    } else {
+      doctor = Doctor.fromJson(handlingResponse);
+      populateFieldsWithProfileData(doctor);
+      isLoadingPage.value = false;
+      update();
+    }
   }
 
   final imagePicker = ImagePicker();
   void pickImage(ImageSource imageSource) async {
     final pickedImage = await imagePicker.pickImage(source: imageSource);
     if (pickedImage != null) {
-      profilePictuer = File(pickedImage.path);
-      ///// for isart the custom image iside avatar list on selected position
+      profilePicture = File(pickedImage.path);
       update();
       Get.back();
     }
@@ -49,7 +89,6 @@ class DoctorProfileController extends GetxController {
         await imagePicker.pickVideo(source: ImageSource.gallery);
     if (pickedVideo != null) {
       profileVideo = File(pickedVideo.path);
-      ///// for isart the custom image iside avatar list on selected position
       update();
       Get.back();
     }
@@ -60,44 +99,171 @@ class DoctorProfileController extends GetxController {
     update();
   }
 
-  addNewSpecialtie() {
-    specialtiesList.add(newSpecialtieName.text);
-    newSpecialtieName.clear();
-  }
+  Future<void> addNewSpecialtie() async {
+    isAddingSpecialty.value = true;
+    String token = await storeService.readString("token");
+    Map<String, dynamic> data = {
+      "specialty": newSpecialtieName.text,
+    };
 
-  removeSpecialtie(int index) {
-    specialtiesList.removeAt(index);
-  }
+    Either<ErrorResponse, Map<String, dynamic>> response =
+        await ApiHelper.makeRequest(
+      targetRout: ServerConstApis.storespecialty,
+      method: "POST",
+      token: token,
+      data: data,
+    );
 
-  addNewExperience(String edExCe, String title, String experienceFrom,
-      DateTime? startDate, DateTime? endDate) {
-    generalExperienceList.add(Experience(
-        id: 0,
-        edExCe: edExCe,
-        title: title,
-        from: experienceFrom,
-        startDate: startDate!,
-        endDate: endDate!));
-  }
-
-  updateExistExperience(String edExCe, String title, String experienceFrom,
-      DateTime? startDate, DateTime? endDate, int experienceIndex) {
-    if (experienceIndex >= 0 &&
-        experienceIndex < generalExperienceList.length) {
-      generalExperienceList[experienceIndex] = Experience(
-        id: generalExperienceList[experienceIndex]
-            .id, // Preserve the original ID
-        edExCe: edExCe,
-        title: title,
-        from: experienceFrom,
-        startDate: startDate!,
-        endDate: endDate!,
-      );
+    dynamic handlingResponse = response.fold((l) => l, (r) => r);
+    if (handlingResponse is ErrorResponse) {
+      SnackbarManager.showSnackbar(handlingResponse.message!,
+          backgroundColor: appTheme.error);
+    } else {
+      specialtiesList.add(Specialty.fromJson(handlingResponse));
+      newSpecialtieName.clear();
     }
+    isAddingSpecialty.value = false;
+    update();
   }
 
-  removeExistexperience(int experienceIndex) {
-    generalExperienceList.removeAt(experienceIndex);
+  Future<void> updateSpecialtie(int id, String specialty) async {
+    isUpdatingSpecialty.value = true;
+    String token = await storeService.readString("token");
+    Map<String, dynamic> data = {"specialty": specialty, "_method": "PUT"};
+
+    Either<ErrorResponse, Map<String, dynamic>> response =
+        await ApiHelper.makeRequest(
+      targetRout: '${ServerConstApis.updateSpecialty}/$id',
+      method: "POST",
+      token: token,
+      data: data,
+    );
+
+    dynamic handlingResponse = response.fold((l) => l, (r) => r);
+    if (handlingResponse is ErrorResponse) {
+      SnackbarManager.showSnackbar(handlingResponse.message!,
+          backgroundColor: appTheme.error);
+    } else {
+      int index = specialtiesList.indexWhere((s) => s.id == id);
+      if (index != -1) {
+        specialtiesList[index] = Specialty.fromJson(handlingResponse);
+      }
+    }
+    isUpdatingSpecialty.value = false;
+    update();
+  }
+
+  Future<void> removeSpecialtie(int id) async {
+    isDeletingSpecialty.value = true;
+    String token = await storeService.readString("token");
+
+    Either<ErrorResponse, Map<String, dynamic>> response =
+        await ApiHelper.makeRequest(
+      targetRout: '${ServerConstApis.deleteSpecialty}/$id',
+      method: "DELETE",
+      token: token,
+    );
+
+    dynamic handlingResponse = response.fold((l) => l, (r) => r);
+    if (handlingResponse is ErrorResponse) {
+      SnackbarManager.showSnackbar(handlingResponse.message!,
+          backgroundColor: appTheme.error);
+    } else {
+      specialtiesList.removeWhere((s) => s.id == id);
+    }
+    isDeletingSpecialty.value = false;
+    update();
+  }
+
+  Future<void> addNewExperience(String edExCe, String title,
+      String experienceFrom, DateTime? startDate, DateTime? endDate) async {
+    isAddingExperience.value = true;
+    String token = await storeService.readString("token");
+    Map<String, dynamic> data = {
+      "ed_ex_ce": edExCe,
+      "title": title,
+      "from": experienceFrom,
+      "start_date": startDate?.toIso8601String(),
+      "end_date": endDate?.toIso8601String(),
+    };
+
+    Either<ErrorResponse, Map<String, dynamic>> response =
+        await ApiHelper.makeRequest(
+      targetRout: ServerConstApis.addExperience,
+      method: "POST",
+      token: token,
+      data: data,
+    );
+
+    dynamic handlingResponse = response.fold((l) => l, (r) => r);
+    if (handlingResponse is ErrorResponse) {
+      SnackbarManager.showSnackbar(handlingResponse.message!,
+          backgroundColor: appTheme.error);
+    } else {
+      generalExperienceList.add(Experience.fromJson(handlingResponse));
+    }
+    isAddingExperience.value = false;
+    update();
+  }
+
+  Future<void> updateExistExperience(int id, String edExCe, String title,
+      String experienceFrom, DateTime? startDate, DateTime? endDate) async {
+    isUpdatingExperience.value = true;
+    String token = await storeService.readString("token");
+    Map<String, dynamic> data = {
+      "ed_ex_ce": edExCe,
+      "title": title,
+      "from": experienceFrom,
+      "start_date": startDate?.toIso8601String(),
+      "end_date": endDate?.toIso8601String(),
+      "_method": "PUT"
+    };
+
+    Either<ErrorResponse, Map<String, dynamic>> response =
+        await ApiHelper.makeRequest(
+      targetRout: '${ServerConstApis.updateExperience}/$id',
+      method: "POST",
+      token: token,
+      data: data,
+    );
+
+    dynamic handlingResponse = response.fold((l) => l, (r) => r);
+    if (handlingResponse is ErrorResponse) {
+      SnackbarManager.showSnackbar(handlingResponse.message!,
+          backgroundColor: appTheme.error);
+    } else {
+      int index = generalExperienceList.indexWhere((e) => e.id == id);
+      if (index != -1) {
+        generalExperienceList[index] = Experience.fromJson(handlingResponse);
+      }
+    }
+    isUpdatingExperience.value = false;
+    update();
+  }
+
+  Future<void> removeExistExperience(int id) async {
+    print("hhhhhhhhhhhhhh+$id");
+    isDeletingExperience.value = true;
+    String token = await storeService.readString("token");
+
+    Either<ErrorResponse, Map<String, dynamic>> response =
+        await ApiHelper.makeRequest(
+      targetRout: '${ServerConstApis.deleteExperience}/$id',
+      method: "DELETE",
+      token: token,
+    );
+
+    dynamic handlingResponse = response.fold((l) => l, (r) => r);
+    if (handlingResponse is ErrorResponse) {
+      SnackbarManager.showSnackbar(handlingResponse.message!,
+          backgroundColor: appTheme.error);
+    } else {
+      print("hhhhhhhhhhhhhh+$handlingResponse");
+
+      generalExperienceList.removeWhere((e) => e.id == id);
+    }
+    isDeletingExperience.value = false;
+    update();
   }
 
   onPressSave() async {
@@ -105,26 +271,29 @@ class DoctorProfileController extends GetxController {
     Either<ErrorResponse, Map<String, dynamic>> response;
     String token = await storeService.readString('token');
     Map<String, File> files = {};
-    if (profilePictuer != null) {
-      files['image'] = profilePictuer!;
+    if (profilePicture != null) {
+      files['image'] = profilePicture!;
+    }
+    if (profileVideo != null) {
+      files['video'] = profileVideo!;
     }
     Map<String, dynamic> data = {
       "full_name": fullName.text,
       "nick_name": nickName.text,
       "sex": gender.value == '' ? null : gender.value,
-      "birthdate": DateFormat.yMd(doctor),
+      "birthdate": doctorBirthDay.toString(),
       "language": language,
       "country": country,
     };
     response = await ApiHelper.makeRequest(
-        targetRout: ServerConstApis.patientProfile,
-        method: "Post",
-        files: files,
-        token: token,
-        data: data);
+      targetRout: ServerConstApis.doctorProfile,
+      method: "Post",
+      files: files,
+      token: token,
+      data: data,
+    );
     dynamic handlingResponse = response.fold((l) => l, (r) => r);
     if (handlingResponse is ErrorResponse) {
-      // isLoading.value = false;
       SnackbarManager.showSnackbar(handlingResponse.message!,
           backgroundColor: appTheme.error);
     } else {
@@ -132,89 +301,8 @@ class DoctorProfileController extends GetxController {
     }
   }
 
-  whenResponseSuccess(handlingResponse) {}
+  whenResponseSuccess(handlingResponse) {
+    isLoading.value = false;
+    // Handle successful response
+  }
 }
-
-Map<String, dynamic> fakeDoctorProfile = {
-  "id": 2,
-  "name": "abood1",
-  "email": "abood@gmail.com1",
-  "phone": "09488422601",
-  "email_verified_at": null,
-  "two_factor_secret": null,
-  "two_factor_recovery_codes": null,
-  "usertype": "user",
-  "created_at": "2024-06-11T18:50:48.000000Z",
-  "updated_at": "2024-06-11T18:50:48.000000Z",
-  "ratings_avg_rating": "4.5000",
-  "doctorprofile": {
-    "id": 2,
-    "user_id": 2,
-    "full_name": "عبد المهيمن حموري",
-    "nick_name": "abood",
-    "sex": "female",
-    "birthdate": "1987-06-10",
-    "language": null,
-    "country": null,
-    "image": null,
-    "video": null,
-    "created_at": "2024-06-19T12:42:16.000000Z",
-    "updated_at": "2024-06-19T12:43:07.000000Z",
-    "image_url": null,
-    "video_url": null
-  },
-  "ratings": [
-    {
-      "id": 4,
-      "user_id": 2,
-      "rated_by": 1,
-      "rating": 4,
-      "comment": "تعليق مرافق للتقييم",
-      "created_at": "2024-06-19T13:22:54.000000Z",
-      "updated_at": "2024-06-19T13:22:54.000000Z"
-    },
-    {
-      "id": 5,
-      "user_id": 2,
-      "rated_by": 2,
-      "rating": 5,
-      "comment": "تعليق مرافق للتقييم",
-      "created_at": "2024-06-19T13:23:23.000000Z",
-      "updated_at": "2024-06-19T13:23:23.000000Z"
-    }
-  ],
-  "specialties": [
-    {"id": 5, "user_id": 2, "specialty": "رهاب اجتماعي"},
-    {"id": 3, "user_id": 2, "specialty": "قلق"},
-    {"id": 1, "user_id": 2, "specialty": "قلق اجتماعي"}
-  ],
-  "experiences": [
-    {
-      "id": 1,
-      "user_id": 2,
-      "ed_ex_ce": "education",
-      "title": "هندسة اتصالات",
-      "from": "جامعة دمشق",
-      "start_date": "2007-01-01",
-      "end_date": "2012-01-01"
-    },
-    {
-      "id": 3,
-      "user_id": 2,
-      "ed_ex_ce": "education",
-      "title": "ماستر علوم ويب",
-      "from": "جامعة دمشق",
-      "start_date": "2007-01-01",
-      "end_date": "2012-01-01"
-    },
-    {
-      "id": 5,
-      "user_id": 2,
-      "ed_ex_ce": "experience",
-      "title": "خبرة برمجية",
-      "from": "شركة أ",
-      "start_date": "2020-01-01",
-      "end_date": "2021-01-01"
-    }
-  ]
-};

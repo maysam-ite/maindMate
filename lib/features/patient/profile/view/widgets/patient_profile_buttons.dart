@@ -69,25 +69,27 @@ class SaveButton extends StatelessWidget {
   final PatientProfileController patientProfileController = Get.find();
   @override
   Widget build(BuildContext context) {
-    return ButtonWidget(
-      showLoadingIndicator: patientProfileController.isLoading.value,
-      onPressed: () {
-        patientProfileController.onPressSave();
-      },
-      text: tr('save'),
-      options: ButtonOptions(
-        width: MediaQuery.sizeOf(context).width * 0.7,
-        height: 50,
-        padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
-        iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-        color: appTheme.primary,
-        textStyle: appTheme.text18.copyWith(color: Colors.white),
-        elevation: 3,
-        borderSide: const BorderSide(
-          color: Colors.transparent,
-          width: 1,
+    return Obx(
+      () => ButtonWidget(
+        showLoadingIndicator: patientProfileController.isLoading.value,
+        onPressed: () {
+          patientProfileController.onPressSave();
+        },
+        text: tr('save'),
+        options: ButtonOptions(
+          width: MediaQuery.sizeOf(context).width * 0.7,
+          height: 50,
+          padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+          iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+          color: appTheme.primary,
+          textStyle: appTheme.text18.copyWith(color: Colors.white),
+          elevation: 3,
+          borderSide: const BorderSide(
+            color: Colors.transparent,
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(12),
         ),
-        borderRadius: BorderRadius.circular(12),
       ),
     );
   }

@@ -8,6 +8,7 @@ import 'package:maindmate/core/shared/functions/validation/email_validation.dart
 import 'package:maindmate/core/shared/functions/validation/password_validation.dart';
 import 'package:maindmate/core/shared/text_fileds/custom_text_filed.dart';
 import 'package:maindmate/features/auth/sign_in/controller/sign_in_controller.dart';
+import 'package:maindmate/features/auth/sign_in/view/widgets/forget_password_widget.dart';
 import 'package:maindmate/main.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -63,10 +64,12 @@ class SignInScreen extends StatelessWidget {
                   validator: (val) {
                     return passwordValidation(val);
                   },
-                  isPassWordVisible: false),
+                  isPassWordVisible: true),
               RemmeberMe(),
               SizedBox(height: 30.h),
               SignInButton(),
+              SizedBox(height: 20.h),
+              FogetPasswordWidget(),
               SizedBox(height: 20.h),
               const SignUpUsingFacebookGoogle(),
               SizedBox(height: 30.h),

@@ -1,11 +1,12 @@
 import 'dart:async';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SnackbarManager {
   static final RxBool _isSnackbarActive = false.obs;
 
-  static void showSnackbar( String message,
+  static void showSnackbar(String message,
       {SnackPosition position = SnackPosition.BOTTOM,
       Widget? icon,
       Color backgroundColor = Colors.blue,
@@ -17,7 +18,7 @@ class SnackbarManager {
     _isSnackbarActive.value = true;
 
     Get.rawSnackbar(
-      message: message,
+      message: tr(message),
 
       icon: icon,
       snackPosition: position,

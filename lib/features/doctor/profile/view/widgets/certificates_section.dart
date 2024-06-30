@@ -29,9 +29,13 @@ class CertificatesSection extends StatelessWidget {
                     widget: AddNewExperience(
                       experienceType: 'certificate',
                       onCreate: (String title, String experienceFrom,
-                          DateTime? startDate, DateTime? endDate) {
-                        doctorProfileController.addNewExperience('certificate',
-                            title, experienceFrom, startDate, endDate);
+                          DateTime? startDate, DateTime? endDate) async {
+                        await doctorProfileController.addNewExperience(
+                            'certificate',
+                            title,
+                            experienceFrom,
+                            startDate,
+                            endDate);
                         Get.back();
                       },
                     ),

@@ -42,9 +42,11 @@ class SignInController extends GetxController {
 
   whenResponseSuccess(handlingResponse) async {
     isLoading.value = false;
+    String token = handlingResponse['token'];
+    storeService.createString('token', token);
     if (isRemmberMeActive.value) {
-      String token = handlingResponse['token'];
-      storeService.createString('token', token);
+      storeService.createString('isRemmberMeActive', 'true');
+
       print(token);
     }
     UserSessionService userSessionService = Get.find<UserSessionService>();

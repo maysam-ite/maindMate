@@ -38,7 +38,7 @@ class _PickLanguageState extends State<PickLanguage> {
         alignment: const AlignmentDirectional(-1, 0.00),
         child: GetBuilder<DoctorProfileController>(builder: (context) {
           return Text(
-            doctorProfileController.country ?? "",
+            doctorProfileController.language ?? "",
             style: appTheme.text16,
           );
         }),

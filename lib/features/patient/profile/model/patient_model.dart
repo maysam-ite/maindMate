@@ -78,7 +78,9 @@ class PatientProfile {
   factory PatientProfile.fromJson(Map<String, dynamic> json) {
     return PatientProfile(
       id: json['id'] as int?,
-      userId: int.parse(json['user_id'] ?? 0),
+      userId: json['user_id'] is String
+          ? int.parse(json['user_id'] ?? "0")
+          : json['user_id'] ?? 0,
       fullName: json['full_name'] as String?,
       nickName: json['nick_name'] as String?,
       sex: json['sex'] as String?,

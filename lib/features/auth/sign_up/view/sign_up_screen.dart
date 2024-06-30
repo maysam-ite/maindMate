@@ -41,7 +41,8 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 Text(
                   tr('user_name'),
-                  style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
+                  style:
+                      appTheme.text16.copyWith(fontWeight: FontWeight.normal),
                 ),
                 customTextField(
                     label: tr('enter_user_name'),
@@ -51,7 +52,8 @@ class SignUpScreen extends StatelessWidget {
                     }),
                 Text(
                   'enter_email',
-                  style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
+                  style:
+                      appTheme.text16.copyWith(fontWeight: FontWeight.normal),
                 ).tr(),
                 customTextField(
                     label: tr('email'),
@@ -61,14 +63,17 @@ class SignUpScreen extends StatelessWidget {
                     }),
                 Text(
                   'enter_phone',
-                  style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
+                  style:
+                      appTheme.text16.copyWith(fontWeight: FontWeight.normal),
                 ).tr(),
                 internationalField(signUpController.phoneController),
                 Text(
                   'enter_password',
-                  style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
+                  style:
+                      appTheme.text16.copyWith(fontWeight: FontWeight.normal),
                 ).tr(),
                 customTextField(
+                    isPassWordVisible: true,
                     label: tr('password'),
                     controller: signUpController.passwordController,
                     validator: (val) {
@@ -76,9 +81,11 @@ class SignUpScreen extends StatelessWidget {
                     }),
                 Text(
                   'اعد ادخال كلمة المرور',
-                  style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
+                  style:
+                      appTheme.text16.copyWith(fontWeight: FontWeight.normal),
                 ),
                 customTextField(
+                    isPassWordVisible: true,
                     label: tr('re_enter_password'),
                     controller: signUpController.confirmPasswordController,
                     validator: (val) {
@@ -98,8 +105,8 @@ class SignUpScreen extends StatelessWidget {
                   children: [
                     Text(
                       'i_have_an_account',
-                      style:
-                          appTheme.text16.copyWith(fontWeight: FontWeight.normal),
+                      style: appTheme.text16
+                          .copyWith(fontWeight: FontWeight.normal),
                     ).tr(),
                     GestureDetector(
                       onTap: () {
@@ -108,7 +115,8 @@ class SignUpScreen extends StatelessWidget {
                       child: Text(
                         'login',
                         style: appTheme.text18.copyWith(
-                            fontWeight: FontWeight.w500, color: appTheme.primary),
+                            fontWeight: FontWeight.w500,
+                            color: appTheme.primary),
                       ).tr(),
                     )
                   ],
@@ -180,11 +188,11 @@ class TermOfUs extends StatelessWidget {
       children: [
         Obx(
           () => Checkbox(
-            isError: signUpController.isAcceptTermOfUsWarningActive.value,
-              value:  signUpController.isAcceptTermOfUs.value,
+              isError: signUpController.isAcceptTermOfUsWarningActive.value,
+              value: signUpController.isAcceptTermOfUs.value,
               onChanged: (val) {
                 signUpController.isAcceptTermOfUs.value = val!;
-                signUpController.isAcceptTermOfUsWarningActive.value=false;
+                signUpController.isAcceptTermOfUsWarningActive.value = false;
               }),
         ),
         Text(
@@ -219,7 +227,9 @@ class SignUpButton extends StatelessWidget {
             height: 50,
             padding: const EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
             iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-            color:signUpController.isAcceptTermOfUs.value? appTheme.primary:appTheme.primary.withOpacity(0.5),
+            color: signUpController.isAcceptTermOfUs.value
+                ? appTheme.primary
+                : appTheme.primary.withOpacity(0.5),
             textStyle: appTheme.text18.copyWith(color: Colors.white),
             elevation: 3,
             borderSide: const BorderSide(

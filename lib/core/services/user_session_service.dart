@@ -7,20 +7,19 @@ import 'package:maindmate/core/server/server_config.dart';
 import 'package:maindmate/main.dart';
 
 class UserSessionService extends GetxService {
-  // Default to guest for simplicity
   Rx<UserType> userType = UserType.guest.obs;
+  RxBool isEmailVerified = false.obs;
 
   Future<UserSessionService> init() async {
-    // Fetch user type from API or secure storage
     await getUserType();
     return this;
   }
 
   Future<void> getUserType() async {
     String? token = await storeService.readString("token");
-
-    // If there's no token, set user type to guest
-    if (token == '' || token.isEmpty) {
+    bool isRememberMeActive =
+        await storeService.isContainKey('isRemmberMeActive');
+    if (token == '' || token.isEmpty || !isRememberMeActive) {
       userType.value = UserType.guest;
       return;
     }
@@ -34,10 +33,11 @@ class UserSessionService extends GetxService {
 
     dynamic handlingResponse = response.fold((l) => l, (r) => r);
     if (handlingResponse is ErrorResponse) {
-      // Handle error appropriately
-      userType.value = UserType.guest; // Default to guest on error
+      userType.value = UserType.guest;
     } else {
       String userTypeStr = handlingResponse['usertype'] ?? 'user';
+      isEmailVerified.value = handlingResponse['email_verified_at'] != null;
+
       if (userTypeStr == 'doctor') {
         userType.value = UserType.doctor;
       } else if (userTypeStr == 'user') {

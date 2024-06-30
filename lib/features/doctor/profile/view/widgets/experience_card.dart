@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -28,13 +29,21 @@ class ExperienceCard extends StatelessWidget {
                   .generalExperienceList[experienceIndex],
               experienceType: 'experience',
               onUpdate: (String title, String experienceFrom,
-                  DateTime? startDate, DateTime? endDate) {
-                doctorProfileController.updateExistExperience('experience',
-                    title, experienceFrom, startDate, endDate, experienceIndex);
+                  DateTime? startDate, DateTime? endDate) async {
+                await doctorProfileController.updateExistExperience(
+                  experience.id,
+                  'experience',
+                  title,
+                  experienceFrom,
+                  startDate,
+                  endDate,
+                );
                 Get.back();
               },
-              onDelete: () {
-                doctorProfileController.removeExistexperience(experienceIndex);
+              onDelete: () async {
+                await doctorProfileController
+                    .removeExistExperience(experience.id);
+                Get.back();
               },
             ),
             height: 600.h);
@@ -66,7 +75,7 @@ class ExperienceCard extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    'From: ${DateFormatter.formatDate(experience.startDate)}',
+                    '${tr("From")}: ${DateFormatter.formatDate(experience.startDate)}',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey[800],
@@ -74,7 +83,7 @@ class ExperienceCard extends StatelessWidget {
                   ),
                   SizedBox(width: 16),
                   Text(
-                    'To: ${DateFormatter.formatDate(experience.endDate)}',
+                    '${tr("To")}: ${DateFormatter.formatDate(experience.endDate)}',
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey[800],

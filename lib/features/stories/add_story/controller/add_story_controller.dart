@@ -10,6 +10,7 @@ import 'package:maindmate/core/server/parse_response.dart';
 import 'package:maindmate/core/server/server_config.dart';
 import 'package:maindmate/core/shared/widgets/snackbar_manager.dart';
 import 'package:maindmate/features/main_bottom_navigation_bar/controller/main_bottom_navigation_controller.dart';
+import 'package:maindmate/features/stories/stories/controller/stories_controller.dart';
 import 'package:maindmate/main.dart';
 
 class AddStoryController extends GetxController {
@@ -44,7 +45,7 @@ class AddStoryController extends GetxController {
   onPressContinue() async {
     isLoading.value = true;
     Either<ErrorResponse, Map<String, dynamic>> response;
-    String token=await storeService.readString('token');
+    String token = await storeService.readString('token');
     Map<String, File> files = {};
     if (media != null) {
       media!.isVideo
@@ -55,26 +56,34 @@ class AddStoryController extends GetxController {
         targetRout: ServerConstApis.stories,
         method: "Post",
         files: files,
-        token:token,
+        token: token,
         data: {
           'text': storyText.text,
         });
     dynamic handlingResponse = response.fold((l) => l, (r) => r);
     if (handlingResponse is ErrorResponse) {
       isLoading.value = false;
-      SnackbarManager.showSnackbar(
-          handlingResponse.message!,
+      SnackbarManager.showSnackbar(handlingResponse.message!,
           backgroundColor: appTheme.error);
+      isLoading.value = false;
     } else {
       whenResponseSuccess(handlingResponse);
     }
   }
 
-  whenResponseSuccess(handlingResponse) {
-     SnackbarManager.showSnackbar(
-          "uplaod new story success!!",
-          backgroundColor: appTheme.success);
+  whenResponseSuccess(handlingResponse) async {
+    SnackbarManager.showSnackbar("uplaod new story success!!",
+        backgroundColor: appTheme.success);
+    await Get.find<StoriesController>().refreshData();
     Get.find<MainBottomNavigationController>().changePage(0);
+    reset();
+  }
+
+  void reset() {
+    storyText.clear();
+    media = null;
+    isLoading.value = false;
+    update();
   }
 }
 

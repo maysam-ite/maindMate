@@ -20,7 +20,9 @@ class StoryCommentModel {
     return StoryCommentModel(
       id: ((map['id'] ?? 0)),
       storyId: (int.parse(map['story_id'] ?? "0")),
-      userId: (int.parse(map['user_id'] ?? "0")),
+      userId: map['user_id'] is String
+          ? (int.parse(map['user_id'] ?? "0"))
+          : (map['user_id'] ?? 0),
       text: (map['text'] ?? '') as String,
       status: (map['status'] ?? '') as String,
       commentAuthor: (map['comment_author'] ?? '') as String,

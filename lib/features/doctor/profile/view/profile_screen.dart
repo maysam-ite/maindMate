@@ -27,76 +27,90 @@ class DoctorProfileScreen extends StatelessWidget {
     return Scaffold(
       body: SizedBox(
         width: double.infinity,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 60),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const ProfileImage(),
-              Text(
-                'full_name',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              customTextField(
-                  label: '',
-                  controller: doctorProfileController.fullName,
-                  validator: (val) {
-                    return nameValidation(val);
-                  }),
-              Text(
-                'nick_name',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              customTextField(
-                  label: '',
-                  controller: doctorProfileController.nickName,
-                  validator: (val) {
-                    return nameValidation(val);
-                  }),
-              Text(
-                'age',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              SetDateOfBirth(),
-              Text(
-                'country',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              PickCountries(),
-              Text(
-                'language',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              PickLanguage(),
-              Text(
-                'gender',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              SelectGender(),
-              Text(
-                'video',
-                style: appTheme.text16.copyWith(fontWeight: FontWeight.normal),
-              ).tr(),
-              PickVideo(),
-              SpecialtiesSection(),
-              ExperienceSection(),
-              CertificatesSection(),
-              EducationSection(),
-              SizedBox(
-                height: 30.h,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  // children: [SkipButton(), CountinueButton()],
-                  children: [SaveButton()],
+        child: Obx(
+          () => doctorProfileController.isLoadingPage.value
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : SingleChildScrollView(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 50, horizontal: 60),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const ProfileImage(),
+                      Text(
+                        'full_name',
+                        style: appTheme.text16
+                            .copyWith(fontWeight: FontWeight.normal),
+                      ).tr(),
+                      customTextField(
+                          label: '',
+                          controller: doctorProfileController.fullName,
+                          validator: (val) {
+                            return nameValidation(val);
+                          }),
+                      Text(
+                        'nick_name',
+                        style: appTheme.text16
+                            .copyWith(fontWeight: FontWeight.normal),
+                      ).tr(),
+                      customTextField(
+                          label: '',
+                          controller: doctorProfileController.nickName,
+                          validator: (val) {
+                            return nameValidation(val);
+                          }),
+                      Text(
+                        'age',
+                        style: appTheme.text16
+                            .copyWith(fontWeight: FontWeight.normal),
+                      ).tr(),
+                      SetDateOfBirth(),
+                      Text(
+                        'country',
+                        style: appTheme.text16
+                            .copyWith(fontWeight: FontWeight.normal),
+                      ).tr(),
+                      PickCountries(),
+                      Text(
+                        'language',
+                        style: appTheme.text16
+                            .copyWith(fontWeight: FontWeight.normal),
+                      ).tr(),
+                      PickLanguage(),
+                      Text(
+                        'gender',
+                        style: appTheme.text16
+                            .copyWith(fontWeight: FontWeight.normal),
+                      ).tr(),
+                      SelectGender(),
+                      Text(
+                        'video',
+                        style: appTheme.text16
+                            .copyWith(fontWeight: FontWeight.normal),
+                      ).tr(),
+                      PickVideo(),
+                      SpecialtiesSection(),
+                      ExperienceSection(),
+                      CertificatesSection(),
+                      EducationSection(),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // children: [SkipButton(), CountinueButton()],
+                          children: [SaveButton()],
+                        ),
+                      )
+                    ].divide(SizedBox(
+                      height: 5.h,
+                    )),
+                  ),
                 ),
-              )
-            ].divide(SizedBox(
-              height: 5.h,
-            )),
-          ),
         ),
       ),
     );

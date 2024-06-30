@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:maindmate/core/shared/widgets/bottom_sheet/show_bottom_sheet.dart';
 import 'package:maindmate/features/doctor/profile/controller/doctor_profile_controller.dart';
 import 'package:maindmate/features/doctor/profile/view/widgets/add_new_specialties.dart';
+import 'package:maindmate/features/doctor/profile/view/widgets/update_specialty.dart';
 import 'package:maindmate/main.dart';
 
 class SpecialtiesSection extends StatelessWidget {
@@ -43,7 +44,8 @@ class SpecialtiesSection extends StatelessWidget {
                 ...List.generate(
                     doctorProfileController.specialtiesList.length,
                     (index) => SpecializationCardWithDeleteAction(
-                          title: doctorProfileController.specialtiesList[index],
+                          title: doctorProfileController
+                              .specialtiesList[index].specialty,
                           index: index,
                         ))
               ],
@@ -62,31 +64,25 @@ class SpecializationCardWithDeleteAction extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          decoration: BoxDecoration(
-              color: appTheme.secondary.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(12.sp)),
-          child: Text(
-            title,
-            style: appTheme.text14.copyWith(color: appTheme.secondary),
-          ),
+    return GestureDetector(
+      onTap: () {
+        showButtonSheet(
+            context: context,
+            widget: UpdateSpecialtie(
+              specialtyIndex: index,
+            ),
+            height: 500);
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        decoration: BoxDecoration(
+            color: appTheme.secondary.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(12.sp)),
+        child: Text(
+          title,
+          style: appTheme.text14.copyWith(color: appTheme.secondary),
         ),
-        Positioned(
-            top: -1,
-            left: -1,
-            child: GestureDetector(
-              onTap: () {
-                Get.find<DoctorProfileController>().removeSpecialtie(index);
-              },
-              child: const Icon(
-                Icons.cancel_rounded,
-                size: 20,
-              ),
-            ))
-      ],
+      ),
     );
   }
 }

@@ -5,6 +5,7 @@ import 'package:maindmate/core/server/helper_api.dart';
 import 'package:maindmate/core/server/parse_response.dart';
 import 'package:maindmate/core/server/server_config.dart';
 import 'package:maindmate/core/shared/widgets/snackbar_manager.dart';
+import 'package:maindmate/features/stories/stories/model/story_comment_model.dart';
 import 'package:maindmate/features/stories/stories/model/story_model.dart';
 import 'package:maindmate/main.dart';
 
@@ -81,10 +82,13 @@ class StoryDetailesController extends GetxController {
   }
 
   void whenResponseSuccess(dynamic handlingResponse) {
+    storyModel.storyComments.add(StoryCommentModel.fromMap(handlingResponse));
+
     comment.clear();
     SnackbarManager.showSnackbar(
       "Your comment was sent",
       backgroundColor: appTheme.success,
     );
+    update();
   }
 }

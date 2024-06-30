@@ -89,14 +89,22 @@ class PatientProfileController extends GetxController {
     Map<String, dynamic> data = {
       "full_name": fullName.text,
       "nick_name": nickName.text,
-      "sex": gender.value == '' ? null : gender.value,
-      "birthdate": patientBirthDay.toString(),
-      "language": language,
-      "country": country,
-      "drug_history": drugHistory.text,
-      "medical_history": medicalHistory.text,
+      "sex": gender.value.isEmpty ? null : gender.value,
+      "birthdate": patientBirthDay?.toIso8601String(),
+      "drug_history": drugHistory.text.isEmpty ? null : drugHistory.text,
+      "medical_history":
+          medicalHistory.text.isEmpty ? null : medicalHistory.text,
       "_method": "PATCH"
     };
+
+    if (language != null && language!.isNotEmpty) {
+      data['language'] = language;
+    }
+    if (country != null && country!.isNotEmpty) {
+      data['country'] = country;
+    }
+
+    data.removeWhere((key, value) => value == null);
     response = await ApiHelper.makeRequest(
         targetRout: ServerConstApis.patientProfile,
         method: "Post",
@@ -105,10 +113,11 @@ class PatientProfileController extends GetxController {
         data: data);
     dynamic handlingResponse = response.fold((l) => l, (r) => r);
     if (handlingResponse is ErrorResponse) {
-      // isLoading.value = false;
+      isLoading.value = false;
       SnackbarManager.showSnackbar(handlingResponse.message!,
           backgroundColor: appTheme.error);
     } else {
+      isLoading.value = false;
       whenResponseSuccess(handlingResponse);
     }
   }

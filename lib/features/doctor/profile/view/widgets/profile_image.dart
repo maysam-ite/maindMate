@@ -35,10 +35,10 @@ class ProfileImage extends StatelessWidget {
               shape: BoxShape.circle,
               border: Border.all(color: Colors.blue, width: 5),
               image: DecorationImage(
-                image: controller.profilePictuer == null
+                image: controller.profilePicture == null
                     ? AssetImage('assets/images/faceBookProfile.jfif')
                         as ImageProvider
-                    : FileImage(controller.profilePictuer
+                    : FileImage(controller.profilePicture
                         as File), // Cast to File if not already typed
                 fit: BoxFit.contain,
               ),

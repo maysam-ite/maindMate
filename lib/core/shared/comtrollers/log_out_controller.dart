@@ -21,6 +21,8 @@ class LogOutController extends GetxController {
       // Handle error appropriately
     } else {
       await storeService.remove('token');
+      await storeService.remove('isRemmberMeActive');
+
       UserSessionService userSessionService = Get.find<UserSessionService>();
       userSessionService.resetUserSession();
       Get.offAllNamed('/');

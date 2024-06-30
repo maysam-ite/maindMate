@@ -52,23 +52,17 @@ class StoriesScreen extends StatelessWidget {
                 onRefresh: () async {
                   await storiesController.refreshData();
                 },
-                child: SingleChildScrollView(
+                child: ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                    children: [
-                      ...List.generate(
-                          storiesController.itemList.length,
-                          (index) => StoriesWidget(
-                                storyModel: storiesController.itemList[index],
-                              ))
-                    ]
-                        .divide(SizedBox(
-                          height: 15.h,
-                        ))
-                        .addToStart(SizedBox(
-                          height: 15.h,
-                        )),
-                  ),
+                  itemCount: storiesController.itemList.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: 7.5.h),
+                      child: StoriesWidget(
+                        storyModel: storiesController.itemList[index],
+                      ),
+                    );
+                  },
                 ),
               ),
       ),

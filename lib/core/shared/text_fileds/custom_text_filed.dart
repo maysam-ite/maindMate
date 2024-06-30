@@ -14,8 +14,7 @@ Widget customTextField(
   return TextFormField(
     keyboardType: keyboardType,
     controller: controller,
-    maxLines: maxLines,
-    
+    maxLines: maxLines ?? 1,
     obscureText: isPassWordVisible ?? false,
     decoration: InputDecoration(
       hoverColor: appTheme.secondaryBackground,
@@ -24,10 +23,9 @@ Widget customTextField(
       floatingLabelBehavior: FloatingLabelBehavior.never,
       errorText: errorText,
       // labelText: label,
-  
+
       hintText: label,
-      
-       
+
       labelStyle: appTheme.text16,
       hintStyle: appTheme.text16,
       enabledBorder: OutlineInputBorder(

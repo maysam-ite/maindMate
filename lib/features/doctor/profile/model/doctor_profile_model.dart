@@ -54,16 +54,14 @@ class Doctor extends User {
 class DoctorProfile {
   final int id;
   final int userId;
-  final String fullName;
-  final String nickName;
-  final String sex;
-  final String birthdate;
+  final String? fullName;
+  final String? nickName;
+  final String? sex;
+  final String? birthdate;
   final String? language;
   final String? country;
   final String? image;
   final String? video;
-  final String createdAt;
-  final String updatedAt;
   final String? imageUrl;
   final String? videoUrl;
 
@@ -78,16 +76,14 @@ class DoctorProfile {
     this.country,
     this.image,
     this.video,
-    required this.createdAt,
-    required this.updatedAt,
     this.imageUrl,
     this.videoUrl,
   });
 
   factory DoctorProfile.fromJson(Map<String, dynamic> json) {
     return DoctorProfile(
-      id: json['id'],
-      userId: json['user_id'],
+      id: json['id'] ?? 0,
+      userId: int.parse(json['user_id'] ?? '0'),
       fullName: json['full_name'],
       nickName: json['nick_name'],
       sex: json['sex'],
@@ -96,8 +92,6 @@ class DoctorProfile {
       country: json['country'],
       image: json['image'],
       video: json['video'],
-      createdAt: json['created_at'],
-      updatedAt: json['updated_at'],
       imageUrl: json['image_url'],
       videoUrl: json['video_url'],
     );
@@ -150,7 +144,7 @@ class Specialty {
   factory Specialty.fromJson(Map<String, dynamic> json) {
     return Specialty(
       id: json['id'],
-      userId: json['user_id'],
+      userId: int.parse(json['user_id'] ?? '0'),
       specialty: json['specialty'],
     );
   }

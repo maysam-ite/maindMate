@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -62,7 +63,7 @@ class SendComment extends StatelessWidget {
       children: [
         Expanded(
           child: customTextField(
-            label: 'comment',
+            label: tr('send_comment'),
             validator: (value) {
               return null;
             },
@@ -164,7 +165,7 @@ class PostComments extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Text(
-                  'Comments (${storyComments.length})',
+                  '${tr("Comments")} (${storyComments.length})',
                   style: appTheme.text14.copyWith(fontWeight: FontWeight.w600),
                 ),
               ),

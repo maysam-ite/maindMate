@@ -68,5 +68,62 @@
   "Select your language":"اختر لغتك"
 
 
-
+  ,
+    "These credentials do not match our records.": "بيانات الاعتماد هذه لا تتطابق مع سجلاتنا.",
+    "start_date_required": "تاريخ البدء مطلوب",
+    "end_date_required": "تاريخ الانتهاء مطلوب",
+    "start_date_after_end_date": "تاريخ البدء يجب أن يكون قبل تاريخ الانتهاء",
+    "Create": "إنشاء",
+    "from": "من",
+    "To": "إلى",
+    "type_longer_text": "النص يجب أن يكون أطول",
+    "experience_from": "الخبرة من",
+    "experience_title": "عنوان الخبرة",
+    "add_new_experience": "إضافة خبرة جديدة",
+    "Specialtie_Name": "اسم التخصص",
+    "add_new_specialties": "إضافة تخصصات جديدة",
+    "certificate": "شهادة",
+    "save": "حفظ",
+    "education": "التعليم",
+    "From": "من",
+    "To": "إلى",
+    "experience": "الخبرة",
+    "specialties": "التخصصات",
+    "update_experience": "تحديث الخبرة",
+    "experience_from": "الخبرة من",
+    "experience_title": "عنوان الخبرة",
+    "Update": "تحديث",
+    "Delete": "حذف",
+    "The specialty name should be at least 2 characters": "يجب أن يكون اسم التخصص على الأقل 2 حروف",
+    "update_specialty": "تحديث التخصص",
+    "video": "فيديو",
+    "Comments":"التعليقات"
+  ,
+   "send_comment": "أرسل تعليق",
+   
+    "type_here_what_you_want": "اكتب هنا ما تريد",
+    "publish_story": "انشر القصة"
+    ,
+      "Forget Password?": "نسيت كلمة المرور؟",
+      "reset it.": "إعادة تعيينها.",
+      "Forget Password": "نسيت كلمة المرور",
+      "Continue": "استمر"
+    
+      ,
+        "Success": "نجاح",
+        "Please check your email for password reset instructions.": "يرجى التحقق من بريدك الإلكتروني للحصول على تعليمات إعادة تعيين كلمة المرور.",
+        "OK": "حسناً"
+        ,
+          "Verify Your Email": "تحقق من بريدك الإلكتروني",
+          "Please verify your email to continue using the app.": "يرجى التحقق من بريدك الإلكتروني لمواصلة استخدام التطبيق.",
+          "Check your email for a verification link. If you haven't received it, you can request a new one.": "تحقق من بريدك الإلكتروني للحصول على رابط التحقق. إذا لم تتلقه، يمكنك طلب رابط جديد.",
+          "Resend Verification Email": "إعادة إرسال بريد التحقق",
+          "Continue": "متابعة"
+    ,    
+        "Your email is not verified yet.": "لم يتم التحقق من بريدك الإلكتروني بعد.",
+  "Verification email sent!": "تم إرسال بريد التحقق!"
+  
+  ,  "upload_new_story_success": "تم تحميل القصة الجديدة بنجاح!!"
+  
+  
 }

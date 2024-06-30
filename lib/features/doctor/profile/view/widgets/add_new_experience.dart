@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:maindmate/core/shared/buttons/general_button.dart';
 import 'package:maindmate/core/shared/functions/helper/date_formatter.dart';
 import 'package:maindmate/core/shared/text_fileds/custom_text_filed.dart';
+import 'package:maindmate/features/doctor/profile/controller/doctor_profile_controller.dart';
 import 'package:maindmate/main.dart';
 
 class AddNewExperience extends StatefulWidget {
@@ -30,6 +31,7 @@ class _AddNewExperienceState extends State<AddNewExperience> {
   DateTime? endDate;
   String? dateError;
   late GlobalKey<FormState> formstate = GlobalKey<FormState>();
+  final DoctorProfileController doctorProfileController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -106,27 +108,54 @@ class _AddNewExperienceState extends State<AddNewExperience> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         const CancelButton(),
-                        CreateButton(
-                          onCreate: () {
-                            FormState? formdata = formstate.currentState;
-                            if (formdata!.validate()) {
-                              formdata.save();
-                              String? validationMessage =
-                                  handlingStartEndDate(startDate, endDate);
-                              setState(() {
-                                dateError = validationMessage;
-                              });
-                              if (validationMessage == null) {
-                                widget.onCreate(
-                                  experienceTitle.text,
-                                  experienceFrom.text,
-                                  startDate!,
-                                  endDate!,
-                                );
-                              }
-                            }
-                          },
-                        ),
+                        Obx(() {
+                          return ButtonWidget(
+                            onPressed:
+                                doctorProfileController.isAddingExperience.value
+                                    ? null
+                                    : () {
+                                        FormState? formdata =
+                                            formstate.currentState;
+                                        if (formdata!.validate()) {
+                                          formdata.save();
+                                          String? validationMessage =
+                                              handlingStartEndDate(
+                                                  startDate, endDate);
+                                          setState(() {
+                                            dateError = validationMessage;
+                                          });
+                                          if (validationMessage == null) {
+                                            widget.onCreate(
+                                              experienceTitle.text,
+                                              experienceFrom.text,
+                                              startDate!,
+                                              endDate!,
+                                            );
+                                          }
+                                        }
+                                      },
+                            text: tr("Create"),
+                            options: ButtonOptions(
+                              width: 100,
+                              height: 45,
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  20, 0, 20, 0),
+                              iconPadding: const EdgeInsetsDirectional.fromSTEB(
+                                  0, 0, 0, 0),
+                              color: appTheme.primary,
+                              textStyle:
+                                  appTheme.text12.copyWith(color: Colors.white),
+                              elevation: 0,
+                              borderSide: BorderSide(
+                                color: appTheme.primary,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            showLoadingIndicator: doctorProfileController
+                                .isAddingExperience.value,
+                          );
+                        }),
                       ],
                     ),
                   ),
@@ -351,7 +380,7 @@ class CreateButton extends StatelessWidget {
         padding: const EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
         iconPadding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
         color: appTheme.primary,
-        textStyle: appTheme.text12,
+        textStyle: appTheme.text12.copyWith(color: Colors.white),
         elevation: 0,
         borderSide: BorderSide(
           color: appTheme.primary,
@@ -400,11 +429,11 @@ class CancelButton extends StatelessWidget {
 
 String? handlingStartEndDate(DateTime? startDate, DateTime? endDate) {
   if (startDate == null) {
-    return "start_date_required";
+    return tr("start_date_required");
   } else if (endDate == null) {
-    return "end_date_required";
+    return tr("end_date_required");
   } else if (startDate.isAfter(endDate)) {
-    return 'start_date_after_end_date ';
+    return tr('start_date_after_end_date');
   } else {
     return null;
   }

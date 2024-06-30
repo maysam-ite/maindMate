@@ -3,10 +3,13 @@ import 'package:maindmate/features/Consultations/book_a_consultation/controller/
 import 'package:maindmate/features/Consultations/book_a_consultation/view/book_a_consultation_screen.dart';
 import 'package:maindmate/features/Consultations/book_now/controller/book_now_binding.dart';
 import 'package:maindmate/features/Consultations/book_now/view/book_now_screen.dart';
+import 'package:maindmate/features/auth/forget_password/controller/forget_password_binding.dart';
+import 'package:maindmate/features/auth/forget_password/view/forget_password_screen.dart';
 import 'package:maindmate/features/auth/sign_in/controller/sign_in_binding.dart';
 import 'package:maindmate/features/auth/sign_in/view/sign_in_screen.dart';
 import 'package:maindmate/features/auth/sign_up/controller/sing_up_binding.dart';
 import 'package:maindmate/features/auth/sign_up/view/sign_up_screen.dart';
+import 'package:maindmate/features/auth/verify_email/view/verify_email_screen.dart';
 import 'package:maindmate/features/auth/welcome_screen/view/welcome_screen.dart';
 import 'package:maindmate/features/group_therapy/spcifice_group_therapy_type/controller/spcifice_group_therapy_type_binding.dart';
 import 'package:maindmate/features/group_therapy/spcifice_group_therapy_type/view/spcifice_group_therapy_type_screen.dart';
@@ -54,7 +57,7 @@ appRoutes() => [
           binding: BookNowBinding()),
       GetPage(
           name: '/StoryDetailesScreen',
-          page: () =>  StoryDetailesScreen(),
+          page: () => StoryDetailesScreen(),
           binding: ExperienceDetailesBinding()),
       GetPage(
           name: '/SelectGroupTherapyScreen',
@@ -67,9 +70,17 @@ appRoutes() => [
       GetPage(
           name: '/ConfirmPaymentScreen',
           page: () => const ConfirmPaymentScreen(),
-          binding: ConfirmPaymentBinding())
-  ,    GetPage(
+          binding: ConfirmPaymentBinding()),
+      GetPage(
           name: '/SpcificeGroupTherapyTypeScreen',
-          page: () =>  SpcificeGroupTherapyTypeScreen(),
-          binding: SpcificeGroupTherapyTypeBinding())
+          page: () => SpcificeGroupTherapyTypeScreen(),
+          binding: SpcificeGroupTherapyTypeBinding()),
+      GetPage(
+        name: '/VerifyEmailScreen',
+        page: () => VerifyEmailScreen(),
+      ),
+      GetPage(
+          name: '/ForgetPasswordScreen',
+          page: () => ForgetPasswordScreen(),
+          binding: ForgetPasswordBinding())
     ];
