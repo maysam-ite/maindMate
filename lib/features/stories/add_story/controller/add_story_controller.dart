@@ -33,13 +33,15 @@ class AddStoryController extends GetxController {
     final XFile? pickedVideo =
         await picker.pickVideo(source: ImageSource.gallery);
 
-    media != null
-        ? MediaType(isVideo: false, data: File(pickedVideo!.path))
-        : null;
+    media = MediaType(isVideo: true, data: File(pickedVideo!.path));
+    print(media!.data);
+    update();
+    Get.back();
   }
 
   deleteSelectedMedia() {
     media = null;
+    update();
   }
 
   onPressContinue() async {

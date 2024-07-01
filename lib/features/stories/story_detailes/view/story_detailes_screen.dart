@@ -110,7 +110,8 @@ class PostWidget extends StatelessWidget {
           children: [
             storyDetailesController.storyModel.video != null
                 ? CardsVideoWidget(
-                    currentVideoUrl: storyDetailesController.storyModel.video!,
+                    currentVideoUrl:
+                        storyDetailesController.storyModel.videoUrl!,
                     videoHgiht: 195.h,
                     videoWidth: double.infinity,
                   )

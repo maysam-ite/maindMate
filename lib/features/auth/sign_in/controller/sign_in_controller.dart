@@ -50,7 +50,7 @@ class SignInController extends GetxController {
       print(token);
     }
     UserSessionService userSessionService = Get.find<UserSessionService>();
-    await userSessionService.getUserType();
+    await userSessionService.getUserType(true);
     Get.offAllNamed('/MainBottomNavigationBarWidget');
   }
 }

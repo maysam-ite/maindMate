@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:maindmate/core/services/divide_widgets.dart';
+import 'package:maindmate/core/services/user_session_service.dart';
 import 'package:maindmate/core/shared/widgets/images/network_image.dart';
 import 'package:maindmate/core/shared/widgets/videos/cards_video_widget.dart';
 import 'package:maindmate/features/stories/stories/model/story_model.dart';
@@ -14,8 +15,12 @@ class StoriesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed('/StoryDetailesScreen',
-            arguments: storyModel.id, preventDuplicates: false);
+        final UserSessionService userSessionService =
+            Get.find<UserSessionService>();
+
+        print(userSessionService.userType.value);
+        // Get.toNamed('/StoryDetailesScreen',
+        //     arguments: storyModel.id, preventDuplicates: false);
       },
       child: Container(
         width: 382.w,

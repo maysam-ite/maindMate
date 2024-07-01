@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:get/get.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
@@ -88,10 +87,6 @@ class ApiHelper {
       if (response.statusCode == 200 || response.statusCode == 201) {
         Map<String, dynamic> responseBody = jsonDecode(response.body);
         return Right(responseBody);
-      } else if (response.statusCode == 401) {
-        Map<String, dynamic> responseBody = jsonDecode(response.body);
-        Get.offAllNamed('/');
-        return Left(ErrorResponse.fromJson(response.statusCode, responseBody));
       } else {
         Map<String, dynamic> responseBody = jsonDecode(response.body);
         return Left(ErrorResponse.fromJson(response.statusCode, responseBody));

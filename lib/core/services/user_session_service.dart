@@ -11,19 +11,33 @@ class UserSessionService extends GetxService {
   RxBool isEmailVerified = false.obs;
 
   Future<UserSessionService> init() async {
-    await getUserType();
+    await getUserType(false);
     return this;
   }
 
-  Future<void> getUserType() async {
+  Future<void> getUserType(bool isSameSession) async {
     String? token = await storeService.readString("token");
     bool isRememberMeActive =
-        await storeService.isContainKey('isRemmberMeActive');
-    if (token == '' || token.isEmpty || !isRememberMeActive) {
+        await storeService.readString('isRemmberMeActive') == 'true';
+    if (token == '' || token.isEmpty) {
+      print("inside first ");
       userType.value = UserType.guest;
+      targetRout = '/';
+      return;
+    } else if (token.isNotEmpty && isSameSession) {
+      print("inside second ");
+      await getUserTypeFromApi(token);
+      return;
+    } else if (token.isNotEmpty && !isRememberMeActive) {
+      print("inside third ");
+      userType.value = UserType.guest;
+      targetRout = '/';
       return;
     }
+    await getUserTypeFromApi(token);
+  }
 
+  getUserTypeFromApi(token) async {
     Either<ErrorResponse, Map<String, dynamic>> response;
     response = await ApiHelper.makeRequest(
       targetRout: ServerConstApis.user,
@@ -37,7 +51,9 @@ class UserSessionService extends GetxService {
     } else {
       String userTypeStr = handlingResponse['usertype'] ?? 'user';
       isEmailVerified.value = handlingResponse['email_verified_at'] != null;
-
+      targetRout = isEmailVerified.value
+          ? '/MainBottomNavigationBarWidget'
+          : '/VerifyEmailScreen';
       if (userTypeStr == 'doctor') {
         userType.value = UserType.doctor;
       } else if (userTypeStr == 'user') {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:maindmate/core/const/user_type.dart';
+import 'package:maindmate/core/shared/widgets/guest/guest_page.dart';
 import 'package:maindmate/features/Consultations/book_a_consultation/view/book_a_consultation_screen.dart';
 import 'package:maindmate/features/doctor/profile/view/profile_screen.dart';
 import 'package:maindmate/features/patient/profile/view/profile_screen.dart';
@@ -34,13 +35,22 @@ class MainBottomNavigationController extends GetxController {
           lazyLoadedScreens[index] = StoriesScreen();
           break;
         case 1:
-          lazyLoadedScreens[index] = const BookAConsultationScreen();
+          lazyLoadedScreens[index] =
+              userSessionService.userType.value == UserType.guest
+                  ? const GuestWidget()
+                  : const BookAConsultationScreen();
           break;
         case 2:
-          lazyLoadedScreens[index] = AddStoryScreen();
+          lazyLoadedScreens[index] =
+              userSessionService.userType.value == UserType.guest
+                  ? const GuestWidget()
+                  : AddStoryScreen();
           break;
         case 3:
-          lazyLoadedScreens[index] = const SelectGroupTherapyScreen();
+          lazyLoadedScreens[index] =
+              userSessionService.userType.value == UserType.guest
+                  ? const GuestWidget()
+                  : const SelectGroupTherapyScreen();
           break;
         case 4:
           // Decide which profile screen to show based on the user type
@@ -49,7 +59,7 @@ class MainBottomNavigationController extends GetxController {
               ? PatientProfileScreen()
               : userSessionService.userType.value == UserType.doctor
                   ? DoctorProfileScreen()
-                  : const SizedBox(); // Handle guest or other types appropriately
+                  : const GuestWidget(); // Handle guest or other types appropriately
           break;
       }
     }

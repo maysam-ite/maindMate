@@ -65,7 +65,7 @@ class WelcomeScreen extends StatelessWidget {
           ButtonWidget(
             showLoadingIndicator: false,
             onPressed: () {
-              Get.offAllNamed('/ExperienceOfOthersScreen');
+              Get.offAllNamed('/MainBottomNavigationBarWidget');
             },
             text: ("الدخول كزائر"),
             options: ButtonOptions(

@@ -123,7 +123,16 @@
         "Your email is not verified yet.": "لم يتم التحقق من بريدك الإلكتروني بعد.",
   "Verification email sent!": "تم إرسال بريد التحقق!"
   
-  ,  "upload_new_story_success": "تم تحميل القصة الجديدة بنجاح!!"
+  ,  "upload_new_story_success": "تم تحميل القصة الجديدة بنجاح!!",
+
+  
+    "Unlock full access to Mind Mate features": "افتح الوصول الكامل إلى ميزات Mind Mate",
+    "Register or log in to start your journey with us.": "سجل أو تسجيل الدخول لبدء رحلتك معنا.",
+    "Join": "انضم",
+    "Sign in": "تسجيل الدخول",
+    "Join us and discover what's waiting for you in Mind Mate!": "انضم إلينا واكتشف ما ينتظرك في Mind Mate!"
+  
+  
   
   
 }

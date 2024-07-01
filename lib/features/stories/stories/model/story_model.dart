@@ -31,7 +31,6 @@ class StoryModel {
   });
 
   factory StoryModel.fromMap(Map<String, dynamic> map) {
-    print("story ${map['story_comments']}");
     return StoryModel(
       id: (map['id'].toInt() ?? 0) as int,
       userId: (int.parse(map['user_id'] ?? '0')),

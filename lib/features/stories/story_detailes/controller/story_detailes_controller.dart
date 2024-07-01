@@ -5,6 +5,7 @@ import 'package:maindmate/core/server/helper_api.dart';
 import 'package:maindmate/core/server/parse_response.dart';
 import 'package:maindmate/core/server/server_config.dart';
 import 'package:maindmate/core/shared/widgets/snackbar_manager.dart';
+import 'package:maindmate/features/stories/stories/controller/stories_controller.dart';
 import 'package:maindmate/features/stories/stories/model/story_comment_model.dart';
 import 'package:maindmate/features/stories/stories/model/story_model.dart';
 import 'package:maindmate/main.dart';
@@ -29,6 +30,8 @@ class StoryDetailesController extends GetxController {
   void onClose() {
     comment.removeListener(_updateCommentText);
     comment.dispose();
+
+    Get.find<StoriesController>().refreshData();
     super.onClose();
   }
 

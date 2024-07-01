@@ -65,7 +65,7 @@ class SignUpController extends GetxController {
       storeService.createString('isRemmberMeActive', 'true');
     }
     UserSessionService userSessionService = Get.find<UserSessionService>();
-    await userSessionService.getUserType();
+    await userSessionService.getUserType(true);
     Get.offAllNamed('/VerifyEmailScreen');
   }
 }

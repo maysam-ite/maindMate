@@ -61,10 +61,10 @@ class _VideoWidgetState extends State<CardsVideoWidget>
             });
           }).catchError((error) {
             // Handle the error here
-            setState((){
-              hasError=true;
+            setState(() {
+              hasError = true;
             });
-              return;
+            return;
           });
     videoPlayerController.addListener(() {
       if (videoPlayerController.value.isPlaying && !_isPlaying) {
@@ -112,9 +112,9 @@ class _VideoWidgetState extends State<CardsVideoWidget>
   Widget build(BuildContext context) {
     if (hasError) {
       return SizedBox(
-            height: widget.videoHgiht, // Set your height
-              width: widget.videoWidth, // Set your width
-          child: Center(
+        height: widget.videoHgiht,
+        width: widget.videoWidth,
+        child: Center(
           child: Text(
             'Error loading video',
             style: TextStyle(color: Colors.red),
@@ -122,77 +122,38 @@ class _VideoWidgetState extends State<CardsVideoWidget>
         ),
       );
     }
-    return 
-    !videoInitialized
-        ? ShimmerLoadingWidget(
-            loadingShimmerWidget: SizedBox(
-              height: widget.videoHgiht, // Set your height
-              width: widget.videoWidth, // Set your width
-            ),
-          )
-        : widget.autoPlay
-            ? Stack(
-                alignment: Alignment.center, // Align everything in the center
 
-                children: [
-                  !videoInitialized
-                      ? SizedBox(
-                          height: widget.videoHgiht, // Set your height
-                          width: widget.videoWidth, // Set your width
-                        )
-                      : SizedBox(
-                          height: widget.videoHgiht, // Set your height
-                          width: widget.videoWidth, // Set your width
-                          child: FittedBox(
-                            fit: BoxFit
-                                .cover, // This will prevent the video from being clipped
-                            child: SizedBox(
-                              height: videoPlayerController.value.size.height,
-                              width: videoPlayerController.value.size.width,
-                              child: VideoPlayer(videoPlayerController),
-                            ),
-                          ),
-                        ),
-                ],
-              )
-            : GestureDetector(
-                onTap: () {
-                  if (videoInitialized) {
-                    setState(() {
-                      if (videoPlayerController.value.isPlaying) {
-                        videoPlayerController.pause();
-                        _isPlaying = false;
-                      } else {
-                        videoPlayerController.play();
-                        _isPlaying = true;
-                      }
-                    });
+    return SizedBox(
+      height: widget.videoHgiht,
+      width: widget.videoWidth,
+      child: videoInitialized
+          ? GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (videoPlayerController.value.isPlaying) {
+                    videoPlayerController.pause();
+                    _isPlaying = false;
+                  } else {
+                    videoPlayerController.play();
+                    _isPlaying = true;
                   }
-                },
-                child: Stack(
-                  alignment: Alignment.center, // Align everything in the center
-
-                  children: [
-                    !videoInitialized
-                        ? SizedBox(
-                            height: widget.videoHgiht, // Set your height
-                            width: widget.videoWidth, // Set your width
-                          )
-                        : SizedBox(
-                            height: widget.videoHgiht, // Set your height
-                            width: widget.videoWidth, // Set your width
-                            child: FittedBox(
-                              fit: BoxFit
-                                  .cover, // This will prevent the video from being clipped
-                              child: SizedBox(
-                                height: videoPlayerController.value.size.height,
-                                width: videoPlayerController.value.size.width,
-                                child: VideoPlayer(videoPlayerController),
-                              ),
-                            ),
-                          ),
-                  ],
+                });
+              },
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: SizedBox(
+                  height: videoPlayerController.value.size.height,
+                  width: videoPlayerController.value.size.width,
+                  child: VideoPlayer(videoPlayerController),
                 ),
-              );
+              ),
+            )
+          : ShimmerLoadingWidget(
+              loadingShimmerWidget: SizedBox(
+                height: widget.videoHgiht,
+                width: widget.videoWidth,
+              ),
+            ),
+    );
   }
 }

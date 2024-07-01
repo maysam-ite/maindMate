@@ -20,15 +20,14 @@ class AddStoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: appTheme.primaryBackground,
-      appBar: generalAppBar(title:'add_story'),
+      appBar: generalAppBar(title: 'add_story'),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
         child: Column(
-
           children: [
-            UserInformation(),
+            const UserInformation(),
             AddStoryContent(addStoryController: addStoryController)
-             ].divide(const SizedBox(
+          ].divide(const SizedBox(
             height: 30,
           )),
         ),
@@ -48,136 +47,163 @@ class AddStoryContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.w,vertical: 20.w),
+      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.w),
       decoration: BoxDecoration(
-        color:appTheme.primaryBackground,
+        color: appTheme.primaryBackground,
         borderRadius: BorderRadius.circular(30.r),
-        boxShadow: [              BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1,
-                  blurRadius: 5)]
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 1,
+            blurRadius: 5,
+          )
+        ],
       ),
-      child:Column(
-        children:[
-    
-       customTextField(
-        maxLines:6,
-        label: tr('type_here_what_you_want'),
-        controller: addStoryController.storyText,
-        validator: (val) {
-          return null;
-          // return emailValidation(val);
-        }),
-    Align(
-      alignment: AlignmentDirectional(-1,0),
-      child: GestureDetector(
-        onTap: () {
-          showBottomSheetForImagesAndVideos(
-              context: context,
-              onPressCamera: () {
-                Get.back();
-                addStoryController.pickMediaForStory(ImageSource.camera);
-              },
-              onPressGallery: () async {
-                Get.back();
-                addStoryController.pickMediaForStory(ImageSource.gallery);
-              },
-              onPressVideo: () async {
-                addStoryController.pickVideoForStory();
-              });
-        },
-        child: GetBuilder<AddStoryController>(
-          builder: (context) {
-            return Stack(
-              children: [
-                Container(
-                  width: 86.w,
-                  height: 60.h,
-                  decoration: BoxDecoration(
-                      color: appTheme.primaryBackground,
-                      borderRadius: BorderRadius.circular(9.r),
-                      border: Border.all(),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 1,
-                            blurRadius: 5)
-                      ]),
-                  child: addStoryController.media != null
-                      ? addStoryController.media!.isVideo
-                          ? CardsLocalVideoWidget(
-                              currentVideoUrl:
-                                  addStoryController.media!.data,
-                              videoHgiht: 86.h,
-                              videoWidth: 60.w)
+      child: Column(
+        children: [
+          customTextField(
+            maxLines: 6,
+            label: tr('type_here_what_you_want'),
+            controller: addStoryController.storyText,
+            validator: (val) =>
+                null, // Adjust according to your validation needs
+          ),
+          Align(
+            alignment: const AlignmentDirectional(-1, 0),
+            child: mediaPreview(context),
+          ),
+          UploadButton(addStoryController: addStoryController),
+        ].divide(const SizedBox(height: 20)),
+      ),
+    );
+  }
+
+  Widget mediaPreview(BuildContext context) {
+    return GetBuilder<AddStoryController>(
+      builder: (ccontext) {
+        return Container(
+          width: 160.w, // Increased width
+          height: 90.h, // Increased height
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            color: appTheme.primaryBackground,
+            borderRadius: BorderRadius.circular(12.r),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.6),
+                spreadRadius: 2,
+                blurRadius: 7,
+              ),
+            ],
+          ),
+          child: Stack(
+            children: [
+              addStoryController.media != null
+                  ? Positioned.fill(
+                      child: addStoryController.media!.isVideo
+                          ? AspectRatio(
+                              aspectRatio:
+                                  16 / 9, // Standard aspect ratio for videos
+                              child: CardsLocalVideoWidget(
+                                currentVideoUrl: addStoryController.media!.data,
+                                videoHgiht: 90.h,
+                                videoWidth: 160.w,
+                              ),
+                            )
                           : Image.file(
                               addStoryController.media!.data,
-                                  width: 86.w,
-                  height: 60.h,
-              fit: BoxFit.contain,
-                            )
-                      : const Center(
-                          child: Icon(
-                          Icons.add,
-                          size: 30,
-                          color: Color(0xFF000000),
-                        )),
+                              fit: BoxFit.cover,
+                            ),
+                    )
+                  : GestureDetector(
+                      onTap: () => showBottomSheetForImagesAndVideos(
+                            context: context,
+                            onPressCamera: () {
+                              Get.back();
+                              addStoryController
+                                  .pickMediaForStory(ImageSource.camera);
+                            },
+                            onPressGallery: () async {
+                              Get.back();
+                              addStoryController
+                                  .pickMediaForStory(ImageSource.gallery);
+                            },
+                            onPressVideo: () async {
+                              addStoryController.pickVideoForStory();
+                            },
+                          ),
+                      child: Center(
+                        child: Icon(
+                          Icons.add_photo_alternate,
+                          size: 40,
+                          color: Colors.grey.shade600,
+                        ),
+                      )),
+              if (addStoryController.media != null)
+                Positioned(
+                  top: 4,
+                  right: 4,
+                  child: GestureDetector(
+                    onTap: () {
+                      addStoryController.deleteSelectedMedia();
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(
+                          8), // Increase padding to enlarge the hit area
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade200,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.close,
+                        size: 24,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
                 ),
-                       addStoryController.media==null?const SizedBox():       Positioned(
-                    top: 0,
-                    right: 0,
-                    child: Icon(Icons.cancel, color: appTheme.error))
-              ],
-            );
-          }
-        ),
-      ),
-    ),
-            
-    UploadButton(addStoryController: addStoryController),
-              
-        ].divide(const SizedBox(
-    height: 50,
-              ))
-      )
+            ],
+          ),
+        );
+      },
     );
   }
 }
+
 class UserInformation extends StatelessWidget {
   const UserInformation({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  Row(
-      children:[
-        Container(
-          width: 33.w,
-          height: 33.h,
-          padding: const EdgeInsets.all(2),
-          decoration: BoxDecoration(
-              shape: BoxShape.circle, border: Border.all(color: Colors.blue)),
-          child: Image.asset('assets/images/Component.png'),
-        ),
-        SizedBox(width:5),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'أحمد محمد احمد',
-              style: appTheme.text16,
-            ),
-            Text(
-              'المنصب او الاشتراك',
-              style: appTheme.text10,
-            ),
-          ],
-        ),
-      ]
-    );
+    return Row(children: [
+      Container(
+        width: 33.w,
+        height: 33.h,
+        padding: const EdgeInsets.all(2),
+        decoration: BoxDecoration(
+            shape: BoxShape.circle, border: Border.all(color: Colors.blue)),
+        child: Image.asset('assets/images/Component.png'),
+      ),
+      const SizedBox(width: 5),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'أحمد محمد احمد',
+            style: appTheme.text16,
+          ),
+          Text(
+            'المنصب او الاشتراك',
+            style: appTheme.text10,
+          ),
+        ],
+      ),
+    ]);
   }
 }
+
 class UploadButton extends StatelessWidget {
   const UploadButton({
     super.key,
@@ -189,7 +215,7 @@ class UploadButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      ()=> ButtonWidget(
+      () => ButtonWidget(
         showLoadingIndicator: addStoryController.isLoading.value,
         onPressed: () {
           addStoryController.onPressContinue();

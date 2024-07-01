@@ -51,6 +51,8 @@ dependencies:
   intl: ^0.18.1
   language_picker: ^0.4.3
   list_country_picker: ^1.0.1
+  better_video_player: ^1.0.5
+  http_parser: ^4.0.2
 
 dev_dependencies:
   flutter_test:

@@ -19,23 +19,11 @@ void main() async {
 
   await AppTheme.initialize();
   Get.put(ConnectivityService());
-  final userSessionService =
-      await Get.putAsync(() => UserSessionService().init());
+
+  await Get.putAsync(() => UserSessionService().init());
 
   // Initialize MainBottomNavigationBinding
   MainBottomNavigationBinding().dependencies();
-  bool token = await storeService.isContainKey('token');
-  bool isRememberMeActive =
-      await storeService.isContainKey('isRemmberMeActive');
-
-  if (token && isRememberMeActive) {
-    await userSessionService.getUserType();
-    targetRout = userSessionService.isEmailVerified.value
-        ? '/MainBottomNavigationBarWidget'
-        : '/VerifyEmailScreen';
-  } else {
-    targetRout = "/";
-  }
 
   runApp(EasyLocalization(
       supportedLocales: const [Locale('ar')],

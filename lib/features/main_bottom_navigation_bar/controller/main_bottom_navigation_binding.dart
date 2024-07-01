@@ -17,12 +17,9 @@ class MainBottomNavigationBinding implements Bindings {
         () => MainBottomNavigationController());
     Get.lazyPut<StoriesController>(() => StoriesController());
     Get.lazyPut<AddStoryController>(() => AddStoryController());
+    Get.lazyPut<PatientProfileController>(() => PatientProfileController());
+    Get.lazyPut<DoctorProfileController>(() => DoctorProfileController());
 
     // Conditionally initialize profile controllers based on user type
-    if (userSessionService.userType.value == UserType.patient) {
-      Get.put<PatientProfileController>(PatientProfileController());
-    } else if (userSessionService.userType.value == UserType.doctor) {
-      Get.put<DoctorProfileController>(DoctorProfileController());
-    }
   }
 }
